@@ -1,0 +1,31 @@
+Machine Learning Engineer
+
+About us:
+Data Science UA is a service company with strong data science and AI expertise. Our journey began in 2016 with the organization of the first Data Science UA conference, setting the foundation for our growth. Over the past 8 years, we have diligently fostered the largest Data Science Community in Eastern Europe.
+
+About the role:
+We are looking for a Machine Learning Engineer to become a helping hand for our internal AI/ML R&D team. Do you want to work on some real projects for our clients and/or perform R&D on novel AI algorithms and platforms? Do you want to try different fields of AI/ML, starting with advanced analytics, ending ad-hoc neural networks optimizations for Edge AI platforms? Then apply and join our team!
+
+Requirements:
+— 1.5 years of experience as ML Engineer/Data Scientist or related (alternatively, participation in open-source ML projects or Kaggle competitions);
+— Expertise in CV or LLM/NLP-based projects;
+— Good knowledge of math, CS, and AI fundamentals;
+— Proficiency in Python;
+— Student/graduate in the field of computer science, mathematics, cybernetics, physics, etc.
+— Upper-Intermediate English.
+
+Nice to have:
+— Have your own pet projects;
+— Completed different Data Science — related courses.
+
+Responsibilities:
+— Participation in AI consulting projects for Clients from Ukraine and abroad;
+— Work on complex R&D projects;
+— Preparation of technical content (presentations, analytical articles).
+
+We offer:
+— Free English classes with a native speaker and external courses compensation;
+— PE support by professional accountants;
+— Medical insurance;
+— Team-building events, conferences, meetups, and other activities;
+— There are many other benefits you’ll find out at the interview.
