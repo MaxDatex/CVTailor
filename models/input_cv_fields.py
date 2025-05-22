@@ -1,9 +1,10 @@
-from typing import List, Optional, Union, Literal
-from pydantic import BaseModel, Field, AnyUrl
-from pydantic_extra_types.phone_numbers import PhoneNumber
-from uuid import uuid4
 from datetime import date as dtdate
 from enum import Enum
+from typing import List, Literal, Optional, Union
+from uuid import uuid4
+
+from pydantic import AnyUrl, BaseModel, Field
+from pydantic_extra_types.phone_numbers import PhoneNumber
 
 
 class Location(BaseModel):
@@ -59,7 +60,7 @@ class WorkItem(BaseModel):
     job_title: str  # Job title
     company_website_url: Optional[AnyUrl]  # Company website
     start_date: dtdate
-    end_date: Union[dtdate, Literal['Present']] = 'Present'
+    end_date: Union[dtdate, Literal["Present"]] = "Present"
     summary: str  # High-level description of role/company
     highlights: List[str]  # Specific achievements or responsibilities (bullet points)
 
@@ -68,7 +69,7 @@ class ProjectItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     name: str  # Project title
     start_date: Optional[dtdate]
-    end_date: Optional[Union[dtdate, Literal['Present']]]
+    end_date: Optional[Union[dtdate, Literal["Present"]]]
     description: str  # Overall description of the project
     highlights: List[str]  # Key contributions or features
     url: Optional[AnyUrl]  # Link to project demo or repository
@@ -80,7 +81,7 @@ class EducationItem(BaseModel):
     area: str  # e.g., Computer Science
     study_type: str  # e.g., Bachelor's Degree, Master's
     start_date: dtdate
-    end_date: Union[dtdate, Literal['Present']]
+    end_date: Union[dtdate, Literal["Present"]]
     score: str  # e.g., GPA
     courses: List[str]  # Relevant coursework
 

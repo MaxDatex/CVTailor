@@ -1,22 +1,12 @@
 from jinja2 import Template
+
+from models.input_cv_fields import (AwardItem, CertificateItem, CVBody,
+                                    CVHeader, EducationItem, LanguageItem,
+                                    Location, ProfessionalSummary, Profile,
+                                    ProjectItem, PublicationItem, SkillItem,
+                                    WorkItem)
 from templates.html_cv_template import CV_TEMPLATE_HTML
 from templates.md_cv_template import CV_TEMPLATE_MD
-from models.input_cv_fields import (
-    CVBody,
-    Location,
-    CVHeader,
-    Profile,
-    ProfessionalSummary,
-    PublicationItem,
-    AwardItem,
-    EducationItem,
-    ProjectItem,
-    WorkItem,
-    SkillItem,
-    LanguageItem,
-    CertificateItem,
-)
-
 
 location_anya = Location(
     address="10 Khreshchatyk Street",

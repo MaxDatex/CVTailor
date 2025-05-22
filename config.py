@@ -1,5 +1,7 @@
-from pydantic_settings import BaseSettings
 from typing import Union
+
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     GOOGLE_API_KEY: Union[str, None] = None
@@ -9,5 +11,6 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+
 
 settings = Settings()
