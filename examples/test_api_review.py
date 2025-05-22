@@ -1,5 +1,3 @@
-import json
-
 from jinja2 import Template
 
 from ai.llm import get_cv_improvements
@@ -12,15 +10,16 @@ with open("cv.md", "r") as f:
     cv = f.read()
 
 response = get_cv_improvements(job_description, cv)
+if not response.success:
+    raise Exception(response.error)
 
-json_data = json.loads(response.text)
-
-print(json.dumps(json_data, indent=4))
+for k, v in response.data.__dict__.items():
+    print(f"{k}: {v}\n")
 
 from examples.test_template import cv_dmytro
 
 template = Template(REVISED_CV_TEMPLATE_MD)
-rendered_md = template.render(cv=cv_dmytro, ai_response=response.parsed)
+rendered_md = template.render(cv=cv_dmytro, ai_response=response.data)
 
 with open("cv_revised.md", "w") as f:
     f.write(rendered_md)

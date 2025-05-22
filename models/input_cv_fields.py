@@ -3,7 +3,14 @@ from enum import Enum
 from typing import List, Literal, Optional, Union, Dict
 from uuid import uuid4
 
-from pydantic import AnyUrl, EmailStr, BaseModel, Field, FieldValidationInfo, field_validator
+from pydantic import (
+    AnyUrl,
+    EmailStr,
+    BaseModel,
+    Field,
+    FieldValidationInfo,
+    field_validator,
+)
 from pydantic_extra_types.phone_numbers import PhoneNumber
 
 
@@ -26,15 +33,20 @@ def validate_keywords_list(keywords: List[str]) -> List[str]:
     """
     if len(keywords) > 20:
         raise ValueError("Maximum 20 keywords allowed")
-    if any(len(keyword) < 2 for keyword in keywords):
-        raise ValueError("Each keyword must be more than 2 characters")
+    if any(len(keyword) < 1 for keyword in keywords):
+        raise ValueError("Each keyword must be more than 1 characters")
     if any(len(keyword) > 50 for keyword in keywords):
         raise ValueError("Each keyword must be less than 50 characters")
     return keywords
 
 
-def validate_end_date(end_date: dtdate, info: FieldValidationInfo):
-    if end_date != "Present" and end_date < info.data.get("start_date"):
+def validate_end_date(
+    end_date: dtdate, info: FieldValidationInfo  # type: ignore
+) -> Union[dtdate, Literal["Present"]]:
+    """
+    Validates that the end date is after the start date.
+    """
+    if end_date != "Present" and end_date < info.data.get("start_date"):  # type: ignore
         raise ValueError("End date must be after start date")
     return end_date
 

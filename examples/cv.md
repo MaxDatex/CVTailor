@@ -51,7 +51,7 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 ## Work Experience
 
 ### Analytics Pro
-ID: b1c6048bb76a4151b1cd44a3c6cac048
+ID: f7c7ac6caa7043e1b850feee219c0caf
 
 **Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua/](https://analyticspro.ua/)
 **Start Date:** 2022-01-15 | **End Date:** Present
@@ -69,7 +69,7 @@ Developed and implemented predictive models for client projects across various i
 
 
 ### FinTech Insights
-ID: d65d4773c31c4d9599a443f372daa68c
+ID: 54984b95dd3f4d44b00f79316a17733a
 
 **Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com/](https://fintechinsights.com/)
 **Start Date:** 2020-09-01 | **End Date:** 2021-12-31
@@ -90,7 +90,7 @@ Assisted senior data scientists in data cleaning, preprocessing, and generating 
 ## Projects
 
 ### Sentiment Analysis of Social Media Data
-ID: 3555106959874abcb68abfabcdece114
+ID: 7f3e6d9ea3d64e41a1451baafe3f278c
 
 **Start Date:** 2024-03-01 | **End Date:** 2024-05-15
 
@@ -112,7 +112,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 ## Education
 
 ### Taras Shevchenko National University of Kyiv
-[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** Bachelor's Degree
+[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** Bachelors
 **Start Date:** 2016-09-01 | **End Date:** 2020-06-30 | **Score:** 3.8/4.0
 **Courses:** Probability Theory, Statistical Inference, Regression Modeling, Data Mining
 
@@ -122,7 +122,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 ## Awards
 
 ### Dean's List for Academic Excellence
-ID: e22e2403597a44938752ebc9238c3c6d
+ID: f3f81f021d7b40058140c40fda39c318
 
 **Date:** 2019-05-20 | **Awarder:** Taras Shevchenko National University of Kyiv
 Recognized for outstanding academic achievement in the Department of Statistics.
@@ -135,7 +135,7 @@ Recognized for outstanding academic achievement in the Department of Statistics.
 ## Publications
 
 ### Predictive Modeling for Customer Lifetime Value in E-commerce
-ID: 2fd257e8a0e9450e8a783f267f2821ac
+ID: 568b4365726a4fea8ac090f9f8c61abb
 
 **Publisher:** Journal of Data Science and Analytics | **Release Date:** 2023-11-01
 [Publication Link](https://journalofdata.com/predictive-modeling)

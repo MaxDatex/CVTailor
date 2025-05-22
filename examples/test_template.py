@@ -1,184 +1,23 @@
 from jinja2 import Template
 
-from models.input_cv_fields import (AwardItem, CertificateItem, CVBody,
-                                    CVHeader, EducationItem, LanguageItem,
-                                    Location, ProfessionalSummary, Profile,
-                                    ProjectItem, PublicationItem, SkillItem,
-                                    WorkItem)
+from models.input_cv_fields import (
+    AwardItem,
+    CertificateItem,
+    CVBody,
+    CVHeader,
+    EducationItem,
+    LanguageItem,
+    Location,
+    ProfessionalSummary,
+    Profile,
+    ProjectItem,
+    PublicationItem,
+    SkillItem,
+    WorkItem,
+    StudyType,
+)
 from templates.html_cv_template import CV_TEMPLATE_HTML
 from templates.md_cv_template import CV_TEMPLATE_MD
-
-location_anya = Location(
-    address="10 Khreshchatyk Street",
-    postalCode="01001",
-    city="Kyiv",
-    countryCode="UA",
-    region="Kyiv City",
-)
-
-profiles_anya = [
-    Profile(network="Twitter", username="anyadev", url="https://twitter.com/anyadev"),
-    Profile(
-        network="Stack Overflow",
-        username="anyapetrova",
-        url="https://stackoverflow.com/users/1234567/anyapetrova",
-    ),
-]
-
-header_anya = CVHeader(
-    full_name="Anya Petrova",
-    professional_title="Senior Software Engineer",
-    image_url="https://example.com/anya_petrova.jpg",
-    email_address="anya.petrova@email.com",
-    phone_number="+380 50 123 4567",
-    github_url="https://github.com/anyapetrova",
-    linkedin_url="https://linkedin.com/in/anyapetrova",
-    portfolio_url="https://anyapetrova.dev",
-    location=location_anya,
-    profiles=profiles_anya,
-)
-
-summary_anya = ProfessionalSummary(
-    summary="A highly motivated and experienced Senior Software Engineer with over 7 years of expertise in designing, developing, and deploying scalable web applications. Adept at full-stack development, cloud infrastructure, and leading cross-functional teams to deliver robust and efficient solutions.",
-    objective="To leverage my technical skills and leadership experience to drive innovation and contribute to challenging projects.",
-    highlights=[
-        "Expert in Python, Django, and React development.",
-        "Proven ability to lead and mentor development teams.",
-        "Experienced with AWS cloud services and CI/CD pipelines.",
-        "Strong problem-solving and analytical skills.",
-    ],
-)
-
-skills_anya = [
-    SkillItem(
-        name="Web Development",
-        level="Advanced",
-        keywords=[
-            "Python",
-            "Django",
-            "Flask",
-            "React",
-            "Node.js",
-            "JavaScript",
-            "TypeScript",
-            "HTML5",
-            "CSS3",
-            "REST APIs",
-        ],
-    ),
-    SkillItem(
-        name="Cloud Platforms",
-        level="Advanced",
-        keywords=["AWS (EC2, S3, Lambda, RDS)", "Docker", "Kubernetes", "CI/CD"],
-    ),
-    SkillItem(
-        name="Databases",
-        level="Intermediate",
-        keywords=["PostgreSQL", "MongoDB", "Redis"],
-    ),
-    SkillItem(
-        name="Tools & Methodologies",
-        level="Advanced",
-        keywords=["Git", "Jira", "Agile", "Scrum", "TDD", "Microservices"],
-    ),
-]
-
-work_experience_anya = [
-    WorkItem(
-        company_name="Tech Solutions Inc.",
-        company_location=Location(
-            address="5 Science Park",
-            postalCode="01001",
-            city="Kyiv",
-            countryCode="UA",
-            region="Kyiv City",
-        ),
-        job_title="Senior Software Engineer",
-        company_website_url="https://techsolutionsinc.com",
-        start_date="2021-03-01",
-        end_date="Present",
-        summary="Led the development of mission-critical backend services for a high-traffic e-commerce platform. Mentored junior developers and contributed to architectural decisions.",
-        highlights=[
-            "Architected and implemented a new microservices-based payment gateway, increasing transaction processing speed by 25%.",
-            "Reduced cloud infrastructure costs by 15% through optimization of AWS resource utilization.",
-            "Mentored a team of 4 junior developers, improving code quality and team efficiency.",
-            "Introduced and integrated a CI/CD pipeline, reducing deployment time by 50%.",
-        ],
-    ),
-    WorkItem(
-        company_name="InnovateWeb",
-        company_location=Location(
-            address="8 Freedom Avenue",
-            postalCode="79000",
-            city="Lviv",
-            countryCode="UA",
-            region="Lviv Region",
-        ),
-        job_title="Software Developer",
-        company_website_url="https://innovateweb.ua",
-        start_date="2018-06-01",
-        end_date="2021-02-28",
-        summary="Developed and maintained full-stack web applications for various clients, focusing on robust and user-friendly interfaces.",
-        highlights=[
-            "Developed responsive front-end interfaces using React.js for a major client project, leading to a 20% increase in user engagement.",
-            "Integrated third-party APIs for data visualization and reporting, enhancing application functionality.",
-            "Contributed to database design and optimization for several key projects.",
-        ],
-    ),
-]
-
-projects_anya = [
-    ProjectItem(
-        name="OpenSourceTaskTracker",
-        start_date="2023-01-15",
-        end_date="2023-06-30",
-        description="A collaborative open-source task management application built with Django and React.",
-        highlights=[
-            "Implemented real-time task updates using WebSockets.",
-            "Designed a scalable database schema for efficient data management.",
-            "Contributed to the community through pull requests and issue resolution.",
-        ],
-        url="https://github.com/anyapetrova/opensource-task-tracker",
-    )
-]
-
-education_anya = [
-    EducationItem(
-        institution="Kyiv Polytechnic Institute",
-        url="https://kpi.ua",
-        area="Computer Science",
-        study_type="Master's Degree",
-        start_date="2017-09-01",
-        end_date="2019-06-30",
-        score="4.0/4.0",
-        courses=["Advanced Algorithms", "Distributed Systems", "Machine Learning"],
-    )
-]
-
-certificates_anya = [
-    CertificateItem(
-        name="AWS Certified Solutions Architect - Associate",
-        date="2022-08-10",
-        issuer="Amazon Web Services (AWS)",
-        url="https://aws.amazon.com/certification/",
-    )
-]
-
-languages_anya = [
-    LanguageItem(language="Ukrainian", fluency="Native"),
-    LanguageItem(language="English", fluency="Fluent"),
-]
-
-cv_anya = CVBody(
-    header=header_anya,
-    professional_summary=summary_anya,
-    skills=skills_anya,
-    work_experience=work_experience_anya,
-    projects=projects_anya,
-    education=education_anya,
-    certificates=certificates_anya,
-    languages=languages_anya,
-)
 
 # ---
 
@@ -320,7 +159,7 @@ education_dmytro = [
         institution="Taras Shevchenko National University of Kyiv",
         url="https://knu.ua",
         area="Applied Statistics",
-        study_type="Bachelor's Degree",
+        study_type=StudyType.BACHELORS,
         start_date="2016-09-01",
         end_date="2020-06-30",
         score="3.8/4.0",

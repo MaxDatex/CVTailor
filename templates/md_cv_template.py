@@ -71,7 +71,7 @@ ID: {{ project_item.id }}
 ## Education
 {% for education_item in cv.education %}
 ### {{ education_item.institution }}
-[Link]({{ education_item.url }}) | **Area:** {{ education_item.area }} | **Type:** {{ education_item.study_type }}
+[Link]({{ education_item.url }}) | **Area:** {{ education_item.area }} | **Type:** {{ education_item.study_type.value }}
 **Start Date:** {{ education_item.start_date }} | **End Date:** {{ education_item.end_date }} | **Score:** {{ education_item.score }}
 **Courses:** {{ ', '.join(education_item.courses) }}
 {% endfor %}

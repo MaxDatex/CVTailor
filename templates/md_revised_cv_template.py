@@ -121,7 +121,7 @@ REVISED_CV_TEMPLATE_MD = '''
 {% set education_to_render = ai_response.revised_education if ai_response and ai_response.revised_education else cv.education %}
 {% for education_item in education_to_render %}
 ### {{ education_item.institution }}
-[Link]({{ education_item.url }}) | **Area:** {{ education_item.area }} | **Type:** {{ education_item.study_type }}
+[Link]({{ education_item.url }}) | **Area:** {{ education_item.area }} | **Type:** {{ education_item.study_type.value }}
 **Start Date:** {{ education_item.start_date }} | **End Date:** {{ education_item.end_date }} | **Score:** {{ education_item.score }}
 **Courses:** {{ ', '.join(education_item.courses) }}
 {% endfor %}
