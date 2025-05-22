@@ -1,8 +1,21 @@
 from jinja2 import Template
 from templates.html_cv_template import CV_TEMPLATE_HTML
 from templates.md_cv_template import CV_TEMPLATE_MD
-from models.input_cv_fields import CVBody, Location, CVHeader, Profile, ProfessionalSummary, PublicationItem, AwardItem, \
-    EducationItem, ProjectItem, WorkItem, SkillItem, LanguageItem, CertificateItem
+from models.input_cv_fields import (
+    CVBody,
+    Location,
+    CVHeader,
+    Profile,
+    ProfessionalSummary,
+    PublicationItem,
+    AwardItem,
+    EducationItem,
+    ProjectItem,
+    WorkItem,
+    SkillItem,
+    LanguageItem,
+    CertificateItem,
+)
 
 
 location_anya = Location(
@@ -10,20 +23,16 @@ location_anya = Location(
     postalCode="01001",
     city="Kyiv",
     countryCode="UA",
-    region="Kyiv City"
+    region="Kyiv City",
 )
 
 profiles_anya = [
-    Profile(
-        network="Twitter",
-        username="anyadev",
-        url="https://twitter.com/anyadev"
-    ),
+    Profile(network="Twitter", username="anyadev", url="https://twitter.com/anyadev"),
     Profile(
         network="Stack Overflow",
         username="anyapetrova",
-        url="https://stackoverflow.com/users/1234567/anyapetrova"
-    )
+        url="https://stackoverflow.com/users/1234567/anyapetrova",
+    ),
 ]
 
 header_anya = CVHeader(
@@ -36,7 +45,7 @@ header_anya = CVHeader(
     linkedin_url="https://linkedin.com/in/anyapetrova",
     portfolio_url="https://anyapetrova.dev",
     location=location_anya,
-    profiles=profiles_anya
+    profiles=profiles_anya,
 )
 
 summary_anya = ProfessionalSummary(
@@ -46,31 +55,42 @@ summary_anya = ProfessionalSummary(
         "Expert in Python, Django, and React development.",
         "Proven ability to lead and mentor development teams.",
         "Experienced with AWS cloud services and CI/CD pipelines.",
-        "Strong problem-solving and analytical skills."
-    ]
+        "Strong problem-solving and analytical skills.",
+    ],
 )
 
 skills_anya = [
     SkillItem(
         name="Web Development",
         level="Advanced",
-        keywords=["Python", "Django", "Flask", "React", "Node.js", "JavaScript", "TypeScript", "HTML5", "CSS3", "REST APIs"]
+        keywords=[
+            "Python",
+            "Django",
+            "Flask",
+            "React",
+            "Node.js",
+            "JavaScript",
+            "TypeScript",
+            "HTML5",
+            "CSS3",
+            "REST APIs",
+        ],
     ),
     SkillItem(
         name="Cloud Platforms",
         level="Advanced",
-        keywords=["AWS (EC2, S3, Lambda, RDS)", "Docker", "Kubernetes", "CI/CD"]
+        keywords=["AWS (EC2, S3, Lambda, RDS)", "Docker", "Kubernetes", "CI/CD"],
     ),
     SkillItem(
         name="Databases",
         level="Intermediate",
-        keywords=["PostgreSQL", "MongoDB", "Redis"]
+        keywords=["PostgreSQL", "MongoDB", "Redis"],
     ),
     SkillItem(
         name="Tools & Methodologies",
         level="Advanced",
-        keywords=["Git", "Jira", "Agile", "Scrum", "TDD", "Microservices"]
-    )
+        keywords=["Git", "Jira", "Agile", "Scrum", "TDD", "Microservices"],
+    ),
 ]
 
 work_experience_anya = [
@@ -81,7 +101,7 @@ work_experience_anya = [
             postalCode="01001",
             city="Kyiv",
             countryCode="UA",
-            region="Kyiv City"
+            region="Kyiv City",
         ),
         job_title="Senior Software Engineer",
         company_website_url="https://techsolutionsinc.com",
@@ -92,8 +112,8 @@ work_experience_anya = [
             "Architected and implemented a new microservices-based payment gateway, increasing transaction processing speed by 25%.",
             "Reduced cloud infrastructure costs by 15% through optimization of AWS resource utilization.",
             "Mentored a team of 4 junior developers, improving code quality and team efficiency.",
-            "Introduced and integrated a CI/CD pipeline, reducing deployment time by 50%."
-        ]
+            "Introduced and integrated a CI/CD pipeline, reducing deployment time by 50%.",
+        ],
     ),
     WorkItem(
         company_name="InnovateWeb",
@@ -102,7 +122,7 @@ work_experience_anya = [
             postalCode="79000",
             city="Lviv",
             countryCode="UA",
-            region="Lviv Region"
+            region="Lviv Region",
         ),
         job_title="Software Developer",
         company_website_url="https://innovateweb.ua",
@@ -112,9 +132,9 @@ work_experience_anya = [
         highlights=[
             "Developed responsive front-end interfaces using React.js for a major client project, leading to a 20% increase in user engagement.",
             "Integrated third-party APIs for data visualization and reporting, enhancing application functionality.",
-            "Contributed to database design and optimization for several key projects."
-        ]
-    )
+            "Contributed to database design and optimization for several key projects.",
+        ],
+    ),
 ]
 
 projects_anya = [
@@ -126,9 +146,9 @@ projects_anya = [
         highlights=[
             "Implemented real-time task updates using WebSockets.",
             "Designed a scalable database schema for efficient data management.",
-            "Contributed to the community through pull requests and issue resolution."
+            "Contributed to the community through pull requests and issue resolution.",
         ],
-        url="https://github.com/anyapetrova/opensource-task-tracker"
+        url="https://github.com/anyapetrova/opensource-task-tracker",
     )
 ]
 
@@ -141,7 +161,7 @@ education_anya = [
         start_date="2017-09-01",
         end_date="2019-06-30",
         score="4.0/4.0",
-        courses=["Advanced Algorithms", "Distributed Systems", "Machine Learning"]
+        courses=["Advanced Algorithms", "Distributed Systems", "Machine Learning"],
     )
 ]
 
@@ -150,19 +170,13 @@ certificates_anya = [
         name="AWS Certified Solutions Architect - Associate",
         date="2022-08-10",
         issuer="Amazon Web Services (AWS)",
-        url="https://aws.amazon.com/certification/"
+        url="https://aws.amazon.com/certification/",
     )
 ]
 
 languages_anya = [
-    LanguageItem(
-        language="Ukrainian",
-        fluency="Native"
-    ),
-    LanguageItem(
-        language="English",
-        fluency="Fluent"
-    )
+    LanguageItem(language="Ukrainian", fluency="Native"),
+    LanguageItem(language="English", fluency="Fluent"),
 ]
 
 cv_anya = CVBody(
@@ -173,7 +187,7 @@ cv_anya = CVBody(
     projects=projects_anya,
     education=education_anya,
     certificates=certificates_anya,
-    languages=languages_anya
+    languages=languages_anya,
 )
 
 # ---
@@ -183,15 +197,11 @@ location_dmytro = Location(
     postalCode="79000",
     city="Lviv",
     countryCode="UA",
-    region="Lviv Region"
+    region="Lviv Region",
 )
 
 profiles_dmytro = [
-    Profile(
-        network="Kaggle",
-        username="dmydata",
-        url="https://www.kaggle.com/dmydata"
-    )
+    Profile(network="Kaggle", username="dmydata", url="https://www.kaggle.com/dmydata")
 ]
 
 header_dmytro = CVHeader(
@@ -204,7 +214,7 @@ header_dmytro = CVHeader(
     linkedin_url="https://linkedin.com/in/dmytrokovalenko",
     portfolio_url="https://dmytrokovalenko.com",
     location=location_dmytro,
-    profiles=profiles_dmytro
+    profiles=profiles_dmytro,
 )
 
 summary_dmytro = ProfessionalSummary(
@@ -214,31 +224,46 @@ summary_dmytro = ProfessionalSummary(
         "Skilled in Python, R, and various machine learning frameworks.",
         "Experienced in predictive modeling and statistical analysis.",
         "Proficient in data visualization and reporting.",
-        "Strong problem-solving and analytical skills."
-    ]
+        "Strong problem-solving and analytical skills.",
+    ],
 )
 
 skills_dmytro = [
     SkillItem(
         name="Data Science",
         level="Advanced",
-        keywords=["Python", "R", "Pandas", "NumPy", "Scikit-learn", "TensorFlow", "Keras", "PyTorch", "SQL"]
+        keywords=[
+            "Python",
+            "R",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "TensorFlow",
+            "Keras",
+            "PyTorch",
+            "SQL",
+        ],
     ),
     SkillItem(
         name="Statistical Analysis",
         level="Advanced",
-        keywords=["Hypothesis Testing", "Regression Analysis", "Time Series Analysis", "A/B Testing"]
+        keywords=[
+            "Hypothesis Testing",
+            "Regression Analysis",
+            "Time Series Analysis",
+            "A/B Testing",
+        ],
     ),
     SkillItem(
         name="Data Visualization",
         level="Intermediate",
-        keywords=["Matplotlib", "Seaborn", "Plotly", "Tableau"]
+        keywords=["Matplotlib", "Seaborn", "Plotly", "Tableau"],
     ),
     SkillItem(
         name="Cloud & Big Data",
         level="Intermediate",
-        keywords=["AWS Sagemaker", "Google Cloud Platform (GCP)", "Spark", "Hadoop"]
-    )
+        keywords=["AWS Sagemaker", "Google Cloud Platform (GCP)", "Spark", "Hadoop"],
+    ),
 ]
 
 work_experience_dmytro = [
@@ -249,7 +274,7 @@ work_experience_dmytro = [
             postalCode="79000",
             city="Lviv",
             countryCode="UA",
-            region="Lviv Region"
+            region="Lviv Region",
         ),
         job_title="Data Scientist",
         company_website_url="https://analyticspro.ua",
@@ -260,8 +285,8 @@ work_experience_dmytro = [
             "Built a customer churn prediction model using gradient boosting, leading to a 10% improvement in customer retention strategies.",
             "Performed extensive exploratory data analysis on large datasets to identify key trends and insights for strategic planning.",
             "Designed and conducted A/B tests for marketing campaigns, resulting in a 15% increase in conversion rates.",
-            "Deployed machine learning models into production environments using AWS Sagemaker."
-        ]
+            "Deployed machine learning models into production environments using AWS Sagemaker.",
+        ],
     ),
     WorkItem(
         company_name="FinTech Insights",
@@ -270,7 +295,7 @@ work_experience_dmytro = [
             postalCode="01001",
             city="Kyiv",
             countryCode="UA",
-            region="Kyiv City"
+            region="Kyiv City",
         ),
         job_title="Junior Data Analyst",
         company_website_url="https://fintechinsights.com",
@@ -280,9 +305,9 @@ work_experience_dmytro = [
         highlights=[
             "Cleaned and preprocessed large financial datasets, ensuring data quality and consistency.",
             "Created automated dashboards and reports using SQL and Tableau for key performance indicators.",
-            "Assisted in the development of risk assessment models by preparing and analyzing relevant data."
-        ]
-    )
+            "Assisted in the development of risk assessment models by preparing and analyzing relevant data.",
+        ],
+    ),
 ]
 
 projects_dmytro = [
@@ -294,9 +319,9 @@ projects_dmytro = [
         highlights=[
             "Collected and preprocessed Twitter data using Tweepy.",
             "Trained a Recurrent Neural Network (RNN) model for sentiment classification (positive, negative, neutral).",
-            "Visualized sentiment trends over time using Plotly."
+            "Visualized sentiment trends over time using Plotly.",
         ],
-        url="https://github.com/dmytrodata/sentiment-analysis-twitter"
+        url="https://github.com/dmytrodata/sentiment-analysis-twitter",
     )
 ]
 
@@ -309,7 +334,12 @@ education_dmytro = [
         start_date="2016-09-01",
         end_date="2020-06-30",
         score="3.8/4.0",
-        courses=["Probability Theory", "Statistical Inference", "Regression Modeling", "Data Mining"]
+        courses=[
+            "Probability Theory",
+            "Statistical Inference",
+            "Regression Modeling",
+            "Data Mining",
+        ],
     )
 ]
 
@@ -318,7 +348,7 @@ awards_dmytro = [
         title="Dean's List for Academic Excellence",
         date="2019-05-20",
         awarder_by="Taras Shevchenko National University of Kyiv",
-        summary="Recognized for outstanding academic achievement in the Department of Statistics."
+        summary="Recognized for outstanding academic achievement in the Department of Statistics.",
     )
 ]
 
@@ -328,19 +358,13 @@ publications_dmytro = [
         publisher="Journal of Data Science and Analytics",
         releaseDate="2023-11-01",
         url="https://journalofdata.com/predictive-modeling",
-        summary="A research paper exploring various machine learning techniques to predict customer lifetime value, demonstrating the impact of accurate predictions on marketing strategies."
+        summary="A research paper exploring various machine learning techniques to predict customer lifetime value, demonstrating the impact of accurate predictions on marketing strategies.",
     )
 ]
 
 languages_dmytro = [
-    LanguageItem(
-        language="Ukrainian",
-        fluency="Native"
-    ),
-    LanguageItem(
-        language="English",
-        fluency="Fluent"
-    )
+    LanguageItem(language="Ukrainian", fluency="Native"),
+    LanguageItem(language="English", fluency="Fluent"),
 ]
 
 cv_dmytro = CVBody(
@@ -352,7 +376,7 @@ cv_dmytro = CVBody(
     education=education_dmytro,
     awards=awards_dmytro,
     publications=publications_dmytro,
-    languages=languages_dmytro
+    languages=languages_dmytro,
 )
 
 
