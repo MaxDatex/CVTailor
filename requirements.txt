@@ -7,3 +7,4 @@ pydantic-extra-types
 loguru
 tenacity
 pydantic_settings
+phonenumbers

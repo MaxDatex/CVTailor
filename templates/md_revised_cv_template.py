@@ -42,7 +42,7 @@ REVISED_CV_TEMPLATE_MD = '''
 ## Skills
 {% set skills_to_render = ai_response.revised_skills if ai_response and ai_response.revised_skills else cv.skills %}
 {% for skill in skills_to_render %}
-### {{ skill.name }} {% if skill.level %}({{ skill.level }}){% endif %}
+### {{ skill.name }} {% if skill.level %}({{ skill.level.value }}){% endif %}
 {{ ', '.join(skill.keywords) }}
 {% endfor %}
 {% endif %}
@@ -162,7 +162,7 @@ REVISED_CV_TEMPLATE_MD = '''
 ## Languages
 {% for language_item in cv.languages %}
 ### {{ language_item.language }}
-**Fluency:** {{ language_item.fluency }}
+**Fluency:** {{ language_item.fluency.value }}
 {% endfor %}
 {% endif %}
 

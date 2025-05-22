@@ -27,7 +27,7 @@ CV_TEMPLATE_MD = '''
 {% if cv.skills %}
 ## Skills
 {% for skill in cv.skills %}
-### {{ skill.name }} {% if skill.level %}({{ skill.level }}){% endif %}
+### {{ skill.name }} {% if skill.level %}({{ skill.level.value }}){% endif %}
 {{ ', '.join(skill.keywords) }}
 {% endfor %}
 {% endif %}
@@ -113,7 +113,7 @@ ID: {{ publication_item.id }}
 ## Languages
 {% for language_item in cv.languages %}
 ### {{ language_item.language }}
-**Fluency:** {{ language_item.fluency }}
+**Fluency:** {{ language_item.fluency.value }}
 {% endfor %}
 {% endif %}
 

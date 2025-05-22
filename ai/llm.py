@@ -10,8 +10,6 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 from ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from config import settings
-from models.input_cv_fields import CVBody
-from models.job_description_fields import JobDescriptionFields
 from models.revised_cv_fields import TestResponseSchema
 
 load_dotenv()
@@ -44,8 +42,8 @@ def get_client(
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def get_cv_improvements(
-    job_description: JobDescriptionFields,
-    cv: CVBody,
+    job_description: str,
+    cv: str,
     max_output_tokens: Union[int, None] = None,
 ) -> Union[GenerateContentResponse, None]:
     client: genai.Client
@@ -55,7 +53,7 @@ def get_cv_improvements(
     client, config = get_client(max_output_tokens)
     logger.success("Successfully created Google API client.")
     try:
-        logger.info("Generating CV improvements...")
+        logger.debug("Generating CV improvements...")
         response = client.models.generate_content(
             model=settings.MODEL_NAME,
             contents=JOB_DESC_W_CV_PROMPT.format(
@@ -63,6 +61,7 @@ def get_cv_improvements(
             ),
             config=config,
         )
+        logger.success("Successfully generated CV improvements.")
     except errors.APIError as e:
         logger.error(
             f"An error occurred:\nError code: {e.code}\nError message: {e.message}\nError details: {e.details}"

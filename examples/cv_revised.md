@@ -10,12 +10,12 @@
 
 # Dmytro Kovalenko
 ## Machine Learning Engineer
-**Location:** Lviv, Lviv Region, UA | **Email:** dmytro.kovalenko@email.com | **Phone:** +380 67 987 6543
-**Links:** [GitHub](https://github.com/dmytrodata) | [LinkedIn](https://linkedin.com/in/dmytrokovalenko) | [Portfolio](https://dmytrokovalenko.com)
+**Location:** Lviv, Lviv Region, UA | **Email:** dmytro.kovalenko@email.com | **Phone:** tel:+380-67-987-6543
+**Links:** [GitHub](https://github.com/dmytrodata) | [LinkedIn](https://linkedin.com/in/dmytrokovalenko) | [Portfolio](https://dmytrokovalenko.com/)
 
 ## Professional Summary
 
-A highly motivated Machine Learning Engineer with 4 years of experience in developing, deploying, and optimizing machine learning models. Expertise in data analysis, statistical modeling, and creating compelling data visualizations. Seeking to leverage skills in AI/ML R&D and client project delivery.
+A highly analytical and innovative Machine Learning Engineer with 4 years of experience in developing, deploying, and optimizing machine learning models. Expertise in data analysis, statistical modeling, and advanced analytics with a focus on Computer Vision and NLP applications. Proven ability to solve complex business problems and contribute to AI/ML R&D projects.
 
 
 ### Objective
@@ -26,13 +26,13 @@ To apply my expertise in data-driven decision-making and advanced analytics to c
 ### Highlights
 
 
-* Proficient in Python and various machine learning frameworks.
+* Proficient in Python and machine learning frameworks (TensorFlow, Keras, PyTorch, Scikit-learn).
 
 * Experienced in predictive modeling, statistical analysis, and A/B testing.
 
-* Strong analytical and problem-solving skills.
+* Skilled in deploying and optimizing machine learning models for production environments.
 
-* Experience with model deployment and optimization.
+* Strong background in math, CS, and AI fundamentals.
 
 
 
@@ -41,13 +41,16 @@ To apply my expertise in data-driven decision-making and advanced analytics to c
 
 
 ### Machine Learning (Advanced)
-Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, LLM, CV, Edge AI, R&D
+Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, Computer Vision, LLM, Edge AI, Model Optimization
 
-### Data Analysis & Statistics (Advanced)
-Pandas, NumPy, SQL, Hypothesis Testing, Regression Analysis, Time Series Analysis, A/B Testing
+### Data Science (Advanced)
+Pandas, NumPy, SQL, Data Analysis, Statistical Modeling, Predictive Modeling
 
-### Cloud & DevOps (Intermediate)
-AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop, Model Deployment
+### Statistical Analysis (Advanced)
+Hypothesis Testing, Regression Analysis, Time Series Analysis, A/B Testing
+
+### Cloud Technologies (Intermediate)
+AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 
 
 
@@ -65,7 +68,7 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop, Model Deployment
     
 
 ### Analytics Pro
-**Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua](https://analyticspro.ua)
+**Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua/](https://analyticspro.ua/)
 **Start Date:** 2022-01-15 | **End Date:** Present
 
 
@@ -95,7 +98,7 @@ Developed and implemented predictive models for client projects across various i
     
 
 ### FinTech Insights
-**Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com](https://fintechinsights.com)
+**Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com/](https://fintechinsights.com/)
 **Start Date:** 2020-09-01 | **End Date:** 2021-12-31
 
 
@@ -150,7 +153,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 
 
 ### Taras Shevchenko National University of Kyiv
-[Link](https://knu.ua) | **Area:** Applied Statistics | **Type:** Bachelor's Degree
+[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** Bachelor's Degree
 **Start Date:** 2016-09-01 | **End Date:** 2020-06-30 | **Score:** 3.8/4.0
 **Courses:** Probability Theory, Statistical Inference, Regression Modeling, Data Mining
 

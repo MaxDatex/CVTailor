@@ -10,8 +10,8 @@
 
 # Dmytro Kovalenko
 ## Data Scientist
-**Location:** Lviv, Lviv Region, UA | **Email:** dmytro.kovalenko@email.com | **Phone:** +380 67 987 6543
-**Links:** [GitHub](https://github.com/dmytrodata) | [LinkedIn](https://linkedin.com/in/dmytrokovalenko) | [Portfolio](https://dmytrokovalenko.com)
+**Location:** Lviv, Lviv Region, UA | **Email:** dmytro.kovalenko@email.com | **Phone:** tel:+380-67-987-6543
+**Links:** [GitHub](https://github.com/dmytrodata) | [LinkedIn](https://linkedin.com/in/dmytrokovalenko) | [Portfolio](https://dmytrokovalenko.com/)
 
 ## Professional Summary
 An analytical and innovative Data Scientist with 4 years of experience in developing and deploying machine learning models to solve complex business problems. Proficient in data analysis, statistical modeling, and creating compelling data visualizations.
@@ -51,9 +51,9 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 ## Work Experience
 
 ### Analytics Pro
-ID: 102ae1be54e74b01b4b894e434414e74
+ID: b1c6048bb76a4151b1cd44a3c6cac048
 
-**Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua](https://analyticspro.ua)
+**Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua/](https://analyticspro.ua/)
 **Start Date:** 2022-01-15 | **End Date:** Present
 
 Developed and implemented predictive models for client projects across various industries, enhancing decision-making processes.
@@ -69,9 +69,9 @@ Developed and implemented predictive models for client projects across various i
 
 
 ### FinTech Insights
-ID: 462aef5675d748d1827511080bdd6ce1
+ID: d65d4773c31c4d9599a443f372daa68c
 
-**Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com](https://fintechinsights.com)
+**Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com/](https://fintechinsights.com/)
 **Start Date:** 2020-09-01 | **End Date:** 2021-12-31
 
 Assisted senior data scientists in data cleaning, preprocessing, and generating reports for financial analytics.
@@ -90,7 +90,7 @@ Assisted senior data scientists in data cleaning, preprocessing, and generating 
 ## Projects
 
 ### Sentiment Analysis of Social Media Data
-ID: b06d77e4d4084c279d945fed0be8e93f
+ID: 3555106959874abcb68abfabcdece114
 
 **Start Date:** 2024-03-01 | **End Date:** 2024-05-15
 
@@ -112,7 +112,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 ## Education
 
 ### Taras Shevchenko National University of Kyiv
-[Link](https://knu.ua) | **Area:** Applied Statistics | **Type:** Bachelor's Degree
+[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** Bachelor's Degree
 **Start Date:** 2016-09-01 | **End Date:** 2020-06-30 | **Score:** 3.8/4.0
 **Courses:** Probability Theory, Statistical Inference, Regression Modeling, Data Mining
 
@@ -122,7 +122,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 ## Awards
 
 ### Dean's List for Academic Excellence
-ID: 94bf50f6f8e446e19abee48f7c0f4898
+ID: e22e2403597a44938752ebc9238c3c6d
 
 **Date:** 2019-05-20 | **Awarder:** Taras Shevchenko National University of Kyiv
 Recognized for outstanding academic achievement in the Department of Statistics.
@@ -135,7 +135,7 @@ Recognized for outstanding academic achievement in the Department of Statistics.
 ## Publications
 
 ### Predictive Modeling for Customer Lifetime Value in E-commerce
-ID: fc79b86f7c37427b871133992dc95c0e
+ID: 2fd257e8a0e9450e8a783f267f2821ac
 
 **Publisher:** Journal of Data Science and Analytics | **Release Date:** 2023-11-01
 [Publication Link](https://journalofdata.com/predictive-modeling)
