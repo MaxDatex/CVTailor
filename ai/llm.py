@@ -82,8 +82,8 @@ def get_cv_improvements(
             return LLMResponse(
                 success=True, response=response, metadata=metadata, error=None
             )
-        metadata["input_tokens_count"] = response.usage_metadata.candidates_token_count
-        metadata["output_tokens_count"] = response.usage_metadata.prompt_token_count
+        metadata["input_tokens_count"] = response.usage_metadata.prompt_token_count
+        metadata["output_tokens_count"] = response.usage_metadata.candidates_token_count
         return LLMResponse(
             success=True, response=response, metadata=metadata, error=None
         )
