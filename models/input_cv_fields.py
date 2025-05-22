@@ -1,6 +1,8 @@
-from typing import List, Optional
-from pydantic import BaseModel, Field
+from typing import List, Optional, Union, Literal
+from pydantic import BaseModel, Field, AnyUrl
+from pydantic_extra_types.phone_numbers import PhoneNumber
 from uuid import uuid4
+from datetime import date as dtdate
 
 
 class Location(BaseModel):
@@ -14,7 +16,7 @@ class Location(BaseModel):
 class Profile(BaseModel):
     network: Optional[str] = None
     username: Optional[str] = None
-    url: Optional[str] = None
+    url: Optional[AnyUrl] = None
 
 
 class CVHeader(BaseModel):
@@ -22,10 +24,10 @@ class CVHeader(BaseModel):
     professional_title: str
     image_url: Optional[str] = None
     email_address: str
-    phone_number: str
-    github_url: str
-    linkedin_url: str
-    portfolio_url: Optional[str] = None
+    phone_number: PhoneNumber
+    github_url: AnyUrl
+    linkedin_url: AnyUrl
+    portfolio_url: Optional[AnyUrl] = None
     location: Optional[Location] = None
     profiles: Optional[List[Profile]] = None
 
@@ -45,11 +47,11 @@ class SkillItem(BaseModel):
 class WorkItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     company_name: str  # Name of the company/organization
-    company_location: Location
+    company_location: Optional[Location]
     job_title: str  # Job title
-    company_website_url: str  # Company website
-    start_date: str  # Format YYYY-MM-DD or YYYY-MM or YYYY
-    end_date: str  # Format YYYY-MM-DD or YYYY-MM or YYYY, or Present
+    company_website_url: Optional[AnyUrl]  # Company website
+    start_date: dtdate
+    end_date: Union[dtdate, Literal['Present']] = 'Present'
     summary: str  # High-level description of role/company
     highlights: List[str]  # Specific achievements or responsibilities (bullet points)
 
@@ -57,20 +59,20 @@ class WorkItem(BaseModel):
 class ProjectItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     name: str  # Project title
-    start_date: str
-    end_date: str
+    start_date: Optional[dtdate]
+    end_date: Optional[Union[dtdate, Literal['Present']]]
     description: str  # Overall description of the project
     highlights: List[str]  # Key contributions or features
-    url: str  # Link to project demo or repository
+    url: Optional[AnyUrl]  # Link to project demo or repository
 
 
 class EducationItem(BaseModel):
     institution: str
-    url: str
+    url: Optional[AnyUrl]
     area: str  # e.g., Computer Science
     study_type: str  # e.g., Bachelor's Degree, Master's
-    start_date: str
-    end_date: str
+    start_date: dtdate
+    end_date: Union[dtdate, Literal['Present']]
     score: str  # e.g., GPA
     courses: List[str]  # Relevant coursework
 
@@ -78,24 +80,24 @@ class EducationItem(BaseModel):
 class AwardItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     title: str
-    date: str  # Date awarded
-    awarder_by: str  # Organization that gave the award
-    summary: str  # Description of the award
+    date: dtdate  # Date awarded
+    awarder_by: Optional[str]  # Organization that gave the award
+    summary: Optional[str]  # Description of the award
 
 
 class CertificateItem(BaseModel):
     name: str  # Name of the certificate
-    date: str  # Date issued
+    date: dtdate  # Date issued
     issuer: str  # Issuing organization (e.g., Coursera, Google)
-    url: str  # Link to certificate if available
+    url: Optional[AnyUrl]  # Link to certificate if available
 
 
 class PublicationItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     name: str  # Title of the publication
     publisher: str  # e.g., Journal name, Conference
-    releaseDate: str
-    url: str  # Link to publication
+    releaseDate: dtdate
+    url: Optional[AnyUrl]  # Link to publication
     summary: str  # Abstract or brief description
 
 
@@ -106,7 +108,7 @@ class LanguageItem(BaseModel):
 
 class InterestItem(BaseModel):
     name: str  # Category of interest (e.g., Open Source, AI Ethics)
-    keywords: list[str]  # Specific interests
+    keywords: List[str]  # Specific interests
 
 
 class ReferenceItem(BaseModel):
