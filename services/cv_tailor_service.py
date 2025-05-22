@@ -9,7 +9,7 @@ def tailor_cv(cv: str, job_description: str):
     response: LLMResponse = get_cv_improvements(job_description, cv)
     if not response.success:
         raise Exception(response.error)
-    parsed_response: RevisedCVResponseSchema = response.parsed
+    parsed_response: RevisedCVResponseSchema = response.response.parsed
 
     # TODO Implement functionality
     pass

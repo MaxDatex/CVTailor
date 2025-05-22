@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Union
 
 from pydantic import BaseModel, Field
 
@@ -98,5 +98,5 @@ class RevisedCVResponseSchema(BaseModel):
 class LLMResponse(BaseModel):
     success: bool
     response: Optional[GenerateContentResponse]
-    metadata: Optional[Dict[str, int]]
+    metadata: Optional[Dict[str, Union[int, None]]]
     error: Optional[str]
