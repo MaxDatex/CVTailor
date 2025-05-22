@@ -58,7 +58,7 @@ class RevisedPublicationItem(BaseModel):
     )
 
 
-class TestResponseSchema(BaseModel):
+class RevisedCVResponseSchema(BaseModel):
     """
     Schema for the AI's response, providing explanations and revised CV sections.
     All revised sections are optional, meaning the AI will only return them
@@ -92,3 +92,10 @@ class TestResponseSchema(BaseModel):
     revised_publications: Optional[List[RevisedPublicationItem]] = Field(
         ..., description="AI-suggested revised publication items."
     )
+
+
+class LLMResponse(BaseModel):
+    success: bool
+    data: Optional[RevisedCVResponseSchema]
+    error: Optional[str]
+

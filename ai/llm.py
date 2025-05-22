@@ -10,7 +10,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 from ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from config import settings
-from models.revised_cv_fields import TestResponseSchema
+from models.revised_cv_fields import RevisedCVResponseSchema, LLMResponse
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ def get_client(
         max_output_tokens=max_output_tokens,
         system_instruction=SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT,
         response_mime_type="application/json",
-        response_schema=TestResponseSchema,
+        response_schema=RevisedCVResponseSchema,
     )
     return client, config
 
@@ -45,10 +45,11 @@ def get_cv_improvements(
     job_description: str,
     cv: str,
     max_output_tokens: Union[int, None] = None,
-) -> Union[GenerateContentResponse, None]:
+) -> LLMResponse:
     client: genai.Client
     config: GenerateContentConfig
     response: Union[GenerateContentResponse, None]
+    success: bool
 
     client, config = get_client(max_output_tokens)
     logger.success("Successfully created Google API client.")
@@ -62,9 +63,12 @@ def get_cv_improvements(
             config=config,
         )
         logger.success("Successfully generated CV improvements.")
+        return LLMResponse(success=True, data=response.parsed, error=None)
     except errors.APIError as e:
         logger.error(
             f"An error occurred:\nError code: {e.code}\nError message: {e.message}\nError details: {e.details}"
         )
-        response = None
-    return response
+        return LLMResponse(success=False, data=None, error=e.message)
+    except Exception as e:
+        logger.error(f"An unexpected error occurred: {e}")
+        return LLMResponse(success=False, data=None, error=str(e))
