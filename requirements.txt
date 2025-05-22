@@ -6,3 +6,4 @@ google-genai
 pydantic-extra-types
 loguru
 tenacity
+pydantic_settings

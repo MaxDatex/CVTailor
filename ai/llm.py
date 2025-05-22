@@ -10,6 +10,7 @@ from models.job_description_fields import JobDescriptionFields
 from typing import Tuple, Union
 from loguru import logger
 from tenacity import retry, stop_after_attempt, wait_exponential
+from config import settings
 
 
 load_dotenv()
@@ -49,7 +50,7 @@ def get_cv_improvements(
     try:
         logger.info("Generating CV improvements...")
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model=settings.MODEL_NAME,
             contents=JOB_DESC_W_CV_PROMPT.format(
                 job_description=job_description, cv=cv
             ),
