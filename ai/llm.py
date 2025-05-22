@@ -1,5 +1,5 @@
 import os
-from typing import Tuple, Union
+from typing import Tuple, Union, Dict
 
 from dotenv import load_dotenv
 from google import genai
@@ -11,6 +11,8 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from config import settings
 from models.revised_cv_fields import RevisedCVResponseSchema, LLMResponse
+from utils.exceptions import ResponseParsingError
+
 
 load_dotenv()
 
@@ -40,7 +42,7 @@ def get_client(
     return client, config
 
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+@retry(stop=stop_after_attempt(settings.RETRY_ATTEMPTS), wait=wait_exponential(multiplier=1, min=settings.RETRY_MIN_WAIT, max=settings.RETRY_MAX_WAIT))
 def get_cv_improvements(
     job_description: str,
     cv: str,
@@ -63,12 +65,23 @@ def get_cv_improvements(
             config=config,
         )
         logger.success("Successfully generated CV improvements.")
-        return LLMResponse(success=True, data=response.parsed, error=None)
+        output_tokens_count: int = response.usage_metadata.candidates_token_count
+        input_tokens_count: int = response.usage_metadata.prompt_token_count
+        metadata: Dict[str, int] = {
+            "input_tokens_count": input_tokens_count,
+            "output_tokens_count": output_tokens_count,
+        }
+        if response.parsed is None or not response.parsed:
+            raise ResponseParsingError()
+        return LLMResponse(success=True, response=response, metadata=metadata, error=None)
+    except ResponseParsingError:
+        logger.error("LLM response could not be parsed or was empty.")
+        return LLMResponse(success=False, response=None, metadata=None, error="Response parsing error.")
     except errors.APIError as e:
         logger.error(
             f"An error occurred:\nError code: {e.code}\nError message: {e.message}\nError details: {e.details}"
         )
-        return LLMResponse(success=False, data=None, error=e.message)
+        return LLMResponse(success=False, response=None, metadata=None, error=e.message)
     except Exception as e:
         logger.error(f"An unexpected error occurred: {e}")
-        return LLMResponse(success=False, data=None, error=str(e))
+        return LLMResponse(success=False, response=None, metadata=None, error=str(e))
