@@ -4,3 +4,4 @@ pydantic~=2.11.4
 Jinja2~=3.1.6
 google-genai
 pydantic-extra-types
+loguru

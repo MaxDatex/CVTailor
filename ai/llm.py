@@ -5,7 +5,10 @@ from google.genai.types import GenerateContentConfig, GenerateContentResponse
 import os
 from ai.prompts import SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT, JOB_DESC_W_CV_PROMPT
 from models.revised_cv_fields import TestResponseSchema
+from models.input_cv_fields import CVBody
+from models.job_description_fields import JobDescriptionFields
 from typing import Tuple, Union
+from loguru import logger
 
 
 load_dotenv()
@@ -16,8 +19,13 @@ def get_client(
 ) -> Tuple[genai.Client, GenerateContentConfig]:
     client: genai.Client
     config: GenerateContentConfig
+    api_key: str = os.getenv("GOOGLE_API_KEY")
+    logger.debug("Getting Google API key from environment variable...")
+    if not api_key:
+        logger.error("No API key found. Please set the GOOGLE_API_KEY environment variable.")
+        raise ValueError("No API key found. Please set the GOOGLE_API_KEY environment variable.")
 
-    client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+    client = genai.Client(api_key=api_key)
     config = GenerateContentConfig(
         max_output_tokens=max_output_tokens,
         system_instruction=SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT,
@@ -28,14 +36,16 @@ def get_client(
 
 
 def get_cv_improvements(
-    job_description: str, cv: str, max_output_tokens: Union[int, None] = None
+    job_description: JobDescriptionFields, cv: CVBody, max_output_tokens: Union[int, None] = None
 ) -> Union[GenerateContentResponse, None]:
     client: genai.Client
     config: GenerateContentConfig
     response: Union[GenerateContentResponse, None]
 
     client, config = get_client(max_output_tokens)
+    logger.success("Successfully created Google API client.")
     try:
+        logger.info("Generating CV improvements...")
         response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents=JOB_DESC_W_CV_PROMPT.format(
@@ -44,7 +54,7 @@ def get_cv_improvements(
             config=config,
         )
     except errors.APIError as e:
-        print(
+        logger.error(
             f"An error occurred:\nError code: {e.code}\nError message: {e.message}\nError details: {e.details}"
         )
         response = None
