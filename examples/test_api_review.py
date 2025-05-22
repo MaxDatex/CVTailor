@@ -13,13 +13,13 @@ response = get_cv_improvements(job_description, cv)
 if not response.success:
     raise Exception(response.error)
 
-for k, v in response.data.__dict__.items():
+for k, v in response.response.parsed.__dict__.items():
     print(f"{k}: {v}\n")
 
 from examples.test_template import cv_dmytro
 
 template = Template(REVISED_CV_TEMPLATE_MD)
-rendered_md = template.render(cv=cv_dmytro, ai_response=response.data)
+rendered_md = template.render(cv=cv_dmytro, ai_response=response.response.parsed)
 
 with open("cv_revised.md", "w") as f:
     f.write(rendered_md)

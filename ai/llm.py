@@ -42,7 +42,12 @@ def get_client(
     return client, config
 
 
-@retry(stop=stop_after_attempt(settings.RETRY_ATTEMPTS), wait=wait_exponential(multiplier=1, min=settings.RETRY_MIN_WAIT, max=settings.RETRY_MAX_WAIT))
+@retry(
+    stop=stop_after_attempt(settings.RETRY_ATTEMPTS),
+    wait=wait_exponential(
+        multiplier=1, min=settings.RETRY_MIN_WAIT, max=settings.RETRY_MAX_WAIT
+    ),
+)
 def get_cv_improvements(
     job_description: str,
     cv: str,
@@ -65,18 +70,28 @@ def get_cv_improvements(
             config=config,
         )
         logger.success("Successfully generated CV improvements.")
-        output_tokens_count: int = response.usage_metadata.candidates_token_count
-        input_tokens_count: int = response.usage_metadata.prompt_token_count
-        metadata: Dict[str, int] = {
-            "input_tokens_count": input_tokens_count,
-            "output_tokens_count": output_tokens_count,
-        }
         if response.parsed is None or not response.parsed:
             raise ResponseParsingError()
-        return LLMResponse(success=True, response=response, metadata=metadata, error=None)
+
+        metadata: Dict[str, Union[int, None]] = {
+            "input_tokens_count": None,
+            "output_tokens_count": None,
+        }
+        if not response.usage_metadata:
+            logger.warning("No usage metadata found in the response.")
+            return LLMResponse(
+                success=True, response=response, metadata=metadata, error=None
+            )
+        metadata["input_tokens_count"] = response.usage_metadata.candidates_token_count
+        metadata["output_tokens_count"] = response.usage_metadata.prompt_token_count
+        return LLMResponse(
+            success=True, response=response, metadata=metadata, error=None
+        )
     except ResponseParsingError:
         logger.error("LLM response could not be parsed or was empty.")
-        return LLMResponse(success=False, response=None, metadata=None, error="Response parsing error.")
+        return LLMResponse(
+            success=False, response=None, metadata=None, error="Response parsing error."
+        )
     except errors.APIError as e:
         logger.error(
             f"An error occurred:\nError code: {e.code}\nError message: {e.message}\nError details: {e.details}"
