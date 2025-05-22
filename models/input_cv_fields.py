@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field, AnyUrl
 from pydantic_extra_types.phone_numbers import PhoneNumber
 from uuid import uuid4
 from datetime import date as dtdate
+from enum import Enum
 
 
 class Location(BaseModel):
@@ -38,9 +39,16 @@ class ProfessionalSummary(BaseModel):
     highlights: Optional[List[str]] = None
 
 
+class SkillLevel(str, Enum):
+    BEGINNER = "Beginner"
+    INTERMEDIATE = "Intermediate"
+    ADVANCED = "Advanced"
+    EXPERT = "Expert"
+
+
 class SkillItem(BaseModel):
     name: str  # Broad skill category (e.g., Web Development, Data Science)
-    level: str  # Optional proficiency level (e.g., Intermediate, Advanced)
+    level: SkillLevel  # Optional proficiency level (e.g., Intermediate, Advanced)
     keywords: List[str]  # Specific technologies or tools (e.g., Python, PyTorch, AWS)
 
 
@@ -101,9 +109,17 @@ class PublicationItem(BaseModel):
     summary: str  # Abstract or brief description
 
 
+class LanguageFluency(str, Enum):
+    NATIVE = "Native"
+    FLUENT = "Fluent"
+    UPPER_INTERMEDIATE = "Upper Intermediate"
+    INTERMEDIATE = "Intermediate"
+    BASIC = "Basic"
+
+
 class LanguageItem(BaseModel):
     language: str  # e.g., English, Spanish
-    fluency: str  # e.g., Native, Fluent, Conversational
+    fluency: LanguageFluency  # e.g., Native, Fluent, Conversational
 
 
 class InterestItem(BaseModel):
