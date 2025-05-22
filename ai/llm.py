@@ -9,6 +9,7 @@ from models.input_cv_fields import CVBody
 from models.job_description_fields import JobDescriptionFields
 from typing import Tuple, Union
 from loguru import logger
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 
 load_dotenv()
@@ -35,6 +36,7 @@ def get_client(
     return client, config
 
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def get_cv_improvements(
     job_description: JobDescriptionFields, cv: CVBody, max_output_tokens: Union[int, None] = None
 ) -> Union[GenerateContentResponse, None]:
