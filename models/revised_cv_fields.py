@@ -98,4 +98,3 @@ class LLMResponse(BaseModel):
     success: bool
     data: Optional[RevisedCVResponseSchema]
     error: Optional[str]
-

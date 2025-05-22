@@ -48,7 +48,7 @@ def get_cv_improvements(
 ) -> LLMResponse:
     client: genai.Client
     config: GenerateContentConfig
-    response: Union[GenerateContentResponse, None]
+    response: GenerateContentResponse
     success: bool
 
     client, config = get_client(max_output_tokens)
