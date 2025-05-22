@@ -8,3 +8,4 @@ loguru
 tenacity
 pydantic_settings
 phonenumbers
+pydantic[email]

@@ -1,31 +1,63 @@
 from datetime import date as dtdate
 from enum import Enum
-from typing import List, Literal, Optional, Union
+from typing import List, Literal, Optional, Union, Dict
 from uuid import uuid4
 
-from pydantic import AnyUrl, BaseModel, Field
+from pydantic import AnyUrl, EmailStr, BaseModel, Field, FieldValidationInfo, field_validator
 from pydantic_extra_types.phone_numbers import PhoneNumber
 
 
+def validate_highlights_list(highlights: List[str]) -> List[str]:
+    """
+    Validates a list of highlights for count, and individual length.
+    """
+    if len(highlights) > 10:
+        raise ValueError("Maximum 10 highlights allowed")
+    if any(len(highlight) < 10 for highlight in highlights):
+        raise ValueError("Each highlight must be more than 10 characters")
+    if any(len(highlight) > 200 for highlight in highlights):
+        raise ValueError("Each highlight must be less than 200 characters")
+    return highlights
+
+
+def validate_keywords_list(keywords: List[str]) -> List[str]:
+    """
+    Validates a list of keywords for count, and individual length.
+    """
+    if len(keywords) > 20:
+        raise ValueError("Maximum 20 keywords allowed")
+    if any(len(keyword) < 2 for keyword in keywords):
+        raise ValueError("Each keyword must be more than 2 characters")
+    if any(len(keyword) > 50 for keyword in keywords):
+        raise ValueError("Each keyword must be less than 50 characters")
+    return keywords
+
+
+def validate_end_date(end_date: dtdate, info: FieldValidationInfo):
+    if end_date != "Present" and end_date < info.data.get("start_date"):
+        raise ValueError("End date must be after start date")
+    return end_date
+
+
 class Location(BaseModel):
-    address: Optional[str] = None
-    postalCode: Optional[str] = None
-    city: Optional[str] = None
-    countryCode: Optional[str] = None
-    region: Optional[str] = None
+    address: Optional[str] = Field(None, min_length=2, max_length=100)
+    postalCode: Optional[str] = Field(None, min_length=2, max_length=50)
+    city: Optional[str] = Field(None, min_length=2, max_length=500)
+    countryCode: Optional[str] = Field(None, min_length=2, max_length=50)
+    region: Optional[str] = Field(None, min_length=2, max_length=500)
 
 
 class Profile(BaseModel):
-    network: Optional[str] = None
-    username: Optional[str] = None
+    network: Optional[str] = Field(None, min_length=1, max_length=100)
+    username: Optional[str] = Field(None, min_length=1, max_length=100)
     url: Optional[AnyUrl] = None
 
 
 class CVHeader(BaseModel):
-    full_name: str
-    professional_title: str
+    full_name: str = Field(..., min_length=2, max_length=100)
+    professional_title: str = Field(..., min_length=2, max_length=100)
     image_url: Optional[str] = None
-    email_address: str
+    email_address: EmailStr
     phone_number: PhoneNumber
     github_url: AnyUrl
     linkedin_url: AnyUrl
@@ -35,9 +67,14 @@ class CVHeader(BaseModel):
 
 
 class ProfessionalSummary(BaseModel):
-    summary: Optional[str] = None
-    objective: Optional[str] = None
+    summary: Optional[str] = Field(None, min_length=50, max_length=5000)
+    objective: Optional[str] = Field(None, min_length=50, max_length=5000)
     highlights: Optional[List[str]] = None
+
+    validate_highlights = field_validator("highlights")(validate_highlights_list)
+
+    class Config:
+        validate_assignment = True
 
 
 class SkillLevel(str, Enum):
@@ -48,66 +85,95 @@ class SkillLevel(str, Enum):
 
 
 class SkillItem(BaseModel):
-    name: str  # Broad skill category (e.g., Web Development, Data Science)
-    level: SkillLevel  # Optional proficiency level (e.g., Intermediate, Advanced)
-    keywords: List[str]  # Specific technologies or tools (e.g., Python, PyTorch, AWS)
+    name: str = Field(..., min_length=1, max_length=100)
+    level: SkillLevel
+    keywords: List[str]
+
+    validate_keywords = field_validator("keywords")(validate_keywords_list)
+
+    class Config:
+        validate_assignment = True
 
 
 class WorkItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
-    company_name: str  # Name of the company/organization
+    company_name: str = Field(..., min_length=1, max_length=100)
     company_location: Optional[Location]
-    job_title: str  # Job title
-    company_website_url: Optional[AnyUrl]  # Company website
+    job_title: str = Field(..., min_length=1, max_length=100)
+    company_website_url: Optional[AnyUrl]
     start_date: dtdate
     end_date: Union[dtdate, Literal["Present"]] = "Present"
-    summary: str  # High-level description of role/company
-    highlights: List[str]  # Specific achievements or responsibilities (bullet points)
+    summary: str = Field(..., min_length=50, max_length=5000)
+    highlights: List[str]
+
+    validate_highlights = field_validator("highlights")(validate_highlights_list)
+    validate_date = field_validator("end_date")(validate_end_date)
+
+    class Config:
+        validate_assignment = True
 
 
 class ProjectItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
-    name: str  # Project title
+    name: str = Field(..., min_length=1, max_length=100)  # Project title
     start_date: Optional[dtdate]
     end_date: Optional[Union[dtdate, Literal["Present"]]]
-    description: str  # Overall description of the project
-    highlights: List[str]  # Key contributions or features
-    url: Optional[AnyUrl]  # Link to project demo or repository
+    description: str = Field(..., min_length=50, max_length=5000)
+    highlights: List[str]
+    url: Optional[AnyUrl]
+
+    validate_highlights = field_validator("highlights")(validate_highlights_list)
+    validate_date = field_validator("end_date")(validate_end_date)
+
+    class Config:
+        validate_assignment = True
+
+
+class StudyType(str, Enum):
+    HIGH_SCHOOL = "High School"
+    BACHELORS = "Bachelors"
+    MASTERS = "Masters"
+    PHD = "PhD"
 
 
 class EducationItem(BaseModel):
-    institution: str
+    institution: str = Field(..., min_length=1, max_length=100)
     url: Optional[AnyUrl]
-    area: str  # e.g., Computer Science
-    study_type: str  # e.g., Bachelor's Degree, Master's
+    area: str = Field(..., min_length=2, max_length=100)  # e.g., Computer Science
+    study_type: StudyType
     start_date: dtdate
     end_date: Union[dtdate, Literal["Present"]]
-    score: str  # e.g., GPA
+    score: Optional[Union[str, float]]  # e.g., GPA
     courses: List[str]  # Relevant coursework
+
+    validate_date = field_validator("end_date")(validate_end_date)
+
+    class Config:
+        validate_assignment = True
 
 
 class AwardItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
-    title: str
-    date: dtdate  # Date awarded
-    awarder_by: Optional[str]  # Organization that gave the award
-    summary: Optional[str]  # Description of the award
+    title: str = Field(..., min_length=1, max_length=100)
+    date: dtdate
+    awarder_by: Optional[str] = Field(None, min_length=2, max_length=100)
+    summary: Optional[str] = Field(None, min_length=50, max_length=5000)
 
 
 class CertificateItem(BaseModel):
-    name: str  # Name of the certificate
-    date: dtdate  # Date issued
-    issuer: str  # Issuing organization (e.g., Coursera, Google)
-    url: Optional[AnyUrl]  # Link to certificate if available
+    name: str = Field(..., min_length=1, max_length=100)
+    date: dtdate
+    issuer: str = Field(..., min_length=1, max_length=100)
+    url: Optional[AnyUrl]
 
 
 class PublicationItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
-    name: str  # Title of the publication
-    publisher: str  # e.g., Journal name, Conference
+    name: str = Field(..., min_length=1, max_length=100)
+    publisher: str = Field(..., min_length=1, max_length=100)
     releaseDate: dtdate
     url: Optional[AnyUrl]  # Link to publication
-    summary: str  # Abstract or brief description
+    summary: str = Field(..., min_length=50, max_length=5000)
 
 
 class LanguageFluency(str, Enum):
@@ -119,18 +185,23 @@ class LanguageFluency(str, Enum):
 
 
 class LanguageItem(BaseModel):
-    language: str  # e.g., English, Spanish
-    fluency: LanguageFluency  # e.g., Native, Fluent, Conversational
+    language: str = Field(..., min_length=2, max_length=100)
+    fluency: LanguageFluency
 
 
 class InterestItem(BaseModel):
-    name: str  # Category of interest (e.g., Open Source, AI Ethics)
-    keywords: List[str]  # Specific interests
+    name: str = Field(..., min_length=1, max_length=100)
+    keywords: List[str]
+
+    validate_keywords = field_validator("keywords")(validate_keywords_list)
+
+    class Config:
+        validate_assignment = True
 
 
 class ReferenceItem(BaseModel):
-    name: str  # Name of reference (ensure consent)
-    reference: str  # Testimonial or contact details (handle privacy appropriately)
+    name: str = Field(..., min_length=2, max_length=100)
+    reference: str = Field(..., min_length=50, max_length=5000)
 
 
 class CVBody(BaseModel):
