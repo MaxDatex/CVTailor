@@ -3,6 +3,7 @@ from jinja2 import Template
 from ai.llm import get_cv_improvements
 from templates.md_revised_cv_template import REVISED_CV_TEMPLATE_MD
 
+
 with open("job_description.txt", "r") as f:
     job_description = f.read()
 

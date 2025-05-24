@@ -9,13 +9,13 @@
 
 
 # Dmytro Kovalenko
-## Machine Learning Engineer | Data Scientist
+## Machine Learning Engineer
 **Location:** Lviv, Lviv Region, UA | **Email:** dmytro.kovalenko@email.com | **Phone:** tel:+380-67-987-6543
 **Links:** [GitHub](https://github.com/dmytrodata) | [LinkedIn](https://linkedin.com/in/dmytrokovalenko) | [Portfolio](https://dmytrokovalenko.com/)
 
 ## Professional Summary
 
-A results-oriented Machine Learning Engineer and Data Scientist with 4+ years of experience in developing and deploying machine learning solutions. Expertise in advanced analytics, predictive modeling, and statistical analysis. Passionate about contributing to AI/ML R&D projects and creating impactful data visualizations.
+Data Scientist with 4 years of experience transitioning to Machine Learning Engineering, specializing in developing and deploying ML models and performing R&D on AI algorithms. Expertise in CV and NLP-based projects, proficient in Python, and experienced in applying machine learning to solve complex problems.
 
 
 ### Objective
@@ -26,13 +26,13 @@ To apply my expertise in data-driven decision-making and advanced analytics to c
 ### Highlights
 
 
-* Proficient in Python and machine learning frameworks (TensorFlow, Keras, PyTorch, Scikit-learn).
+* Experienced in developing and deploying machine learning models.
 
-* Experienced in developing computer vision (CV) and NLP-based models.
+* Proficient in Python and skilled in various ML frameworks.
 
-* Strong background in mathematics, computer science, and AI fundamentals.
+* Strong background in statistical modeling and data analysis.
 
-* Proven ability to deliver technical content and participate in AI consulting projects.
+* Proven ability to perform R&D on AI algorithms.
 
 
 
@@ -41,16 +41,13 @@ To apply my expertise in data-driven decision-making and advanced analytics to c
 
 
 ### Machine Learning (Advanced)
-Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, Computer Vision, LLM, AI/ML R&D
+Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, Computer Vision, LLM
 
-### Programming & Data (Advanced)
-Python, SQL, Pandas, NumPy, Spark, Hadoop
+### Data Analysis (Advanced)
+Pandas, NumPy, SQL, Statistical Modeling, Hypothesis Testing, Regression Analysis
 
-### Statistical Analysis (Advanced)
-Hypothesis Testing, Regression Analysis, Time Series Analysis, A/B Testing
-
-### Cloud Platforms (Intermediate)
-AWS Sagemaker, Google Cloud Platform (GCP)
+### Cloud Technologies (Intermediate)
+AWS Sagemaker, Google Cloud Platform, Spark, Hadoop
 
 
 
@@ -153,7 +150,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 
 
 ### Taras Shevchenko National University of Kyiv
-[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** StudyType.BACHELORS
+[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** Bachelors
 **Start Date:** 2016-09-01 | **End Date:** 2020-06-30 | **Score:** 3.8/4.0
 **Courses:** Probability Theory, Statistical Inference, Regression Modeling, Data Mining
 
