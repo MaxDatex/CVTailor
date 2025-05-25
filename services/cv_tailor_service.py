@@ -186,9 +186,6 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
     job_description = job_description_template.render(
         job_description_data=job_description
     )
-
     response: LLMResponse = get_cv_improvements(job_description, cv)
-
     ai_suggestions: RevisedCVResponseSchema = response.response.parsed
-
     return create_comparison_cv(original_cv, ai_suggestions)
