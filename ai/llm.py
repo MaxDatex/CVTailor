@@ -4,24 +4,28 @@ from google import genai
 from google.genai import errors
 from google.genai.types import GenerateContentConfig, GenerateContentResponse
 from loguru import logger
-from tenacity import (retry, retry_if_exception_type, stop_after_attempt,
-                      wait_exponential)
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 from ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from config import settings
 from models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
-from utils.exceptions import (ClientInitializationError, MissingAPIKeyError,
-                              ResponseParsingError)
+from utils.exceptions import (
+    ClientInitializationError,
+    MissingAPIKeyError,
+    ResponseParsingError,
+)
 
 _CLIENT: Optional[genai.Client] = None
 _IS_INITIALIZED: bool = False
 
 
-retriable_errors = (errors.ServerError,)
-
-
 def _init_ai_resources() -> None:
-    global _CLIENT, _IS_INITIALIZED, _PROMPT_INJECTION_CLASSIFIER
+    global _CLIENT, _IS_INITIALIZED
     if _IS_INITIALIZED:
         logger.debug("AI resources already initialized.")
         return None
@@ -41,7 +45,13 @@ def _init_ai_resources() -> None:
     _CLIENT.models.list()
     _IS_INITIALIZED = True
     logger.success("Successfully initialized Google API client and model.")
+
+    logger.debug("Initializing prompt injection guardrail...")
+
     return None
+
+
+retriable_errors = (errors.ServerError,)
 
 
 def get_suggest_improvements_config(
