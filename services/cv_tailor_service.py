@@ -205,16 +205,16 @@ def create_comparison_cv(
         original_header=original_cv.header,
         professional_title=compared_prof_title,
         professional_summary=compared_ps,
-        original_skills=original_cv.skills,  # Direct assignment
-        suggested_skills=ai_suggestions.revised_skills,  # Direct assignment
+        original_skills=original_cv.skills,
+        suggested_skills=ai_suggestions.revised_skills,
         work_experience=(
             compared_work_experience if compared_work_experience else []
-        ),  # Ensure list
-        projects=compared_projects if compared_projects else [],  # Ensure list
-        awards=compared_awards if compared_awards else None,  # Optional list
+        ),
+        projects=compared_projects if compared_projects else [],
+        awards=compared_awards if compared_awards else None,
         publications=(
             compared_publications if compared_publications else None
-        ),  # Optional list
+        ),
         education=original_cv.education,
         certificates=original_cv.certificates,
         languages=original_cv.languages,

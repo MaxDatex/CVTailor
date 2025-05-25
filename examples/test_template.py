@@ -199,17 +199,19 @@ cv_dmytro = CVBody(
 )
 
 
-template = Template(CV_TEMPLATE_MD)
-# 4. Render the template with the data.
-rendered_md = template.render(cv=cv_dmytro)
+if __name__ == "__main__":
 
-with open("cv.md", "w") as f:
-    f.write(rendered_md)
+    template = Template(CV_TEMPLATE_MD)
+    # 4. Render the template with the data.
+    rendered_md = template.render(cv=cv_dmytro)
+
+    with open("cv.md", "w") as f:
+        f.write(rendered_md)
 
 
-template = Template(CV_TEMPLATE_LLM_MD)
+    template = Template(CV_TEMPLATE_LLM_MD)
 
-rendered_md = template.render(cv=cv_dmytro)
+    rendered_md = template.render(cv=cv_dmytro)
 
-with open("cv_4_llm.md", "w") as f:
-    f.write(rendered_md)
+    with open("cv_4_llm.md", "w") as f:
+        f.write(rendered_md)
