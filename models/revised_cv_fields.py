@@ -15,10 +15,10 @@ class RevisedWorkItem(BaseModel):
     id: str = Field(
         ..., description="The unique identifier for the work experience item."
     )
-    company_name: str = Field(
-        ..., description="The name of the company/organization for identification."
-    )
-    job_title: str = Field(..., description="The job title for identification.")
+    # company_name: str = Field(
+    #     ..., description="The name of the company/organization for identification."
+    # )
+    # job_title: str = Field(..., description="The job title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for this work experience."
     )
@@ -34,8 +34,8 @@ class RevisedProjectItem(BaseModel):
     """
 
     id: str = Field(..., description="The unique identifier for the project item.")
-    name: str = Field(..., description="The project title for identification.")
-    revised_description: Optional[str] = Field(
+    # name: str = Field(..., description="The project title for identification.")
+    revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised description for the project."
     )
     revised_highlights: Optional[List[str]] = Field(
@@ -45,7 +45,7 @@ class RevisedProjectItem(BaseModel):
 
 class RevisedAwardItem(BaseModel):
     id: str = Field(..., description="The unique identifier for the award item.")
-    title: str = Field(..., description="The award title for identification.")
+    # title: str = Field(..., description="The award title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for the award."
     )
@@ -53,10 +53,14 @@ class RevisedAwardItem(BaseModel):
 
 class RevisedPublicationItem(BaseModel):
     id: str = Field(..., description="The unique identifier for the publication item.")
-    name: str = Field(..., description="The publication title for identification.")
+    # name: str = Field(..., description="The publication title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for the publication."
     )
+
+
+class RevisedSkillItem(SkillItem):
+    pass
 
 
 class RevisedCVResponseSchema(BaseModel):
@@ -75,7 +79,7 @@ class RevisedCVResponseSchema(BaseModel):
     revised_professional_summary: Optional[ProfessionalSummary] = Field(
         None, description="AI-suggested revised professional summary."
     )
-    revised_skills: Optional[List[SkillItem]] = Field(
+    revised_skills: Optional[List[RevisedSkillItem]] = Field(
         None,
         description="AI-suggested revised skills section. May include rephrased skills or new keywords.",
     )

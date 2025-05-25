@@ -3,8 +3,7 @@ from enum import Enum
 from typing import List, Literal, Optional, Union
 from uuid import uuid4
 
-from pydantic import (AnyUrl, BaseModel, EmailStr, Field, ValidationInfo,
-                      field_validator)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, ValidationInfo, field_validator
 from pydantic_extra_types.phone_numbers import PhoneNumber
 
 
@@ -131,7 +130,7 @@ class ProjectItem(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)  # Project title
     start_date: Optional[dtdate]
     end_date: Optional[Union[dtdate, Literal["Present"]]]
-    description: str = Field(..., min_length=50, max_length=5000)
+    summary: str = Field(..., min_length=50, max_length=5000)
     highlights: List[str]
     url: Optional[AnyUrl]
 
