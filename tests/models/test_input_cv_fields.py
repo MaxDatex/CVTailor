@@ -3,8 +3,13 @@ from datetime import date, timedelta
 import pytest
 from pydantic import ValidationError
 
-from models.input_cv_fields import (EducationItem, Location,
-                                    ProfessionalSummary, StudyType, WorkItem)
+from models.input_cv_fields import (
+    EducationItem,
+    Location,
+    ProfessionalSummary,
+    StudyType,
+    WorkItem,
+)
 
 
 class TestProfessionalSummary:

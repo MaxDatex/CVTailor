@@ -1,10 +1,20 @@
 from jinja2 import Template
 
-from models.input_cv_fields import (AwardItem, CVBody,
-                                    CVHeader, EducationItem, LanguageItem,
-                                    Location, ProfessionalSummary, Profile,
-                                    ProjectItem, PublicationItem, SkillItem,
-                                    StudyType, WorkItem)
+from models.input_cv_fields import (
+    AwardItem,
+    CVBody,
+    CVHeader,
+    EducationItem,
+    LanguageItem,
+    Location,
+    ProfessionalSummary,
+    Profile,
+    ProjectItem,
+    PublicationItem,
+    SkillItem,
+    StudyType,
+    WorkItem,
+)
 from templates.html_cv_template import CV_TEMPLATE_HTML
 from templates.md_cv_template import CV_TEMPLATE_MD
 from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
@@ -134,7 +144,7 @@ projects_dmytro = [
         name="Sentiment Analysis of Social Media Data",
         start_date="2024-03-01",
         end_date="2024-05-15",
-        description="A personal project to analyze public sentiment from Twitter data using natural language processing (NLP) techniques.",
+        summary="A personal project to analyze public sentiment from Twitter data using natural language processing (NLP) techniques.",
         highlights=[
             "Collected and preprocessed Twitter data using Tweepy.",
             "Trained a Recurrent Neural Network (RNN) model for sentiment classification (positive, negative, neutral).",

@@ -8,18 +8,19 @@ from models.input_cv_fields import (
     ProjectItem as OriginalProjectItem,
     AwardItem as OriginalAwardItem,
     PublicationItem as OriginalPublicationItem,
-    CVHeader # Keep original header parts that are not revised by AI
+    CVHeader,  # Keep original header parts that are not revised by AI
 )
 from models.revised_cv_fields import (
-    RevisedWorkItem, # AI gives a subset of fields for these
+    RevisedWorkItem,  # AI gives a subset of fields for these
     RevisedProjectItem,
     RevisedAwardItem,
     RevisedPublicationItem,
-    RevisedSkillItem
+    RevisedSkillItem,
 )
 
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class ComparisonField(BaseModel, Generic[T]):
     original: T
@@ -44,7 +45,8 @@ class ComparisonWorkItem(BaseModel):
 
     # Other original fields (not revised by AI but needed for display)
     # e.g., company_location, company_website_url, start_date, end_date
-    original_data: OriginalWorkItem # Keep the full original item for unrevised parts
+    original_data: OriginalWorkItem  # Keep the full original item for unrevised parts
+
 
 class ComparisonProjectItem(BaseModel):
     id: str
@@ -53,23 +55,29 @@ class ComparisonProjectItem(BaseModel):
     highlights: ComparisonField[List[str]]
     original_data: OriginalProjectItem
 
+
 class ComparisonAwardItem(BaseModel):
     id: str
     summary: ComparisonField[str]
     original_data: OriginalAwardItem
+
 
 class ComparisonPublicationItem(BaseModel):
     id: str
     summary: ComparisonField[Optional[str]]
     original_data: OriginalPublicationItem
 
+
 # ... similar structures for ComparisonAwardItem, ComparisonPublicationItem
+
 
 class ComparisonCV(BaseModel):
     # Fields from CVHeader that aren't directly revised by AI
     # but you might still want to show them.
     # Or, the header itself could be a ComparisonField if parts are revised.
-    original_header: CVHeader # For now, assume header parts like name, email are not AI-revised
+    original_header: (
+        CVHeader  # For now, assume header parts like name, email are not AI-revised
+    )
 
     # Revised fields
     professional_title: ComparisonField[str]
@@ -83,7 +91,9 @@ class ComparisonCV(BaseModel):
     publications: Optional[List[ComparisonPublicationItem]] = None
 
     # Sections not revised by AI (directly pass through from original CVBody)
-    education: Optional[List[OriginalEducationItem]] = None # Assuming Education is not revised by current AI prompt
+    education: Optional[List[OriginalEducationItem]] = (
+        None  # Assuming Education is not revised by current AI prompt
+    )
     # ... other non-revised sections like languages, certificates
 
-    ai_general_explanations: str # From RevisedCVResponseSchema.explanations
+    ai_general_explanations: str  # From RevisedCVResponseSchema.explanations

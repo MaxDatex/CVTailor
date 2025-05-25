@@ -15,24 +15,24 @@
 
 ## Professional Summary
 
-A results-driven Machine Learning Engineer with 4 years of experience in developing, deploying, and optimizing machine learning models. Proven ability to solve complex problems using advanced analytics, statistical modeling, and data visualization techniques. Expertise in Computer Vision (CV) and Natural Language Processing (NLP).
+A highly analytical and results-oriented Machine Learning Engineer with 4 years of experience in developing, deploying, and optimizing machine learning models, including expertise in Computer Vision and NLP. Passionate about R&D and solving complex problems with innovative AI solutions.
 
 
 ### Objective
 
-To contribute to innovative AI/ML projects, leveraging my experience in developing and deploying machine learning solutions.
+To apply my expertise in data-driven decision-making and advanced analytics to contribute to impactful projects.
 
 
 ### Highlights
 
 
-* Proficient in Python and machine learning frameworks (TensorFlow, Keras, PyTorch).
+* Proficient in Python and machine learning frameworks including TensorFlow, Keras, and PyTorch.
 
-* Experienced in developing and deploying CV and NLP models.
+* Experienced in developing and deploying predictive models, including customer churn prediction and risk assessment.
 
-* Strong analytical and problem-solving skills with a focus on quantifiable results.
+* Proven ability to conduct exploratory data analysis, generate insights, and communicate findings through data visualization.
 
-* Expertise in predictive modeling, statistical analysis, and data visualization.
+* Skilled in cloud technologies such as AWS Sagemaker and GCP for model deployment and management.
 
 
 
@@ -40,14 +40,11 @@ To contribute to innovative AI/ML projects, leveraging my experience in developi
 ## Skills
 
 
-### Data Science (Advanced)
-Python, Pandas, NumPy, Scikit-learn, TensorFlow, Keras, PyTorch, SQL, Machine Learning, Deep Learning, CV, NLP
+### Machine Learning (Advanced)
+Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, LLM, Computer Vision, Predictive Modeling, Statistical Analysis, R&D, Edge AI
 
-### Statistical Analysis (Advanced)
-Hypothesis Testing, Regression Analysis, Time Series Analysis, A/B Testing
-
-### Data Visualization (Intermediate)
-Matplotlib, Seaborn, Plotly, Tableau
+### Data Analysis & Visualization (Advanced)
+Pandas, NumPy, SQL, Matplotlib, Seaborn, Plotly, Tableau, Data Cleaning, Data Preprocessing, A/B Testing
 
 ### Cloud & Big Data (Intermediate)
 AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
