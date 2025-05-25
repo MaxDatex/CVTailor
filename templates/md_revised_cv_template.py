@@ -1,4 +1,4 @@
-REVISED_CV_TEMPLATE_MD = '''
+REVISED_CV_TEMPLATE_MD = """
 {% set name = cv.header.full_name %}
 {% set title = cv.header.professional_title %}
 {% set location = cv.header.location.city + ", " + cv.header.location.region + ", " + cv.header.location.countryCode %}
@@ -166,4 +166,4 @@ REVISED_CV_TEMPLATE_MD = '''
 {% endfor %}
 {% endif %}
 
-'''
+"""

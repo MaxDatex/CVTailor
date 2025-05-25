@@ -1,4 +1,4 @@
-CV_TEMPLATE_LLM_MD = '''
+CV_TEMPLATE_LLM_MD = """
 {% set name = cv.header.full_name %}
 {% set title = cv.header.professional_title %}
 
@@ -100,4 +100,4 @@ ID: {{ publication_item.id }}
 {% endfor %}
 {% endif %}
 
-'''
+"""
