@@ -7,10 +7,9 @@ Analyze the provided job description and the provided CV. Your goal is to refine
 - Concise and impactful wording.
 - Focus on achievements and quantifiable results where possible.
 - Use active voice (e.g., Developed, Managed, Led).
-- Adhere strictly to the requested formats. Avoid extra conversational text.
-- DO NOT focus on formatting by now. Care only about the content.
-- Rewrite only Professional Summary, Skills, and Work Experience sections.
-- First, explain what changes you want to make and then do it.
+- DO NOT focus on visual formatting or layout. Care only about the content.
+- In the 'explanations' field, provide a brief and concise overview of your general strategy and key changes made, referencing how they align with the job description or ATS best practices.
+- Provide other suggestions for improvements in the 'suggestions' field.
 """
 
 

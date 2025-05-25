@@ -70,28 +70,31 @@ class RevisedCVResponseSchema(BaseModel):
         ..., description="Explanation and plan of changes to the CV."
     )
     revised_professional_title: Optional[str] = Field(
-        ..., description="AI-suggested revised professional title."
+        None, description="AI-suggested revised professional title."
     )
     revised_professional_summary: Optional[ProfessionalSummary] = Field(
-        ..., description="AI-suggested revised professional summary."
+        None, description="AI-suggested revised professional summary."
     )
     revised_skills: Optional[List[SkillItem]] = Field(
-        ...,
+        None,
         description="AI-suggested revised skills section. May include rephrased skills or new keywords.",
     )
     revised_work_experience: Optional[List[RevisedWorkItem]] = Field(
-        ...,
+        None,
         description="AI-suggested revised work experience items, including revised summaries and highlights.",
     )
     revised_projects: Optional[List[RevisedProjectItem]] = Field(
-        ...,
+        None,
         description="AI-suggested revised project items, including revised descriptions and highlights.",
     )
     revised_awards: Optional[List[RevisedAwardItem]] = Field(
-        ..., description="AI-suggested revised award items."
+        None, description="AI-suggested revised award items."
     )
     revised_publications: Optional[List[RevisedPublicationItem]] = Field(
-        ..., description="AI-suggested revised publication items."
+        None, description="AI-suggested revised publication items."
+    )
+    suggestions: Optional[str] = Field(
+        None, description="Other suggestions for improvements in the CV."
     )
 
 
