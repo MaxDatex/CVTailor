@@ -51,7 +51,7 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 ## Work Experience
 
 ### Analytics Pro
-ID: 2bae1c075b1e4928b44292a3c56370f9
+ID: 6a6417bd6a3e42b2abc5077cc6eaf350
 
 **Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua/](https://analyticspro.ua/)
 **Start Date:** 2022-01-15 | **End Date:** Present
@@ -69,7 +69,7 @@ Developed and implemented predictive models for client projects across various i
 
 
 ### FinTech Insights
-ID: 0f511873422d4dd3ad09eeadcd82063d
+ID: 007aca39dcd740e8afd203c138ea8ab4
 
 **Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com/](https://fintechinsights.com/)
 **Start Date:** 2020-09-01 | **End Date:** 2021-12-31
@@ -90,7 +90,7 @@ Assisted senior data scientists in data cleaning, preprocessing, and generating 
 ## Projects
 
 ### Sentiment Analysis of Social Media Data
-ID: f56968ca30104fda9d4d2f2e6725e646
+ID: 4eec9a5afc574088b8525e22a2f1d455
 
 **Start Date:** 2024-03-01 | **End Date:** 2024-05-15
 
@@ -122,7 +122,7 @@ A personal project to analyze public sentiment from Twitter data using natural l
 ## Awards
 
 ### Dean's List for Academic Excellence
-ID: c3070b798a094f5095bed128bc53ac20
+ID: fb1d4592afc04a608c2d5d97233ccf5d
 
 **Date:** 2019-05-20 | **Awarder:** Taras Shevchenko National University of Kyiv
 Recognized for outstanding academic achievement in the Department of Statistics.
@@ -135,7 +135,7 @@ Recognized for outstanding academic achievement in the Department of Statistics.
 ## Publications
 
 ### Predictive Modeling for Customer Lifetime Value in E-commerce
-ID: 8eee68dec3934ad19935c0027ffd6f24
+ID: c69d3daea00241a8aceb4a6fed205640
 
 **Publisher:** Journal of Data Science and Analytics | **Release Date:** 2023-11-01
 [Publication Link](https://journalofdata.com/predictive-modeling)

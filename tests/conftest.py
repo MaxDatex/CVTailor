@@ -1,6 +1,6 @@
 import pytest
 
-from models.input_cv_fields import (CVBody, CVHeader, Location,  # etc.
+from models.input_cv_fields import (CVBody, CVHeader, Location,
                                     ProfessionalSummary)
 
 

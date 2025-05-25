@@ -1,12 +1,13 @@
 from jinja2 import Template
 
-from models.input_cv_fields import (AwardItem, CertificateItem, CVBody,
+from models.input_cv_fields import (AwardItem, CVBody,
                                     CVHeader, EducationItem, LanguageItem,
                                     Location, ProfessionalSummary, Profile,
                                     ProjectItem, PublicationItem, SkillItem,
                                     StudyType, WorkItem)
 from templates.html_cv_template import CV_TEMPLATE_HTML
 from templates.md_cv_template import CV_TEMPLATE_MD
+from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
 
 # ---
 
@@ -203,4 +204,12 @@ template = Template(CV_TEMPLATE_MD)
 rendered_md = template.render(cv=cv_dmytro)
 
 with open("cv.md", "w") as f:
+    f.write(rendered_md)
+
+
+template = Template(CV_TEMPLATE_LLM_MD)
+
+rendered_md = template.render(cv=cv_dmytro)
+
+with open("cv_4_llm.md", "w") as f:
     f.write(rendered_md)

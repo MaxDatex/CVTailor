@@ -2,46 +2,31 @@
 
 
 
-
-
-
-
-
-
 # Dmytro Kovalenko
-## Machine Learning Engineer
-**Location:** Lviv, Lviv Region, UA | **Email:** dmytro.kovalenko@email.com | **Phone:** tel:+380-67-987-6543
-**Links:** [GitHub](https://github.com/dmytrodata) | [LinkedIn](https://linkedin.com/in/dmytrokovalenko) | [Portfolio](https://dmytrokovalenko.com/)
+## Data Scientist
 
 ## Professional Summary
-
-A results-driven Machine Learning Engineer with 4 years of experience in developing, deploying, and optimizing machine learning models. Proven ability to solve complex problems using advanced analytics, statistical modeling, and data visualization techniques. Expertise in Computer Vision (CV) and Natural Language Processing (NLP).
-
+An analytical and innovative Data Scientist with 4 years of experience in developing and deploying machine learning models to solve complex business problems. Proficient in data analysis, statistical modeling, and creating compelling data visualizations.
 
 ### Objective
-
-To contribute to innovative AI/ML projects, leveraging my experience in developing and deploying machine learning solutions.
-
+To apply my expertise in data-driven decision-making and advanced analytics to contribute to impactful projects.
 
 ### Highlights
 
+* Skilled in Python, R, and various machine learning frameworks.
 
-* Proficient in Python and machine learning frameworks (TensorFlow, Keras, PyTorch).
+* Experienced in predictive modeling and statistical analysis.
 
-* Experienced in developing and deploying CV and NLP models.
+* Proficient in data visualization and reporting.
 
-* Strong analytical and problem-solving skills with a focus on quantifiable results.
-
-* Expertise in predictive modeling, statistical analysis, and data visualization.
-
+* Strong problem-solving and analytical skills.
 
 
 
 ## Skills
 
-
 ### Data Science (Advanced)
-Python, Pandas, NumPy, Scikit-learn, TensorFlow, Keras, PyTorch, SQL, Machine Learning, Deep Learning, CV, NLP
+Python, R, Pandas, NumPy, Scikit-learn, TensorFlow, Keras, PyTorch, SQL
 
 ### Statistical Analysis (Advanced)
 Hypothesis Testing, Regression Analysis, Time Series Analysis, A/B Testing
@@ -57,24 +42,10 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 
 ## Work Experience
 
-
-
-    
-        
-        
-    
-        
-        
-    
-
 ### Analytics Pro
-**Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua/](https://analyticspro.ua/)
-**Start Date:** 2022-01-15 | **End Date:** Present
-
+ID: 6a6417bd6a3e42b2abc5077cc6eaf350
 
 Developed and implemented predictive models for client projects across various industries, enhancing decision-making processes.
-
-
 
 
 * Built a customer churn prediction model using gradient boosting, leading to a 10% improvement in customer retention strategies.
@@ -86,25 +57,10 @@ Developed and implemented predictive models for client projects across various i
 * Deployed machine learning models into production environments using AWS Sagemaker.
 
 
-
-
-
-    
-        
-        
-    
-        
-        
-    
-
 ### FinTech Insights
-**Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com/](https://fintechinsights.com/)
-**Start Date:** 2020-09-01 | **End Date:** 2021-12-31
-
+ID: 007aca39dcd740e8afd203c138ea8ab4
 
 Assisted senior data scientists in data cleaning, preprocessing, and generating reports for financial analytics.
-
-
 
 
 * Cleaned and preprocessed large financial datasets, ensuring data quality and consistency.
@@ -117,23 +73,12 @@ Assisted senior data scientists in data cleaning, preprocessing, and generating 
 
 
 
-
 ## Projects
 
-
-
-    
-        
-        
-    
-
 ### Sentiment Analysis of Social Media Data
-**Start Date:** 2024-03-01 | **End Date:** 2024-05-15
-
+ID: 4eec9a5afc574088b8525e22a2f1d455
 
 A personal project to analyze public sentiment from Twitter data using natural language processing (NLP) techniques.
-
-
 
 
 * Collected and preprocessed Twitter data using Tweepy.
@@ -144,17 +89,13 @@ A personal project to analyze public sentiment from Twitter data using natural l
 
 
 
-[Project Link](https://github.com/dmytrodata/sentiment-analysis-twitter)
-
-
 
 
 ## Education
 
-
 ### Taras Shevchenko National University of Kyiv
-[Link](https://knu.ua/) | **Area:** Applied Statistics | **Type:** Bachelors
-**Start Date:** 2016-09-01 | **End Date:** 2020-06-30 | **Score:** 3.8/4.0
+**Area:** Applied Statistics | **Type:** Bachelors
+**Score:** 3.8/4.0
 **Courses:** Probability Theory, Statistical Inference, Regression Modeling, Data Mining
 
 
@@ -162,9 +103,10 @@ A personal project to analyze public sentiment from Twitter data using natural l
 
 ## Awards
 
-
 ### Dean's List for Academic Excellence
-**Date:** 2019-05-20 | **Awarder:** Taras Shevchenko National University of Kyiv
+ID: fb1d4592afc04a608c2d5d97233ccf5d
+
+**Awarder:** Taras Shevchenko National University of Kyiv
 Recognized for outstanding academic achievement in the Department of Statistics.
 
 
@@ -174,10 +116,10 @@ Recognized for outstanding academic achievement in the Department of Statistics.
 
 ## Publications
 
-
 ### Predictive Modeling for Customer Lifetime Value in E-commerce
-**Publisher:** Journal of Data Science and Analytics | **Release Date:** 2023-11-01
-[Publication Link](https://journalofdata.com/predictive-modeling)
+ID: c69d3daea00241a8aceb4a6fed205640
+
+**Publisher:** Journal of Data Science and Analytics
 A research paper exploring various machine learning techniques to predict customer lifetime value, demonstrating the impact of accurate predictions on marketing strategies.
 
 
