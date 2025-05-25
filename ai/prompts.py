@@ -8,6 +8,7 @@ Analyze the provided job description and the provided CV. Your goal is to refine
 - Focus on achievements and quantifiable results where possible.
 - Use active voice (e.g., Developed, Managed, Led).
 - DO NOT focus on visual formatting or layout. Care only about the content.
+- Do NOT make up any skills or other information. Operate ONLY on the provided information in the CV.
 - In the 'explanations' field, provide a brief and concise overview of your general strategy and key changes made, referencing how they align with the job description or ATS best practices.
 - Provide other suggestions for improvements in the 'suggestions' field.
 """
