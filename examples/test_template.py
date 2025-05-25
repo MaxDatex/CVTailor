@@ -1,20 +1,10 @@
 from jinja2 import Template
 
-from models.input_cv_fields import (
-    AwardItem,
-    CVBody,
-    CVHeader,
-    EducationItem,
-    LanguageItem,
-    Location,
-    ProfessionalSummary,
-    Profile,
-    ProjectItem,
-    PublicationItem,
-    SkillItem,
-    StudyType,
-    WorkItem,
-)
+from models.input_cv_fields import (AwardItem, CVBody, CVHeader, EducationItem,
+                                    LanguageItem, Location,
+                                    ProfessionalSummary, Profile, ProjectItem,
+                                    PublicationItem, SkillItem, StudyType,
+                                    WorkItem)
 from templates.html_cv_template import CV_TEMPLATE_HTML
 from templates.md_cv_template import CV_TEMPLATE_MD
 from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD

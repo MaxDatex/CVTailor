@@ -1,6 +1,7 @@
 import pytest
 
-from models.input_cv_fields import CVBody, CVHeader, Location, ProfessionalSummary
+from models.input_cv_fields import (CVBody, CVHeader, Location,
+                                    ProfessionalSummary)
 
 
 @pytest.fixture(

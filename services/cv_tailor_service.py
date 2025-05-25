@@ -1,122 +1,152 @@
-from typing import Optional, List, Union, Dict, Type
+from typing import Any, Callable, Dict, List, Optional, TypeVar
 
-from ai.llm import get_cv_improvements
-from models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
-from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
-from templates.md_job_description_template import JOB_DESCRIPTION_TEMPLATE_MD
 from jinja2 import Template
 from loguru import logger
-from models.input_cv_fields import (
-    CVBody,
-    SkillItem,
-    WorkItem,
-    ProjectItem,
-    AwardItem,
-    PublicationItem,
-)
+
+from ai.llm import get_cv_improvements
+from models.comparison_cv_fields import (ComparisonAwardItem, ComparisonCV,
+                                         ComparisonField,
+                                         ComparisonProfessionalSummary,
+                                         ComparisonProjectItem,
+                                         ComparisonPublicationItem,
+                                         ComparisonWorkItem)
+from models.input_cv_fields import AwardItem as OriginalAwardItem
+from models.input_cv_fields import CVBody
+from models.input_cv_fields import ProjectItem as OriginalProjectItem
+from models.input_cv_fields import PublicationItem as OriginalPublicationItem
+from models.input_cv_fields import WorkItem as OriginalWorkItem
 from models.job_description_fields import JobDescriptionFields
-from models.revised_cv_fields import (
-    RevisedWorkItem,
-    RevisedProjectItem,
-    RevisedAwardItem,
-    RevisedPublicationItem,
-)
-from models.comparison_cv_fields import (
-    ComparisonField,
-    ComparisonProfessionalSummary,
-    ComparisonWorkItem,
-    ComparisonProjectItem,
-    ComparisonCV,
-    ComparisonAwardItem,
-    ComparisonPublicationItem,
-)
+from models.revised_cv_fields import (LLMResponse, RevisedAwardItem,
+                                      RevisedCVResponseSchema,
+                                      RevisedProjectItem,
+                                      RevisedPublicationItem, RevisedWorkItem)
+from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
+from templates.md_job_description_template import JOB_DESCRIPTION_TEMPLATE_MD
 
 
-def _get_comparison_item_data(
-    original_item: Union[
-        Type[WorkItem], Type[ProjectItem], Type[AwardItem], Type[PublicationItem]
-    ],
-    revised_item_suggestion: Union[
-        Type[RevisedWorkItem],
-        Type[RevisedProjectItem],
-        Type[RevisedPublicationItem],
-        Type[RevisedAwardItem],
-    ],
-) -> Dict:
-    comparison_item_data: Dict = {
-        "id": original_item.id,
-        "original_data": original_item,
-        "summary": ComparisonField[str](
-            original=original_item.summary,
-            suggested=(
-                revised_item_suggestion.revised_summary
-                if revised_item_suggestion
-                else None
-            ),
+def _create_comparison_field[T](
+    original_value: T, suggested_value: Optional[T]
+) -> ComparisonField[T]:
+    return ComparisonField[T](original=original_value, suggested=suggested_value)
+
+
+def _create_comparison_work_item(
+    original_item: OriginalWorkItem, revised_suggestion: Optional[RevisedWorkItem]
+) -> ComparisonWorkItem:
+    return ComparisonWorkItem(
+        id=original_item.id,
+        summary=_create_comparison_field(
+            original_item.summary,
+            revised_suggestion.revised_summary if revised_suggestion else None,
         ),
-    }
-    if original_item.highlights is not None and len(original_item.highlights) > 0:
-        comparison_item_data["highlights"] = ComparisonField[List[str]](
-            original=original_item.highlights,
-            suggested=(
-                revised_item_suggestion.revised_highlights
-                if revised_item_suggestion
-                else None
-            ),
-        )
-    return comparison_item_data
+        highlights=_create_comparison_field(
+            original_item.highlights,
+            revised_suggestion.revised_highlights if revised_suggestion else None,
+        ),
+        original_data=original_item,
+    )
 
 
-def _get_compared_field(
-    original_cv: Type[CVBody],
-    ai_suggestions: Type[RevisedCVResponseSchema],
-    cv_field: str,
-    comparison_item: Union[
-        Type[ComparisonWorkItem],
-        Type[ComparisonProjectItem],
-        Type[ComparisonAwardItem],
-        Type[ComparisonPublicationItem],
+def _create_comparison_project_item(
+    original_item: OriginalProjectItem, revised_suggestion: Optional[RevisedProjectItem]
+) -> ComparisonProjectItem:
+    return ComparisonProjectItem(
+        id=original_item.id,
+        summary=_create_comparison_field(
+            original_item.summary,
+            revised_suggestion.revised_summary if revised_suggestion else None,
+        ),
+        highlights=_create_comparison_field(
+            original_item.highlights,
+            revised_suggestion.revised_highlights if revised_suggestion else None,
+        ),
+        original_data=original_item,
+    )
+
+
+def _create_comparison_award_item(
+    original_item: OriginalAwardItem, revised_suggestion: Optional[RevisedAwardItem]
+) -> ComparisonAwardItem:
+    return ComparisonAwardItem(
+        id=original_item.id,
+        summary=_create_comparison_field(
+            original_item.summary,
+            revised_suggestion.revised_summary if revised_suggestion else None,
+        ),
+        original_data=original_item,
+    )
+
+
+def _create_comparison_publication_item(
+    original_item: OriginalPublicationItem,
+    revised_suggestion: Optional[RevisedPublicationItem],
+) -> ComparisonPublicationItem:
+    return ComparisonPublicationItem(
+        id=original_item.id,
+        summary=_create_comparison_field(
+            original_item.summary,
+            revised_suggestion.revised_summary if revised_suggestion else None,
+        ),
+        original_data=original_item,
+    )
+
+
+OriginalItemT = TypeVar("OriginalItemT", bound=Any)
+RevisedAISuggestionT = TypeVar("RevisedAISuggestionT", bound=Any)
+ComparisonOutputT = TypeVar("ComparisonOutputT")
+
+
+def _process_comparable_list(
+    original_items: Optional[List[OriginalItemT]],
+    ai_suggestions_list: Optional[List[RevisedAISuggestionT]],
+    creator_func: Callable[
+        [OriginalItemT, Optional[RevisedAISuggestionT]], ComparisonOutputT
     ],
-) -> List[
-    Union[
-        Type[ComparisonWorkItem],
-        Type[ComparisonProjectItem],
-        Type[ComparisonAwardItem],
-        Type[ComparisonPublicationItem],
-    ]
-]:
+    item_type_name: str = "Item",
+) -> List[ComparisonOutputT]:
+    comparison_results: List[ComparisonOutputT] = []
+    if not original_items:
+        return comparison_results
 
-    comp_list: List = []
-    original_cv_item = getattr(original_cv, cv_field)
-    if original_cv_item:
-        original_map = {item.id: item for item in (original_cv_item or [])}
-        revised_cv_item = getattr(ai_suggestions, f"revised_{cv_field}")
-        if revised_cv_item:
-            for revised_item_suggestion in revised_cv_item:
-                original_item = original_map.get(revised_item_suggestion.id)
-                if original_item:
-                    comparison_item_data = _get_comparison_item_data(
-                        original_item, revised_item_suggestion
-                    )
+    ai_suggestions_map: Dict[str, RevisedAISuggestionT] = {}
+    if ai_suggestions_list:
+        for suggestion in ai_suggestions_list:
+            if hasattr(suggestion, "id"):
+                ai_suggestions_map[suggestion.id] = suggestion
+            else:
+                logger.warning(
+                    f"AI suggestion for {item_type_name} missing 'id' attribute."
+                )
 
-                    comp_list.append(comparison_item(**comparison_item_data))
-                else:
-                    logger.warning(
-                        f"AI suggested revision for ID {cv_field} '{revised_item_suggestion.id}' not found in original CV."
-                    )
-            # Include original work items that AI didn't suggest changes for
-            ai_revised_item_ids = {item.id for item in (revised_cv_item or [])}
-            for original_item in original_cv_item:
-                if original_item.id not in ai_revised_item_ids:
-                    comparison_item_data = _get_comparison_item_data(
-                        original_item, None
-                    )
-                    comp_list.append(comparison_item(**comparison_item_data))
-                    logger.debug(
-                        f"Added original {cv_field} ID (no AI suggestion): {original_item.id}"
-                    )
+    for original_item in original_items:
+        if not hasattr(original_item, "id"):
+            logger.warning(
+                f"Original {item_type_name} missing 'id' attribute, cannot compare: {original_item}"
+            )
+            comparison_results.append(creator_func(original_item, None))
+            continue
 
-    return comp_list
+        corresponding_ai_suggestion = ai_suggestions_map.get(original_item.id)
+        comparison_item = creator_func(original_item, corresponding_ai_suggestion)
+        comparison_results.append(comparison_item)
+        if corresponding_ai_suggestion:
+            logger.debug(
+                f"Compared {item_type_name} ID '{original_item.id}' with AI suggestion."
+            )
+        else:
+            logger.debug(
+                f"Included original {item_type_name} ID '{original_item.id}' (no AI suggestion)."
+            )
+
+    if ai_suggestions_list:
+        original_item_ids = {item.id for item in original_items if hasattr(item, "id")}
+        for suggestion in ai_suggestions_list:
+            if hasattr(suggestion, "id") and suggestion.id not in original_item_ids:
+                logger.warning(
+                    f"AI suggestion for {item_type_name} ID '{suggestion.id}' did not match any original item."
+                )
+
+    return comparison_results
 
 
 def create_comparison_cv(
@@ -124,57 +154,72 @@ def create_comparison_cv(
 ) -> ComparisonCV:
     logger.info("Starting to create comparison CV structure.")
 
-    compared_prof_title = ComparisonField[str](
-        original=original_cv.header.professional_title,
-        suggested=ai_suggestions.revised_professional_title,
+    compared_prof_title = _create_comparison_field(
+        original_cv.header.professional_title, ai_suggestions.revised_professional_title
     )
 
     original_ps = original_cv.professional_summary
-    revised_ps = ai_suggestions.revised_professional_summary
+    revised_ps_suggestion = ai_suggestions.revised_professional_summary
 
     compared_ps = ComparisonProfessionalSummary(
-        summary=ComparisonField[Optional[str]](
-            original=original_ps.summary,
-            suggested=revised_ps.summary if revised_ps else None,
+        summary=_create_comparison_field(
+            original_ps.summary,
+            revised_ps_suggestion.summary if revised_ps_suggestion else None,
         ),
-        objective=ComparisonField[Optional[str]](
-            original=original_ps.objective,
-            suggested=revised_ps.objective if revised_ps else None,
+        objective=_create_comparison_field(
+            original_ps.objective,
+            revised_ps_suggestion.objective if revised_ps_suggestion else None,
         ),
-        highlights=ComparisonField[Optional[List[str]]](
-            original=original_ps.highlights,
-            suggested=revised_ps.highlights if revised_ps else None,
+        highlights=_create_comparison_field(
+            original_ps.highlights,
+            revised_ps_suggestion.highlights if revised_ps_suggestion else None,
         ),
     )
 
-    original_skills_list: Optional[List[SkillItem]] = original_cv.skills
-    suggested_skills_list: Optional[List[SkillItem]] = ai_suggestions.revised_skills
-
-    compared_work_experience = _get_compared_field(
-        original_cv, ai_suggestions, "work_experience", ComparisonWorkItem
+    compared_work_experience = _process_comparable_list(
+        original_cv.work_experience,
+        ai_suggestions.revised_work_experience,
+        _create_comparison_work_item,
+        "WorkExperience",
     )
-    compared_projects = _get_compared_field(
-        original_cv, ai_suggestions, "projects", ComparisonProjectItem
+    compared_projects = _process_comparable_list(
+        original_cv.projects,
+        ai_suggestions.revised_projects,
+        _create_comparison_project_item,
+        "Project",
     )
-    compared_awards = _get_compared_field(
-        original_cv, ai_suggestions, "awards", ComparisonAwardItem
+    compared_awards = _process_comparable_list(
+        original_cv.awards,
+        ai_suggestions.revised_awards,
+        _create_comparison_award_item,
+        "Award",
     )
-    compared_publications = _get_compared_field(
-        original_cv, ai_suggestions, "publications", ComparisonPublicationItem
+    compared_publications = _process_comparable_list(
+        original_cv.publications,
+        ai_suggestions.revised_publications,
+        _create_comparison_publication_item,
+        "Publication",
     )
 
     return ComparisonCV(
         original_header=original_cv.header,
         professional_title=compared_prof_title,
         professional_summary=compared_ps,
-        original_skills=original_skills_list,
-        suggested_skills=suggested_skills_list,
-        work_experience=compared_work_experience,
-        projects=compared_projects,
-        education=original_cv.education,  # Pass through non-revised
+        original_skills=original_cv.skills,  # Direct assignment
+        suggested_skills=ai_suggestions.revised_skills,  # Direct assignment
+        work_experience=(
+            compared_work_experience if compared_work_experience else []
+        ),  # Ensure list
+        projects=compared_projects if compared_projects else [],  # Ensure list
+        awards=compared_awards if compared_awards else None,  # Optional list
+        publications=(
+            compared_publications if compared_publications else None
+        ),  # Optional list
+        education=original_cv.education,
+        certificates=original_cv.certificates,
+        languages=original_cv.languages,
         ai_general_explanations=ai_suggestions.explanations,
-        awards=compared_awards,
-        publications=compared_publications,
+        ai_suggestions=ai_suggestions.suggestions,
     )
 
 
@@ -183,9 +228,9 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
     job_description_template = Template(JOB_DESCRIPTION_TEMPLATE_MD)
 
     cv = cv_template.render(cv=original_cv)
-    job_description = job_description_template.render(
+    job_description_string: str = job_description_template.render(
         job_description_data=job_description
     )
-    response: LLMResponse = get_cv_improvements(job_description, cv)
+    response: LLMResponse = get_cv_improvements(job_description_string, cv)
     ai_suggestions: RevisedCVResponseSchema = response.response.parsed
     return create_comparison_cv(original_cv, ai_suggestions)

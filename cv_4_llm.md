@@ -43,7 +43,7 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 ## Work Experience
 
 ### Analytics Pro
-ID: 6fb16f5e4022415d944ef724b637cc81
+ID: c8a7a02f30e941a4b149ab0f60328970
 
 Developed and implemented predictive models for client projects across various industries, enhancing decision-making processes.
 
@@ -58,7 +58,7 @@ Developed and implemented predictive models for client projects across various i
 
 
 ### FinTech Insights
-ID: 52343998f0db45138ba8b590b384cae0
+ID: 285efa59934f436297b1e1dc91bb3b68
 
 Assisted senior data scientists in data cleaning, preprocessing, and generating reports for financial analytics.
 
@@ -76,7 +76,7 @@ Assisted senior data scientists in data cleaning, preprocessing, and generating 
 ## Projects
 
 ### Sentiment Analysis of Social Media Data
-ID: c4899ba03e53489381b26a5df3680a4b
+ID: 46067f72846f499ba44e70c409f01de6
 
 
 
@@ -104,7 +104,7 @@ ID: c4899ba03e53489381b26a5df3680a4b
 ## Awards
 
 ### Dean's List for Academic Excellence
-ID: 93250152978947bcb8dcfa4d5f3934cb
+ID: bcd6d6d309a749bc85b0f5ef96089b38
 
 **Awarder:** Taras Shevchenko National University of Kyiv
 Recognized for outstanding academic achievement in the Department of Statistics.
@@ -117,7 +117,7 @@ Recognized for outstanding academic achievement in the Department of Statistics.
 ## Publications
 
 ### Predictive Modeling for Customer Lifetime Value in E-commerce
-ID: 2603aff679fd4b7eab2040b77b1cec60
+ID: d7b7f3a46a9247ac9b9768b351514e21
 
 **Publisher:** Journal of Data Science and Analytics
 A research paper exploring various machine learning techniques to predict customer lifetime value, demonstrating the impact of accurate predictions on marketing strategies.

@@ -3,7 +3,8 @@ from enum import Enum
 from typing import List, Literal, Optional, Union
 from uuid import uuid4
 
-from pydantic import AnyUrl, BaseModel, EmailStr, Field, ValidationInfo, field_validator
+from pydantic import (AnyUrl, BaseModel, EmailStr, Field, ValidationInfo,
+                      field_validator)
 from pydantic_extra_types.phone_numbers import PhoneNumber
 
 
