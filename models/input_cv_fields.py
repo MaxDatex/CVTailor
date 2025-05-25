@@ -12,6 +12,8 @@ def validate_highlights_list(highlights: List[str]) -> List[str]:
     """
     Validates a list of highlights for count, and individual length.
     """
+    if not highlights:
+        return []
     if len(highlights) > 10:
         raise ValueError("Maximum 10 highlights allowed")
     if any(len(highlight) < 10 for highlight in highlights):
@@ -25,6 +27,8 @@ def validate_keywords_list(keywords: List[str]) -> List[str]:
     """
     Validates a list of keywords for count, and individual length.
     """
+    if not keywords:
+        return []
     if len(keywords) > 20:
         raise ValueError("Maximum 20 keywords allowed")
     if any(len(keyword) < 1 for keyword in keywords):
