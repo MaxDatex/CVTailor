@@ -1,16 +1,10 @@
 from datetime import date as dtdate
 from enum import Enum
-from typing import List, Literal, Optional, Union, Dict
+from typing import List, Literal, Optional, Union
 from uuid import uuid4
 
-from pydantic import (
-    AnyUrl,
-    EmailStr,
-    BaseModel,
-    Field,
-    FieldValidationInfo,
-    field_validator,
-)
+from pydantic import (AnyUrl, BaseModel, EmailStr, Field, ValidationInfo,
+                      field_validator)
 from pydantic_extra_types.phone_numbers import PhoneNumber
 
 
@@ -41,7 +35,7 @@ def validate_keywords_list(keywords: List[str]) -> List[str]:
 
 
 def validate_end_date(
-    end_date: dtdate, info: FieldValidationInfo  # type: ignore
+    end_date: dtdate, info: ValidationInfo  # type: ignore
 ) -> Union[dtdate, Literal["Present"]]:
     """
     Validates that the end date is after the start date.
@@ -85,8 +79,9 @@ class ProfessionalSummary(BaseModel):
 
     validate_highlights = field_validator("highlights")(validate_highlights_list)
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+    }
 
 
 class SkillLevel(str, Enum):
@@ -103,8 +98,9 @@ class SkillItem(BaseModel):
 
     validate_keywords = field_validator("keywords")(validate_keywords_list)
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+    }
 
 
 class WorkItem(BaseModel):
@@ -121,8 +117,9 @@ class WorkItem(BaseModel):
     validate_highlights = field_validator("highlights")(validate_highlights_list)
     validate_date = field_validator("end_date")(validate_end_date)
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+    }
 
 
 class ProjectItem(BaseModel):
@@ -137,8 +134,9 @@ class ProjectItem(BaseModel):
     validate_highlights = field_validator("highlights")(validate_highlights_list)
     validate_date = field_validator("end_date")(validate_end_date)
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+    }
 
 
 class StudyType(str, Enum):
@@ -160,8 +158,9 @@ class EducationItem(BaseModel):
 
     validate_date = field_validator("end_date")(validate_end_date)
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+    }
 
 
 class AwardItem(BaseModel):
@@ -207,8 +206,9 @@ class InterestItem(BaseModel):
 
     validate_keywords = field_validator("keywords")(validate_keywords_list)
 
-    class Config:
-        validate_assignment = True
+    model_config = {
+        "validate_assignment": True,
+    }
 
 
 class ReferenceItem(BaseModel):

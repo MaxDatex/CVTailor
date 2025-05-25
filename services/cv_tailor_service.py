@@ -1,8 +1,9 @@
 from typing import Optional
+
+from ai.llm import get_cv_improvements
 from models.input_cv_fields import CVBody
 from models.job_description_fields import JobDescriptionFields
-from models.revised_cv_fields import RevisedCVResponseSchema, LLMResponse
-from ai.llm import get_cv_improvements
+from models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
 
 
 def tailor_cv(cv: str, job_description: str):

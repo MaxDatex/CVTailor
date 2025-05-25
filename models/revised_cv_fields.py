@@ -1,9 +1,9 @@
-from typing import List, Optional, Dict, Union
+from typing import Dict, List, Optional, Union
 
+from google.genai.types import GenerateContentResponse
 from pydantic import BaseModel, Field
 
 from models.input_cv_fields import ProfessionalSummary, SkillItem
-from google.genai.types import GenerateContentResponse
 
 
 class RevisedWorkItem(BaseModel):
@@ -96,7 +96,5 @@ class RevisedCVResponseSchema(BaseModel):
 
 
 class LLMResponse(BaseModel):
-    success: bool
     response: Optional[GenerateContentResponse]
     metadata: Optional[Dict[str, Union[int, None]]]
-    error: Optional[str]

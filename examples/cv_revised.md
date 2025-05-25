@@ -15,7 +15,7 @@
 
 ## Professional Summary
 
-Data Scientist with 4 years of experience transitioning to Machine Learning Engineering, specializing in developing and deploying ML models and performing R&D on AI algorithms. Expertise in CV and NLP-based projects, proficient in Python, and experienced in applying machine learning to solve complex problems.
+Data Scientist with 4 years of experience in developing and deploying machine learning models and contributing to R&D projects. Expertise in machine learning, statistical modeling, and data visualization. Seeking to leverage skills in AI/ML to contribute to innovative projects.
 
 
 ### Objective
@@ -26,13 +26,13 @@ To apply my expertise in data-driven decision-making and advanced analytics to c
 ### Highlights
 
 
-* Experienced in developing and deploying machine learning models.
+* Proficient in Python and machine learning frameworks (TensorFlow, Keras, PyTorch).
 
-* Proficient in Python and skilled in various ML frameworks.
+* Experienced in predictive modeling, statistical analysis, and A/B testing.
 
-* Strong background in statistical modeling and data analysis.
+* Strong analytical, problem-solving, and communication skills.
 
-* Proven ability to perform R&D on AI algorithms.
+* Experience with cloud deployment using AWS Sagemaker.
 
 
 
@@ -41,13 +41,19 @@ To apply my expertise in data-driven decision-making and advanced analytics to c
 
 
 ### Machine Learning (Advanced)
-Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, Computer Vision, LLM
+Python, Scikit-learn, TensorFlow, Keras, PyTorch, NLP, LLM, CV, Edge AI, Data Science
 
-### Data Analysis (Advanced)
-Pandas, NumPy, SQL, Statistical Modeling, Hypothesis Testing, Regression Analysis
+### Statistical Analysis (Advanced)
+Hypothesis Testing, Regression Analysis, Time Series Analysis, A/B Testing
 
-### Cloud Technologies (Intermediate)
-AWS Sagemaker, Google Cloud Platform, Spark, Hadoop
+### Data Visualization (Intermediate)
+Matplotlib, Seaborn, Plotly, Tableau
+
+### Cloud & Big Data (Intermediate)
+AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
+
+### Programming Languages (Advanced)
+Python, SQL, R
 
 
 
