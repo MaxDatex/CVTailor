@@ -4,7 +4,7 @@ from typing import List
 import pytest
 from pydantic import ValidationError, AnyUrl
 
-from models.input_cv_fields import (
+from src.core.models.input_cv_fields import (
     EducationItem,
     Location,
     ProfessionalSummary,

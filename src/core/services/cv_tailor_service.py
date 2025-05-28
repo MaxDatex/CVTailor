@@ -4,26 +4,26 @@ from google.genai import errors
 from jinja2 import Template
 from loguru import logger
 
-from ai.llm import get_cv_improvements
-from models.comparison_cv_fields import (ComparisonAwardItem, ComparisonCV,
-                                         ComparisonField,
-                                         ComparisonProfessionalSummary,
-                                         ComparisonProjectItem,
-                                         ComparisonPublicationItem,
-                                         ComparisonWorkItem)
-from models.input_cv_fields import AwardItem as OriginalAwardItem
-from models.input_cv_fields import CVBody
-from models.input_cv_fields import ProjectItem as OriginalProjectItem
-from models.input_cv_fields import PublicationItem as OriginalPublicationItem
-from models.input_cv_fields import WorkItem as OriginalWorkItem
-from models.job_description_fields import JobDescriptionFields
-from models.revised_cv_fields import (LLMResponse, RevisedAwardItem,
-                                      RevisedCVResponseSchema,
-                                      RevisedProjectItem,
-                                      RevisedPublicationItem, RevisedWorkItem)
-from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
-from templates.md_job_description_template import JOB_DESCRIPTION_TEMPLATE_MD
-from utils.exceptions import ClientInitializationError, ResponseParsingError
+from src.core.ai.llm import get_cv_improvements
+from src.core.models.comparison_cv_fields import (ComparisonAwardItem, ComparisonCV,
+                                                  ComparisonField,
+                                                  ComparisonProfessionalSummary,
+                                                  ComparisonProjectItem,
+                                                  ComparisonPublicationItem,
+                                                  ComparisonWorkItem)
+from src.core.models.input_cv_fields import AwardItem as OriginalAwardItem
+from src.core.models.input_cv_fields import CVBody
+from src.core.models.input_cv_fields import ProjectItem as OriginalProjectItem
+from src.core.models.input_cv_fields import PublicationItem as OriginalPublicationItem
+from src.core.models.input_cv_fields import WorkItem as OriginalWorkItem
+from src.core.models.job_description_fields import JobDescriptionFields
+from src.core.models.revised_cv_fields import (LLMResponse, RevisedAwardItem,
+                                               RevisedCVResponseSchema,
+                                               RevisedProjectItem,
+                                               RevisedPublicationItem, RevisedWorkItem)
+from src.core.templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
+from src.core.templates.md_job_description_template import JOB_DESCRIPTION_TEMPLATE_MD
+from src.core.utils.exceptions import ClientInitializationError, ResponseParsingError
 
 
 def _create_comparison_field[T](
@@ -167,10 +167,6 @@ def create_comparison_cv(
         summary=_create_comparison_field(
             original_ps.summary,
             revised_ps_suggestion.summary if revised_ps_suggestion else None,
-        ),
-        objective=_create_comparison_field(
-            original_ps.objective,
-            revised_ps_suggestion.objective if revised_ps_suggestion else None,
         ),
         highlights=_create_comparison_field(
             original_ps.highlights,

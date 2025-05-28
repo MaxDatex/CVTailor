@@ -81,7 +81,6 @@ class CVHeader(BaseModel):
 
 class ProfessionalSummary(BaseModel):
     summary: str = Field(..., min_length=50, max_length=5000)
-    # objective: Optional[str] = Field(None, min_length=50, max_length=5000)
     highlights: Optional[List[str]] = None
 
     validate_highlights = field_validator("highlights")(validate_highlights_list)

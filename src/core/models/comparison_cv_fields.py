@@ -2,16 +2,16 @@ from typing import Generic, List, Optional, TypeVar
 
 from pydantic import BaseModel
 
-from models.input_cv_fields import AwardItem as OriginalAwardItem
-from models.input_cv_fields import CertificateItem as OriginalCertificateItem
-from models.input_cv_fields import CVHeader
-from models.input_cv_fields import EducationItem as OriginalEducationItem
-from models.input_cv_fields import LanguageItem as OriginalLanguageItem
-from models.input_cv_fields import ProjectItem as OriginalProjectItem
-from models.input_cv_fields import PublicationItem as OriginalPublicationItem
-from models.input_cv_fields import SkillItem as OriginalSkillItem
-from models.input_cv_fields import WorkItem as OriginalWorkItem
-from models.revised_cv_fields import RevisedSkillItem
+from src.core.models.input_cv_fields import AwardItem as OriginalAwardItem
+from src.core.models.input_cv_fields import CertificateItem as OriginalCertificateItem
+from src.core.models.input_cv_fields import CVHeader
+from src.core.models.input_cv_fields import EducationItem as OriginalEducationItem
+from src.core.models.input_cv_fields import LanguageItem as OriginalLanguageItem
+from src.core.models.input_cv_fields import ProjectItem as OriginalProjectItem
+from src.core.models.input_cv_fields import PublicationItem as OriginalPublicationItem
+from src.core.models.input_cv_fields import SkillItem as OriginalSkillItem
+from src.core.models.input_cv_fields import WorkItem as OriginalWorkItem
+from src.core.models.revised_cv_fields import RevisedSkillItem
 
 T = TypeVar("T")
 

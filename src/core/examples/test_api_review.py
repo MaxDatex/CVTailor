@@ -1,8 +1,3 @@
-from jinja2 import Template
-
-from ai.llm import get_cv_improvements
-from templates.md_revised_cv_template import REVISED_CV_TEMPLATE_MD
-
 if __name__ == "__main__":
     # with open("examples/job_description.txt", "r") as f:
     #     job_description = f.read()
@@ -25,7 +20,7 @@ if __name__ == "__main__":
     # with open("examples/cv_revised.md", "w") as f:
     #     f.write(rendered_md)
 
-    from services.cv_tailor_service import tailor_cv
+    from src.core.services.cv_tailor_service import tailor_cv
 
     templ = """
     <!-- For Professional Title -->
@@ -88,14 +83,11 @@ if __name__ == "__main__":
         </div>
     {% endfor %}
         """
-    from examples.test_template import cv_dmytro
-    from models.job_description_fields import get_job_description_example
+    from src.core.examples.test_template import cv_dmytro
+    from src.core.models.job_description_fields import get_job_description_example
 
     job_description = get_job_description_example()
     comparison_cv = tailor_cv(original_cv=cv_dmytro, job_description=job_description)
-    # rendered_template = Template(templ).render(comparison_cv=comparison_cv)
-    # with open("examples/cv_compared.html", "w") as f:
-    #     f.write(rendered_template)
     for k, v in comparison_cv.model_dump().items():
         print(f"{k}: {v}\n")
 

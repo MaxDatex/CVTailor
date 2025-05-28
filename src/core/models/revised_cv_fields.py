@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 from google.genai.types import GenerateContentResponse
 from pydantic import BaseModel, Field
 
-from models.input_cv_fields import ProfessionalSummary, SkillItem
+from src.core.models.input_cv_fields import ProfessionalSummary, SkillItem
 
 
 class RevisedWorkItem(BaseModel):

@@ -7,11 +7,11 @@ from loguru import logger
 from tenacity import (retry, retry_if_exception_type, stop_after_attempt,
                       wait_exponential)
 
-from ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
+from src.core.ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from config import settings
-from models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
-from utils.exceptions import (ClientInitializationError, MissingAPIKeyError,
-                              ResponseParsingError)
+from src.core.models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
+from src.core.utils.exceptions import (ClientInitializationError, MissingAPIKeyError,
+                                       ResponseParsingError)
 
 _CLIENT: Optional[genai.Client] = None
 _IS_INITIALIZED: bool = False
