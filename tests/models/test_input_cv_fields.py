@@ -271,12 +271,11 @@ class TestProjectItem:
     def test_project_item_valid(
         self, valid_summary_data: str, valid_highlights_data: List[str]
     ):
-        data = {
-            "name": "AI Chatbot",
-            "summary": valid_summary_data,
-            "highlights": valid_highlights_data,
-        }
-        project = ProjectItem(**data)
+        project = ProjectItem(
+            name="AI Chatbot",
+            summary=valid_summary_data,
+            highlights=valid_highlights_data,
+        )
         assert project.name == "AI Chatbot"
 
     def test_project_item_end_date_validation(
@@ -327,15 +326,14 @@ class TestProjectItem:
 
 class TestEducationItem:
     def test_education_item_valid(self):
-        data = {
-            "institution": "University of Example",
-            "area": "Computer Science",
-            "study_type": StudyType.BACHELORS,
-            "start_date": date(2018, 9, 1),
-            "end_date": date(2022, 6, 30),
-            "courses": ["Data Structures", "Algorithms"],
-        }
-        edu = EducationItem(**data)
+        edu = EducationItem(
+            institution="University of Example",
+            area="Computer Science",
+            study_type=StudyType.BACHELORS,
+            start_date=date(2018, 9, 1),
+            end_date=date(2022, 6, 30),
+            courses=["Data Structures", "Algorithms"],
+        )
         assert edu.institution == "University of Example"
 
     def test_education_item_invalid_study_type(self):
@@ -352,12 +350,12 @@ class TestEducationItem:
 
 class TestAwardItem:
     def test_award_item_valid(self, valid_summary_data: str):
-        data = {
-            "title": "Best Project Award",
-            "date": date(2023, 5, 15),
-            "summary": valid_summary_data,
-        }
-        award = AwardItem(**data)
+        award = AwardItem(
+            title="Best Project Award",
+            date=date(2023, 5, 15),
+            summary=valid_summary_data,
+            awarder_by=None,
+        )
         assert award.title == "Best Project Award"
         assert award.summary is not None
 
@@ -386,7 +384,7 @@ class TestPublicationItem:
             "releaseDate": date(2023, 7, 20),
             "summary": valid_summary_data,
         }
-        pub = PublicationItem(**data)
+        pub = PublicationItem(**data)  # type: ignore
         assert pub.name == "Advanced Techniques in ML"
 
 

@@ -46,7 +46,7 @@ def validate_end_date(
     if end_date is None or info.data.get("start_date") is None:
         return end_date
 
-    if end_date != "Present" and end_date < info.data.get("start_date"):
+    if end_date != "Present" and end_date < info.data.get("start_date", dtdate.min):
         raise ValueError("End date must be after start date")
     return end_date
 

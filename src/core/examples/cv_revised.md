@@ -56,13 +56,13 @@ AWS Sagemaker, Google Cloud Platform (GCP), Spark, Hadoop
 
 
 
-    
-        
-        
-    
-        
-        
-    
+
+
+
+
+
+
+
 
 ### Analytics Pro
 **Location:** Lviv, Lviv Region, UA | **Title:** Data Scientist | **Website:** [https://analyticspro.ua/](https://analyticspro.ua/)
@@ -86,13 +86,13 @@ Developed and implemented predictive models for client projects across various i
 
 
 
-    
-        
-        
-    
-        
-        
-    
+
+
+
+
+
+
+
 
 ### FinTech Insights
 **Location:** Kyiv, Kyiv City, UA | **Title:** Junior Data Analyst | **Website:** [https://fintechinsights.com/](https://fintechinsights.com/)
@@ -119,10 +119,10 @@ Assisted senior data scientists in data cleaning, preprocessing, and generating 
 
 
 
-    
-        
-        
-    
+
+
+
+
 
 ### Sentiment Analysis of Social Media Data
 **Start Date:** 2024-03-01 | **End Date:** 2024-05-15
@@ -187,5 +187,3 @@ A research paper exploring various machine learning techniques to predict custom
 
 ### English
 **Fluency:** Fluent
-
-

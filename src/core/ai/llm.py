@@ -20,7 +20,7 @@ from src.core.utils.exceptions import (
     ResponseParsingError,
 )
 
-_CLIENT: Optional[genai.Client] = None
+_CLIENT: genai.Client
 _IS_INITIALIZED: bool = False
 
 

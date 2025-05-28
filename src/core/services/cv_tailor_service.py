@@ -236,23 +236,31 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
     logger.info(f"Job description for LLM content: {job_description_string}")
     try:
         llm_data: LLMResponse = get_cv_improvements(job_description_string, cv)
-        if not llm_data.response.usage_metadata:
+        if not llm_data.response:
             logger.error(
                 "LLMResponse received, but 'response' attribute is missing/empty."
             )
             raise ResponseParsingError("Internal error: LLM response was not found.")
-        ai_suggestions: RevisedCVResponseSchema = llm_data.response.parsed
+        ai_suggestions = llm_data.response.parsed
         if not isinstance(ai_suggestions, RevisedCVResponseSchema):
             logger.error(
                 f"LLM response was not parsed into RevisedCVResponseSchema. Type: {type(ai_suggestions)}"
             )
-            raise TypeError(
+            raise ResponseParsingError(
                 "LLM response not parsed into expected schema after API call."
             )
     except ResponseParsingError as e:
         logger.error(f"Failed to parse LLM response: {e}")
         ai_suggestions = RevisedCVResponseSchema(
-            explanations="An error occurred. Please try again later."
+            explanations="An error occurred. Please try again later.",
+            suggestions="An error occurred. Please try again later.",
+            revised_professional_title=None,
+            revised_professional_summary=None,
+            revised_work_experience=None,
+            revised_projects=None,
+            revised_awards=None,
+            revised_publications=None,
+            revised_skills=None,
         )
         return create_comparison_cv(original_cv, ai_suggestions)
     except ClientInitializationError as e:

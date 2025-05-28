@@ -23,7 +23,6 @@ class ComparisonField(BaseModel, Generic[T]):
 
 class ComparisonProfessionalSummary(BaseModel):
     summary: ComparisonField[Optional[str]]
-    # objective: ComparisonField[Optional[str]]
     highlights: ComparisonField[Optional[List[str]]]
 
 

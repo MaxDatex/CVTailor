@@ -132,5 +132,3 @@ A research paper exploring various machine learning techniques to predict custom
 
 ### English
 **Fluency:** Fluent
-
-
