@@ -42,9 +42,6 @@ def _init_ai_resources() -> None:
     return None
 
 
-retriable_errors = (errors.ServerError,)
-
-
 def get_suggest_improvements_config() -> GenerateContentConfig:
     config = GenerateContentConfig(
         max_output_tokens=settings.MAX_OUTPUT_TOKENS,
@@ -67,6 +64,9 @@ def get_token_usage_metadata(response: GenerateContentResponse) -> Dict:
     metadata["input_tokens_count"] = response.usage_metadata.prompt_token_count
     metadata["output_tokens_count"] = response.usage_metadata.candidates_token_count
     return metadata
+
+
+retriable_errors = (errors.ServerError, ResponseParsingError)
 
 
 @retry(
