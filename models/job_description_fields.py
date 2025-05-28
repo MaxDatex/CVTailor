@@ -21,19 +21,19 @@ class JobDescriptionFields(BaseModel):
     job_description: JobDescriptionContent
 
 
-def get_job_desctiption_example():
+def get_job_description_example():
 
     mock_job_description_data = {
-        "job_title": "Senior Full Stack Engineer",
-        "job_description": {
-            "about_company": "Acme Innovations is a leading technology company specializing in scalable cloud solutions and AI-driven analytics. We are committed to fostering a culture of innovation, collaboration, and continuous learning. Our mission is to empower businesses with cutting-edge tools that transform data into actionable insights, driving growth and efficiency across various industries. We value diversity and inclusion, believing that a wide range of perspectives leads to the most creative and effective solutions. Join our dynamic team and contribute to building the future of technology.",
-            "about_role": "We are seeking a highly motivated and experienced Senior Full Stack Engineer to join our growing product development team. In this role, you will be responsible for designing, developing, and maintaining robust and scalable web applications from front-end user interfaces to back-end services. You will work closely with product managers, UX/UI designers, and other engineers to deliver high-quality software solutions that meet user needs and business objectives. This position offers an exciting opportunity to work on challenging projects and make a significant impact on our core products.",
-            "requirements": "Minimum 5 years of professional experience in full stack web development. Proficient in Python (Django/Flask) and JavaScript (React/Angular/Vue.js). Strong understanding of RESTful APIs, microservices architecture, and database design (SQL/NoSQL). Experience with cloud platforms (AWS, GCP, or Azure) and CI/CD pipelines. Solid grasp of data structures, algorithms, and software design principles. Excellent problem-solving skills and ability to work independently as well as collaboratively within a team. Bachelor's degree in Computer Science or a related field.",
-            "nice_to_have": "Experience with containerization technologies (Docker, Kubernetes). Familiarity with GraphQL. Knowledge of machine learning fundamentals or data engineering concepts. Contributions to open-source projects. Master's degree in a relevant field. Prior experience in a fast-paced startup environment. Strong communication skills and ability to mentor junior developers.",
-            "responsibilities": "Design, develop, and deploy full-stack web applications and services. Write clean, maintainable, and efficient code. Collaborate with cross-functional teams to define, design, and ship new features. Participate in code reviews to ensure code quality and adherence to best practices. Troubleshoot and debug production issues. Optimize applications for maximum speed and scalability. Stay up-to-date with emerging technologies and industry trends. Contribute to architectural discussions and technical decision-making.",
-            "other": "This is a full-time position based in our dynamic San Francisco office, with flexible remote work options available. We offer competitive salary, comprehensive health benefits, generous paid time off, and opportunities for professional development and growth. Our team is passionate about building innovative products and making a difference. We believe in work-life balance and provide a supportive environment for our employees to thrive. Apply now to be part of our exciting journey!",
-        },
+    "job_title": "Machine Learning Engineer",
+    "job_description": {
+        "about_company": "Data Science UA is a service company with strong data science and AI expertise. Our journey began in 2016 with the organization of the first Data Science UA conference, setting the foundation for our growth. Over the past 8 years, we have diligently fostered the largest Data Science Community in Eastern Europe.",
+        "about_role": "We are looking for a Machine Learning Engineer to become a helping hand for our internal AI/ML R&D team. Do you want to work on some real projects for our clients and/or perform R&D on novel AI algorithms and platforms? Do you want to try different fields of AI/ML, starting with advanced analytics, ending ad-hoc neural networks optimizations for Edge AI platforms? Then apply and join our team!",
+        "requirements": "— 1.5 years of experience as ML Engineer/Data Scientist or related (alternatively, participation in open-source ML projects or Kaggle competitions);\n— Expertise in CV or LLM/NLP-based projects;\n— Good knowledge of math, CS, and AI fundamentals;\n— Proficiency in Python;\n— Student/graduate in the field of computer science, mathematics, cybernetics, physics, etc.\n— Upper-Intermediate English.",
+        "nice_to_have": "— Have your own pet projects;\n— Completed different Data Science — related courses.",
+        "responsibilities": "— Participation in AI consulting projects for Clients from Ukraine and abroad;\n— Work on complex R&D projects;\n— Preparation of technical content (presentations, analytical articles).",
+        "other": "We offer:\n— Free English classes with a native speaker and external courses compensation;\n— PE support by professional accountants;\n— Medical insurance;\n— Team-building events, conferences, meetups, and other activities;\n— There are many other benefits you’ll find out at the interview."
     }
+}
 
     try:
         job_description_instance = JobDescriptionFields(**mock_job_description_data)
