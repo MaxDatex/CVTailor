@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import pytest
 
 from src.core.models.input_cv_fields import (
@@ -47,3 +49,9 @@ def valid_summary_data():
 def valid_highlights_data():
     """Provides valid highlights data for tests."""
     yield ["Valid highlight 1", "Valid highlight 2"]
+
+
+@pytest.fixture(scope="session")
+def valid_id():
+    """Provides valid ID data for tests."""
+    yield uuid4()

@@ -1,7 +1,7 @@
 from typing import Dict, List, Optional
 
 from google.genai.types import GenerateContentResponse
-from pydantic import BaseModel, Field
+from pydantic import UUID4, BaseModel, Field
 
 from src.core.models.input_cv_fields import ProfessionalSummary, SkillItem
 
@@ -12,7 +12,7 @@ class RevisedWorkItem(BaseModel):
     Includes minimal identifying fields to link back to the original item.
     """
 
-    id: str = Field(
+    id: UUID4 = Field(
         ..., description="The unique identifier for the work experience item."
     )
     # company_name: str = Field(
@@ -33,7 +33,7 @@ class RevisedProjectItem(BaseModel):
     Includes minimal identifying fields to link back to the original item.
     """
 
-    id: str = Field(..., description="The unique identifier for the project item.")
+    id: UUID4 = Field(..., description="The unique identifier for the project item.")
     # name: str = Field(..., description="The project title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised description for the project."
@@ -44,7 +44,7 @@ class RevisedProjectItem(BaseModel):
 
 
 class RevisedAwardItem(BaseModel):
-    id: str = Field(..., description="The unique identifier for the award item.")
+    id: UUID4 = Field(..., description="The unique identifier for the award item.")
     # title: str = Field(..., description="The award title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for the award."
@@ -52,7 +52,9 @@ class RevisedAwardItem(BaseModel):
 
 
 class RevisedPublicationItem(BaseModel):
-    id: str = Field(..., description="The unique identifier for the publication item.")
+    id: UUID4 = Field(
+        ..., description="The unique identifier for the publication item."
+    )
     # name: str = Field(..., description="The publication title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for the publication."
