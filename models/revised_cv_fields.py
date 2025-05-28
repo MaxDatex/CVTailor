@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 
 from google.genai.types import GenerateContentResponse
 from pydantic import BaseModel, Field
@@ -104,4 +104,4 @@ class RevisedCVResponseSchema(BaseModel):
 
 class LLMResponse(BaseModel):
     response: Optional[GenerateContentResponse]
-    metadata: Optional[Dict[str, Union[int, None]]]
+    metadata: Optional[Dict[str, Optional[int]]]

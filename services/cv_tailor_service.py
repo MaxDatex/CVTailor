@@ -1,5 +1,6 @@
 from typing import Any, Callable, Dict, List, Optional, TypeVar
 
+from google.genai import errors
 from jinja2 import Template
 from loguru import logger
 
@@ -22,6 +23,7 @@ from models.revised_cv_fields import (LLMResponse, RevisedAwardItem,
                                       RevisedPublicationItem, RevisedWorkItem)
 from templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
 from templates.md_job_description_template import JOB_DESCRIPTION_TEMPLATE_MD
+from utils.exceptions import ClientInitializationError, ResponseParsingError
 
 
 def _create_comparison_field[T](
@@ -231,6 +233,27 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
     job_description_string: str = job_description_template.render(
         job_description_data=job_description
     )
-    response: LLMResponse = get_cv_improvements(job_description_string, cv)
-    ai_suggestions: RevisedCVResponseSchema = response.response.parsed
+    try:
+        llm_data: LLMResponse = get_cv_improvements(job_description_string, cv)
+        if not llm_data.response.usage_metadata:
+            logger.error("LLMResponse received, but 'response' attribute is missing/empty.")
+            raise ResponseParsingError("Internal error: LLM response was not found.")
+        ai_suggestions: RevisedCVResponseSchema = llm_data.response.parsed
+        if not isinstance(ai_suggestions, RevisedCVResponseSchema):
+            logger.error(f"LLM response was not parsed into RevisedCVResponseSchema. Type: {type(ai_suggestions)}")
+            raise TypeError("LLM response not parsed into expected schema after API call.")
+    except ResponseParsingError as e:
+        logger.error(f"Failed to parse LLM response: {e}")
+        ai_suggestions = RevisedCVResponseSchema(explanations='An error occurred. Please try again later.')
+        return create_comparison_cv(original_cv, ai_suggestions)
+    except ClientInitializationError as e:
+        logger.error(f"AI client initialization failed: {e}")
+        raise
+    except errors.APIError as e:
+        logger.error(f"Google API error during CV improvements: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error during get_cv_improvements: {e}")
+        raise
+
     return create_comparison_cv(original_cv, ai_suggestions)
