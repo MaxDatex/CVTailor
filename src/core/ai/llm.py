@@ -11,8 +11,8 @@ from tenacity import (
     wait_exponential,
 )
 
-from config import settings
 from src.core.ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
+from src.core.config import settings
 from src.core.models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
 from src.core.utils.exceptions import (
     ClientInitializationError,
