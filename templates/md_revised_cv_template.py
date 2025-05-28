@@ -20,13 +20,6 @@ REVISED_CV_TEMPLATE_MD = """
 {{ cv.professional_summary.summary }}
 {% endif %}
 
-### Objective
-{% if ai_response and ai_response.revised_professional_summary and ai_response.revised_professional_summary.objective %}
-{{ ai_response.revised_professional_summary.objective }}
-{% else %}
-{{ cv.professional_summary.objective }}
-{% endif %}
-
 ### Highlights
 {% if ai_response and ai_response.revised_professional_summary and ai_response.revised_professional_summary.highlights %}
 {% for highlight in ai_response.revised_professional_summary.highlights %}

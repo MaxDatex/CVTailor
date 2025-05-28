@@ -39,12 +39,15 @@ def validate_keywords_list(keywords: List[str]) -> List[str]:
 
 
 def validate_end_date(
-    end_date: dtdate, info: ValidationInfo  # type: ignore
+    end_date: dtdate, info: ValidationInfo
 ) -> Union[dtdate, Literal["Present"]]:
     """
     Validates that the end date is after the start date.
     """
-    if end_date != "Present" and end_date < info.data.get("start_date"):  # type: ignore
+    if end_date is None or info.data.get("start_date") is None:
+        return end_date
+
+    if end_date != "Present" and end_date < info.data.get("start_date"):
         raise ValueError("End date must be after start date")
     return end_date
 
@@ -77,8 +80,8 @@ class CVHeader(BaseModel):
 
 
 class ProfessionalSummary(BaseModel):
-    summary: Optional[str] = Field(None, min_length=50, max_length=5000)
-    objective: Optional[str] = Field(None, min_length=50, max_length=5000)
+    summary: str = Field(..., min_length=50, max_length=5000)
+    # objective: Optional[str] = Field(None, min_length=50, max_length=5000)
     highlights: Optional[List[str]] = None
 
     validate_highlights = field_validator("highlights")(validate_highlights_list)
@@ -110,9 +113,9 @@ class SkillItem(BaseModel):
 class WorkItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     company_name: str = Field(..., min_length=1, max_length=100)
-    company_location: Optional[Location]
+    company_location: Optional[Location] = None
     job_title: str = Field(..., min_length=1, max_length=100)
-    company_website_url: Optional[AnyUrl]
+    company_website_url: Optional[AnyUrl] = None
     start_date: dtdate
     end_date: Union[dtdate, Literal["Present"]] = "Present"
     summary: str = Field(..., min_length=50, max_length=5000)
@@ -128,12 +131,12 @@ class WorkItem(BaseModel):
 
 class ProjectItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
-    name: str = Field(..., min_length=1, max_length=100)  # Project title
-    start_date: Optional[dtdate]
-    end_date: Optional[Union[dtdate, Literal["Present"]]]
+    name: str = Field(..., min_length=1, max_length=100)
+    start_date: Optional[dtdate] = None
+    end_date: Optional[Union[dtdate, Literal["Present"]]] = None
     summary: str = Field(..., min_length=50, max_length=5000)
     highlights: List[str]
-    url: Optional[AnyUrl]
+    url: Optional[AnyUrl] = None
 
     validate_highlights = field_validator("highlights")(validate_highlights_list)
     validate_date = field_validator("end_date")(validate_end_date)
@@ -152,13 +155,13 @@ class StudyType(str, Enum):
 
 class EducationItem(BaseModel):
     institution: str = Field(..., min_length=1, max_length=100)
-    url: Optional[AnyUrl]
+    url: Optional[AnyUrl] = None
     area: str = Field(..., min_length=2, max_length=100)  # e.g., Computer Science
     study_type: StudyType
     start_date: dtdate
     end_date: Union[dtdate, Literal["Present"]]
-    score: Optional[Union[str, float]]  # e.g., GPA
-    courses: List[str]  # Relevant coursework
+    score: Optional[Union[str, float]] = None
+    courses: Optional[List[str]] = None
 
     validate_date = field_validator("end_date")(validate_end_date)
 
@@ -179,15 +182,15 @@ class CertificateItem(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     date: dtdate
     issuer: str = Field(..., min_length=1, max_length=100)
-    url: Optional[AnyUrl]
+    url: Optional[AnyUrl] = None
 
 
 class PublicationItem(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     name: str = Field(..., min_length=1, max_length=100)
-    publisher: str = Field(..., min_length=1, max_length=100)
+    publisher: Optional[str] = Field(None, min_length=1, max_length=100)
     releaseDate: dtdate
-    url: Optional[AnyUrl]  # Link to publication
+    url: Optional[AnyUrl] = None
     summary: str = Field(..., min_length=50, max_length=5000)
 
 

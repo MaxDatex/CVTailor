@@ -8,9 +8,6 @@ CV_TEMPLATE_LLM_MD = """
 ## Professional Summary
 {{ cv.professional_summary.summary }}
 
-### Objective
-{{ cv.professional_summary.objective }}
-
 ### Highlights
 {% for highlight in cv.professional_summary.highlights %}
 * {{ highlight }}
