@@ -89,9 +89,9 @@ if __name__ == "__main__":
     {% endfor %}
         """
     from examples.test_template import cv_dmytro
-    from models.job_description_fields import get_job_desctiption_example
+    from models.job_description_fields import get_job_description_example
 
-    job_description = get_job_desctiption_example()
+    job_description = get_job_description_example()
     comparison_cv = tailor_cv(original_cv=cv_dmytro, job_description=job_description)
     # rendered_template = Template(templ).render(comparison_cv=comparison_cv)
     # with open("examples/cv_compared.html", "w") as f:

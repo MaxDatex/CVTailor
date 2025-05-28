@@ -44,7 +44,7 @@ ID: {{ work_item.id }}
 ### {{ project_item.name }}
 ID: {{ project_item.id }}
 
-{{ project_item.description }}
+{{ project_item.summary }}
 
 {% for highlight in project_item.highlights %}
 * {{ highlight }}

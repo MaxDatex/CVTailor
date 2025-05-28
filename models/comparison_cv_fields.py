@@ -43,7 +43,7 @@ class ComparisonProjectItem(BaseModel):
 
 class ComparisonAwardItem(BaseModel):
     id: str
-    summary: ComparisonField[str]
+    summary: ComparisonField[Optional[str]]
     original_data: OriginalAwardItem
 
 
