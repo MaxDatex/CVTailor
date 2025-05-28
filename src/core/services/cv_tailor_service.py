@@ -225,10 +225,12 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
     cv_template = Template(CV_TEMPLATE_LLM_MD)
     job_description_template = Template(JOB_DESCRIPTION_TEMPLATE_MD)
 
-    cv = cv_template.render(cv=original_cv)
+    cv: str = cv_template.render(cv=original_cv)
+    logger.info(f"CV for LLM content: {cv}")
     job_description_string: str = job_description_template.render(
         job_description_data=job_description
     )
+    logger.info(f"Job description for LLM content: {job_description_string}")
     try:
         llm_data: LLMResponse = get_cv_improvements(job_description_string, cv)
         if not llm_data.response.usage_metadata:

@@ -104,6 +104,7 @@ def get_cv_improvements(job_description: str, cv: str) -> LLMResponse:
 
     if response.parsed is None or not response.parsed:
         logger.error("LLM response could not be parsed or was empty.")
+        logger.info(f"LLM response: {response}")
         raise ResponseParsingError("LLM response could not be parsed or was empty.")
 
     metadata = get_token_usage_metadata(response)
