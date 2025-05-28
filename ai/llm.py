@@ -45,11 +45,9 @@ def _init_ai_resources() -> None:
 retriable_errors = (errors.ServerError,)
 
 
-def get_suggest_improvements_config(
-    max_output_tokens: Optional[int] = None,
-) -> GenerateContentConfig:
+def get_suggest_improvements_config() -> GenerateContentConfig:
     config = GenerateContentConfig(
-        max_output_tokens=max_output_tokens,
+        max_output_tokens=settings.MAX_OUTPUT_TOKENS,
         system_instruction=SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT,
         response_mime_type="application/json",
         response_schema=RevisedCVResponseSchema,

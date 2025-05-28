@@ -253,7 +253,7 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
         logger.error(f"Google API error during CV improvements: {e}")
         raise
     except Exception as e:
-        logger.error(f"Unexpected error during get_cv_improvements: {e}")
+        logger.error(f"Unexpected error during get_cv_improvements: {e}", exc_info=True)
         raise
 
     return create_comparison_cv(original_cv, ai_suggestions)
