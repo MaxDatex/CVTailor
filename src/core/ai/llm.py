@@ -115,3 +115,44 @@ def get_cv_improvements(job_description: str, cv: str) -> LLMResponse:
 
     metadata = get_token_usage_metadata(response)
     return LLMResponse(response=response, metadata=metadata)
+
+
+@retry(
+    reraise=True,
+    retry=retry_if_exception_type(retriable_errors),
+    stop=stop_after_attempt(settings.RETRY_ATTEMPTS),
+    wait=wait_exponential(
+        multiplier=1, min=settings.RETRY_MIN_WAIT, max=settings.RETRY_MAX_WAIT
+    ),
+)
+async def get_cv_improvements_async(job_description: str, cv: str) -> LLMResponse:
+    config: GenerateContentConfig
+    response: GenerateContentResponse
+
+    global _CLIENT, _IS_INITIALIZED
+    config = get_suggest_improvements_config()
+
+    if not _IS_INITIALIZED or _CLIENT is None:
+        logger.error("AI resources were not initialized. Attempting to initialize now.")
+        try:
+            _init_ai_resources()
+        except Exception as e:
+            logger.error(f"Failed to initialize AI resources: {str(e)}")
+            raise ClientInitializationError(e) from e
+
+    logger.debug("Generating CV improvements...")
+
+    response = await _CLIENT.aio.models.generate_content(
+        model=settings.MODEL_NAME,
+        contents=JOB_DESC_W_CV_PROMPT.format(job_description=job_description, cv=cv),
+        config=config,
+    )
+    logger.success("Successfully generated CV improvements.")
+
+    if response.parsed is None or not response.parsed:
+        logger.error("LLM response could not be parsed or was empty.")
+        logger.info(f"LLM response: {response}")
+        raise ResponseParsingError("LLM response could not be parsed or was empty.")
+
+    metadata = get_token_usage_metadata(response)
+    return LLMResponse(response=response, metadata=metadata)

@@ -274,3 +274,55 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
         raise
 
     return create_comparison_cv(original_cv, ai_suggestions)
+
+
+async def tailor_cv_async(original_cv: CVBody, job_description: JobDescriptionFields):
+    cv_template = Template(CV_TEMPLATE_LLM_MD)
+    job_description_template = Template(JOB_DESCRIPTION_TEMPLATE_MD)
+
+    cv: str = cv_template.render(cv=original_cv)
+    logger.info(f"CV for LLM content: {cv}")
+    job_description_string: str = job_description_template.render(
+        job_description_data=job_description
+    )
+    logger.info(f"Job description for LLM content: {job_description_string}")
+    try:
+        llm_data: LLMResponse = await get_cv_improvements(job_description_string, cv)
+        if not llm_data.response:
+            logger.error(
+                "LLMResponse received, but 'response' attribute is missing/empty."
+            )
+            raise ResponseParsingError("Internal error: LLM response was not found.")
+        ai_suggestions = llm_data.response.parsed
+        if not isinstance(ai_suggestions, RevisedCVResponseSchema):
+            logger.error(
+                f"LLM response was not parsed into RevisedCVResponseSchema. Type: {type(ai_suggestions)}"
+            )
+            raise ResponseParsingError(
+                "LLM response not parsed into expected schema after API call."
+            )
+    except ResponseParsingError as e:
+        logger.error(f"Failed to parse LLM response: {e}")
+        ai_suggestions = RevisedCVResponseSchema(
+            explanations="An error occurred. Please try again later.",
+            suggestions="An error occurred. Please try again later.",
+            revised_professional_title=None,
+            revised_professional_summary=None,
+            revised_work_experience=None,
+            revised_projects=None,
+            revised_awards=None,
+            revised_publications=None,
+            revised_skills=None,
+        )
+        return create_comparison_cv(original_cv, ai_suggestions)
+    except ClientInitializationError as e:
+        logger.error(f"AI client initialization failed: {e}")
+        raise
+    except errors.APIError as e:
+        logger.error(f"Google API error during CV improvements: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error during get_cv_improvements: {e}", exc_info=True)
+        raise
+
+    return create_comparison_cv(original_cv, ai_suggestions)
