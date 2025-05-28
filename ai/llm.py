@@ -39,8 +39,6 @@ def _init_ai_resources() -> None:
     _IS_INITIALIZED = True
     logger.success("Successfully initialized Google API client and model.")
 
-    logger.debug("Initializing prompt injection guardrail...")
-
     return None
 
 
