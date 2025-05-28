@@ -1,6 +1,11 @@
 import pytest
 
-from src.core.models.input_cv_fields import CVBody, CVHeader, Location, ProfessionalSummary
+from src.core.models.input_cv_fields import (
+    CVBody,
+    CVHeader,
+    Location,
+    ProfessionalSummary,
+)
 
 
 @pytest.fixture(scope="session")

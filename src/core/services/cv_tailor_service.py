@@ -5,22 +5,29 @@ from jinja2 import Template
 from loguru import logger
 
 from src.core.ai.llm import get_cv_improvements
-from src.core.models.comparison_cv_fields import (ComparisonAwardItem, ComparisonCV,
-                                                  ComparisonField,
-                                                  ComparisonProfessionalSummary,
-                                                  ComparisonProjectItem,
-                                                  ComparisonPublicationItem,
-                                                  ComparisonWorkItem)
+from src.core.models.comparison_cv_fields import (
+    ComparisonAwardItem,
+    ComparisonCV,
+    ComparisonField,
+    ComparisonProfessionalSummary,
+    ComparisonProjectItem,
+    ComparisonPublicationItem,
+    ComparisonWorkItem,
+)
 from src.core.models.input_cv_fields import AwardItem as OriginalAwardItem
 from src.core.models.input_cv_fields import CVBody
 from src.core.models.input_cv_fields import ProjectItem as OriginalProjectItem
 from src.core.models.input_cv_fields import PublicationItem as OriginalPublicationItem
 from src.core.models.input_cv_fields import WorkItem as OriginalWorkItem
 from src.core.models.job_description_fields import JobDescriptionFields
-from src.core.models.revised_cv_fields import (LLMResponse, RevisedAwardItem,
-                                               RevisedCVResponseSchema,
-                                               RevisedProjectItem,
-                                               RevisedPublicationItem, RevisedWorkItem)
+from src.core.models.revised_cv_fields import (
+    LLMResponse,
+    RevisedAwardItem,
+    RevisedCVResponseSchema,
+    RevisedProjectItem,
+    RevisedPublicationItem,
+    RevisedWorkItem,
+)
 from src.core.templates.md_cv_template_to_llm import CV_TEMPLATE_LLM_MD
 from src.core.templates.md_job_description_template import JOB_DESCRIPTION_TEMPLATE_MD
 from src.core.utils.exceptions import ClientInitializationError, ResponseParsingError
@@ -205,14 +212,10 @@ def create_comparison_cv(
         professional_summary=compared_ps,
         original_skills=original_cv.skills,
         suggested_skills=ai_suggestions.revised_skills,
-        work_experience=(
-            compared_work_experience if compared_work_experience else []
-        ),
+        work_experience=(compared_work_experience if compared_work_experience else []),
         projects=compared_projects if compared_projects else [],
         awards=compared_awards if compared_awards else None,
-        publications=(
-            compared_publications if compared_publications else None
-        ),
+        publications=(compared_publications if compared_publications else None),
         education=original_cv.education,
         certificates=original_cv.certificates,
         languages=original_cv.languages,
@@ -234,15 +237,23 @@ def tailor_cv(original_cv: CVBody, job_description: JobDescriptionFields):
     try:
         llm_data: LLMResponse = get_cv_improvements(job_description_string, cv)
         if not llm_data.response.usage_metadata:
-            logger.error("LLMResponse received, but 'response' attribute is missing/empty.")
+            logger.error(
+                "LLMResponse received, but 'response' attribute is missing/empty."
+            )
             raise ResponseParsingError("Internal error: LLM response was not found.")
         ai_suggestions: RevisedCVResponseSchema = llm_data.response.parsed
         if not isinstance(ai_suggestions, RevisedCVResponseSchema):
-            logger.error(f"LLM response was not parsed into RevisedCVResponseSchema. Type: {type(ai_suggestions)}")
-            raise TypeError("LLM response not parsed into expected schema after API call.")
+            logger.error(
+                f"LLM response was not parsed into RevisedCVResponseSchema. Type: {type(ai_suggestions)}"
+            )
+            raise TypeError(
+                "LLM response not parsed into expected schema after API call."
+            )
     except ResponseParsingError as e:
         logger.error(f"Failed to parse LLM response: {e}")
-        ai_suggestions = RevisedCVResponseSchema(explanations='An error occurred. Please try again later.')
+        ai_suggestions = RevisedCVResponseSchema(
+            explanations="An error occurred. Please try again later."
+        )
         return create_comparison_cv(original_cv, ai_suggestions)
     except ClientInitializationError as e:
         logger.error(f"AI client initialization failed: {e}")

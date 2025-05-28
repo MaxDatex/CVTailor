@@ -2,26 +2,26 @@ from datetime import date
 from typing import List
 
 import pytest
-from pydantic import ValidationError, AnyUrl
+from pydantic import AnyUrl, ValidationError
 
 from src.core.models.input_cv_fields import (
-    EducationItem,
-    Location,
-    ProfessionalSummary,
-    StudyType,
-    WorkItem,
-    validate_keywords_list,
-    validate_highlights_list,
-    Profile,
-    CVHeader,
-    SkillLevel,
-    SkillItem,
-    ProjectItem,
     AwardItem,
     CertificateItem,
-    PublicationItem,
+    CVHeader,
+    EducationItem,
     LanguageFluency,
     LanguageItem,
+    Location,
+    ProfessionalSummary,
+    Profile,
+    ProjectItem,
+    PublicationItem,
+    SkillItem,
+    SkillLevel,
+    StudyType,
+    WorkItem,
+    validate_highlights_list,
+    validate_keywords_list,
 )
 
 

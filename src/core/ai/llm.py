@@ -4,14 +4,21 @@ from google import genai
 from google.genai import errors
 from google.genai.types import GenerateContentConfig, GenerateContentResponse
 from loguru import logger
-from tenacity import (retry, retry_if_exception_type, stop_after_attempt,
-                      wait_exponential)
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
 
-from src.core.ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from config import settings
+from src.core.ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
 from src.core.models.revised_cv_fields import LLMResponse, RevisedCVResponseSchema
-from src.core.utils.exceptions import (ClientInitializationError, MissingAPIKeyError,
-                                       ResponseParsingError)
+from src.core.utils.exceptions import (
+    ClientInitializationError,
+    MissingAPIKeyError,
+    ResponseParsingError,
+)
 
 _CLIENT: Optional[genai.Client] = None
 _IS_INITIALIZED: bool = False
@@ -78,7 +85,6 @@ retriable_errors = (errors.ServerError, ResponseParsingError)
     ),
 )
 def get_cv_improvements(job_description: str, cv: str) -> LLMResponse:
-    client: genai.Client
     config: GenerateContentConfig
     response: GenerateContentResponse
 
