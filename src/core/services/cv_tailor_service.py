@@ -4,7 +4,7 @@ from google.genai import errors
 from jinja2 import Template
 from loguru import logger
 
-from src.core.ai.llm import get_cv_improvements
+from src.core.ai.llm import get_cv_improvements, get_cv_improvements_async
 from src.core.models.comparison_cv_fields import (
     ComparisonAwardItem,
     ComparisonCV,
@@ -287,7 +287,9 @@ async def tailor_cv_async(original_cv: CVBody, job_description: JobDescriptionFi
     )
     logger.info(f"Job description for LLM content: {job_description_string}")
     try:
-        llm_data: LLMResponse = await get_cv_improvements(job_description_string, cv)
+        llm_data: LLMResponse = await get_cv_improvements_async(
+            job_description_string, cv
+        )
         if not llm_data.response:
             logger.error(
                 "LLMResponse received, but 'response' attribute is missing/empty."
