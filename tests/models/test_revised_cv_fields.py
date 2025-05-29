@@ -33,8 +33,7 @@ class TestRevisedWorkItem:
         assert item.revised_highlights == valid_highlights_data
 
     def test_valid_instantiation_optional_fields_missing(self, valid_id: UUID4):
-        data = {"id": valid_id}
-        item = RevisedWorkItem(**data)
+        item = RevisedWorkItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
         assert item.revised_highlights is None
@@ -46,7 +45,7 @@ class TestRevisedWorkItem:
             RevisedWorkItem(
                 revised_summary=valid_summary_data,
                 revised_highlights=valid_highlights_data,
-            )
+            )  # type: ignore[call-arg]
         assert "id" in str(excinfo.value).lower()
 
     def test_invalid_id_type(
@@ -54,22 +53,23 @@ class TestRevisedWorkItem:
     ):
         with pytest.raises(ValidationError) as excinfo:
             RevisedWorkItem(
-                id=123,
+                id=123,  # type: ignore[arg-type]
                 revised_summary=valid_summary_data,
                 revised_highlights=valid_highlights_data,
             )
         assert "id" in str(excinfo.value).lower()
 
-    def test_optional_fields_can_be_empty_list(self, valid_id: str):
-        data = {"id": valid_id, "revised_highlights": []}
-        item = RevisedWorkItem(**data)
+    def test_optional_fields_can_be_empty_list(
+        self, valid_id: UUID4, valid_summary_data
+    ):
+        item = RevisedWorkItem(id=valid_id, revised_highlights=[])  # type: ignore[call-arg]
         assert item.revised_highlights == []
         assert item.revised_summary is None
 
 
 class TestRevisedProjectItem:
     def test_valid_instantiation_all_fields(
-        self, valid_id: str, valid_summary_data: str, valid_highlights_data: List[str]
+        self, valid_id: UUID4, valid_summary_data: str, valid_highlights_data: List[str]
     ):
         item = RevisedProjectItem(
             id=valid_id,
@@ -80,47 +80,47 @@ class TestRevisedProjectItem:
         assert item.revised_summary == valid_summary_data
         assert item.revised_highlights == valid_highlights_data
 
-    def test_valid_instantiation_optional_fields_missing(self, valid_id: str):
-        item = RevisedProjectItem(id=valid_id)
+    def test_valid_instantiation_optional_fields_missing(self, valid_id: UUID4):
+        item = RevisedProjectItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
         assert item.revised_highlights is None
 
     def test_missing_required_id(self, valid_summary_data: str):
         with pytest.raises(ValidationError):
-            RevisedProjectItem(revised_summary=valid_summary_data)
+            RevisedProjectItem(revised_summary=valid_summary_data)  # type: ignore[call-arg]
 
 
 class TestRevisedAwardItem:
-    def test_valid_instantiation(self, valid_id: str, valid_summary_data: str):
-        item = RevisedAwardItem(id=valid_id, revised_summary=valid_summary_data)
+    def test_valid_instantiation(self, valid_id: UUID4, valid_summary_data: str):
+        item = RevisedAwardItem(id=valid_id, revised_summary=valid_summary_data)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary == valid_summary_data
 
-    def test_valid_instantiation_summary_missing(self, valid_id: str):
-        item = RevisedAwardItem(id=valid_id)
+    def test_valid_instantiation_summary_missing(self, valid_id: UUID4):
+        item = RevisedAwardItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
 
     def test_missing_required_id(self, valid_summary_data: str):
         with pytest.raises(ValidationError):
-            RevisedAwardItem(revised_summary=valid_summary_data)
+            RevisedAwardItem(revised_summary=valid_summary_data)  # type: ignore[call-arg]
 
 
 class TestRevisedPublicationItem:
-    def test_valid_instantiation(self, valid_id: str, valid_summary_data: str):
+    def test_valid_instantiation(self, valid_id: UUID4, valid_summary_data: str):
         item = RevisedPublicationItem(id=valid_id, revised_summary=valid_summary_data)
         assert item.id == valid_id
         assert item.revised_summary == valid_summary_data
 
-    def test_valid_instantiation_summary_missing(self, valid_id: str):
-        item = RevisedPublicationItem(id=valid_id)
+    def test_valid_instantiation_summary_missing(self, valid_id: UUID4):
+        item = RevisedPublicationItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
 
     def test_missing_required_id(self, valid_summary_data: str):
         with pytest.raises(ValidationError):
-            RevisedPublicationItem(revised_summary=valid_summary_data)
+            RevisedPublicationItem(revised_summary=valid_summary_data)  # type: ignore[call-arg]
 
 
 class TestRevisedSkillItem:
@@ -185,20 +185,24 @@ class TestRevisedCVResponseSchema:
             ],
             "suggestions": "Consider adding a section on volunteer experience.",
         }
-        schema = RevisedCVResponseSchema(**data)
+        schema = RevisedCVResponseSchema(**data)  # type: ignore[arg-type]
         assert schema.explanations == "Comprehensive review and revisions."
         assert schema.revised_professional_title == "Chief Innovator"
         assert isinstance(schema.revised_professional_summary, ProfessionalSummary)
         assert schema.revised_professional_summary.summary == valid_summary_data
+        assert schema.revised_skills is not None
+        assert type(schema.revised_skills) == list
         assert len(schema.revised_skills) == 1
         assert isinstance(schema.revised_skills[0], RevisedSkillItem)
         assert schema.revised_skills[0].name == "Python"
+        assert schema.revised_work_experience is not None
+        assert type(schema.revised_work_experience) == list
         assert len(schema.revised_work_experience) == 1
         assert schema.revised_work_experience[0].id == valid_id
 
     def test_missing_required_explanations(self):
         with pytest.raises(ValidationError) as excinfo:
-            RevisedCVResponseSchema(revised_professional_title="New Title")
+            RevisedCVResponseSchema(revised_professional_title="New Title")  # type: ignore[call-arg]
         assert "explanations" in str(excinfo.value).lower()
 
     def test_nested_model_validation_professional_summary(self):
