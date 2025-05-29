@@ -15,7 +15,7 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Use the latest release tag for ruff
     # Check https://github.com/astral-sh/ruff-pre-commit/releases for latest
-    rev: v0.11.11
+    rev: v0.11.12
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix] # --fix will auto-fix issues. --exit-non-zero-on-fix makes git commit fail if auto-fix happened.
@@ -26,4 +26,4 @@ repos:
     rev: v1.15.0
     hooks:
       - id: mypy
-#        args: ["src/", "tests/"] # Explicitly specify folders to type-check
+#        args: ["tests/", "src/"] # Explicitly specify folders to type-check

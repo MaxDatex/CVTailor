@@ -40,4 +40,5 @@ select = ["I"]
 docstring-code-format = false
 
 [tool.mypy]
+mypy_path = "."
 exclude = ["src/core/examples/"]

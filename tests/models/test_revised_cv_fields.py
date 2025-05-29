@@ -5,7 +5,6 @@ from uuid import UUID
 import pytest
 from google.genai.types import GenerateContentResponse
 from pydantic import ValidationError
-from pydantic.v1 import UUID4
 
 from src.core.models.input_cv_fields import ProfessionalSummary, SkillLevel
 from src.core.models.revised_cv_fields import (
@@ -131,7 +130,7 @@ class TestRevisedPublicationItem:
         assert item.id == valid_id
         assert item.revised_summary == valid_summary_data
 
-    def test_valid_instantiation_summary_missing(self, valid_id: UUID4):
+    def test_valid_instantiation_summary_missing(self, valid_id: str):
         item = RevisedPublicationItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
