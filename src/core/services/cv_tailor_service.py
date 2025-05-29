@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, List, Optional, TypeVar, Union
+from typing import Any, Callable, Dict, List, Optional, TypeVar
 
 from google.genai import errors
 from jinja2 import Template
@@ -45,6 +45,17 @@ class BaseService:
 class CVTailorService(BaseService):
     def __init__(self):
         super().__init__()
+        self.ai_suggestions_with_error = RevisedCVResponseSchema(
+            explanations="ERROR: An error occurred. Please try again later.",
+            suggestions="ERROR: An error occurred. Please try again later.",
+            revised_professional_title=None,
+            revised_professional_summary=None,
+            revised_work_experience=None,
+            revised_projects=None,
+            revised_awards=None,
+            revised_publications=None,
+            revised_skills=None,
+        )
 
     @staticmethod
     def _create_comparison_field[T](
@@ -241,11 +252,11 @@ class CVTailorService(BaseService):
         job_description_template = Template(JOB_DESCRIPTION_TEMPLATE_MD)
 
         cv: str = cv_template.render(cv=original_cv)
-        logger.info(f"CV for LLM content: {cv}")
+        logger.info(f"CV for LLM content: {cv[:100]}")
         job_description_string: str = job_description_template.render(
             job_description_data=job_description
         )
-        logger.info(f"Job description for LLM content: {job_description_string}")
+        logger.info(f"Job description for LLM content: {job_description_string[:100]}")
         try:
             llm_data: LLMResponse = get_cv_improvements(job_description_string, cv)
             if not llm_data.response:
@@ -265,18 +276,9 @@ class CVTailorService(BaseService):
                 )
         except ResponseParsingError as e:
             logger.error(f"Failed to parse LLM response: {e}")
-            ai_suggestions = RevisedCVResponseSchema(
-                explanations="An error occurred. Please try again later.",
-                suggestions="An error occurred. Please try again later.",
-                revised_professional_title=None,
-                revised_professional_summary=None,
-                revised_work_experience=None,
-                revised_projects=None,
-                revised_awards=None,
-                revised_publications=None,
-                revised_skills=None,
+            return self.create_comparison_cv(
+                original_cv, self.ai_suggestions_with_error
             )
-            return self.create_comparison_cv(original_cv, ai_suggestions)
         except ClientInitializationError as e:
             logger.error(f"AI client initialization failed: {e}")
             raise
@@ -298,11 +300,11 @@ class CVTailorService(BaseService):
         job_description_template = Template(JOB_DESCRIPTION_TEMPLATE_MD)
 
         cv: str = cv_template.render(cv=original_cv)
-        logger.info(f"CV for LLM content: {cv}")
+        logger.info(f"CV for LLM content: {cv[:100]}")
         job_description_string: str = job_description_template.render(
             job_description_data=job_description
         )
-        logger.info(f"Job description for LLM content: {job_description_string}")
+        logger.info(f"Job description for LLM content: {job_description_string[:100]}")
         try:
             llm_data: LLMResponse = await get_cv_improvements_async(
                 job_description_string, cv
@@ -324,21 +326,9 @@ class CVTailorService(BaseService):
                 )
         except ResponseParsingError as e:
             logger.error(f"Failed to parse LLM response: {e}")
-            ai_suggestions = RevisedCVResponseSchema(
-                explanations="An error occurred. Please try again later.",
-                suggestions="An error occurred. Please try again later.",
-                revised_professional_title=None,
-                revised_professional_summary=None,
-                revised_work_experience=None,
-                revised_projects=None,
-                revised_awards=None,
-                revised_publications=None,
-                revised_skills=None,
+            return self.create_comparison_cv(
+                original_cv, self.ai_suggestions_with_error
             )
-            return self.create_comparison_cv(original_cv, ai_suggestions)
-        except ClientInitializationError as e:
-            logger.error(f"AI client initialization failed: {e}")
-            raise
         except errors.APIError as e:
             logger.error(f"Google API error during CV improvements: {e}")
             raise
