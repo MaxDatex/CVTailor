@@ -54,4 +54,4 @@ def valid_highlights_data():
 @pytest.fixture(scope="session")
 def valid_id():
     """Provides valid ID data for tests."""
-    yield uuid4()
+    yield uuid4().hex

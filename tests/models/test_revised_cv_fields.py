@@ -1,5 +1,6 @@
 from typing import List
 from unittest.mock import MagicMock
+from uuid import UUID
 
 import pytest
 from google.genai.types import GenerateContentResponse
@@ -21,7 +22,7 @@ from tests.conftest import valid_summary_data
 
 class TestRevisedWorkItem:
     def test_valid_instantiation_all_fields(
-        self, valid_summary_data: str, valid_highlights_data: List[str], valid_id: UUID4
+        self, valid_summary_data: str, valid_highlights_data: List[str], valid_id: str
     ):
         item = RevisedWorkItem(
             id=valid_id,
@@ -32,11 +33,16 @@ class TestRevisedWorkItem:
         assert item.revised_summary == valid_summary_data
         assert item.revised_highlights == valid_highlights_data
 
-    def test_valid_instantiation_optional_fields_missing(self, valid_id: UUID4):
+    def test_valid_instantiation_optional_fields_missing(self, valid_id: str):
         item = RevisedWorkItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
         assert item.revised_highlights is None
+
+    def test_optional_fields_can_be_empty_list(self, valid_id: str, valid_summary_data):
+        item = RevisedWorkItem(id=valid_id, revised_highlights=[])  # type: ignore[call-arg]
+        assert item.revised_highlights == []
+        assert item.revised_summary is None
 
     def test_missing_required_id(
         self, valid_summary_data: str, valid_highlights_data: List[str]
@@ -51,25 +57,37 @@ class TestRevisedWorkItem:
     def test_invalid_id_type(
         self, valid_summary_data: str, valid_highlights_data: List[str]
     ):
-        with pytest.raises(ValidationError) as excinfo:
+        with pytest.raises(TypeError, match="should be a string"):
             RevisedWorkItem(
                 id=123,  # type: ignore[arg-type]
                 revised_summary=valid_summary_data,
                 revised_highlights=valid_highlights_data,
             )
-        assert "id" in str(excinfo.value).lower()
 
-    def test_optional_fields_can_be_empty_list(
-        self, valid_id: UUID4, valid_summary_data
+    def test_id_is_valid_uuid(
+        self, valid_id: str, valid_summary_data: str, valid_highlights_data: List[str]
     ):
-        item = RevisedWorkItem(id=valid_id, revised_highlights=[])  # type: ignore[call-arg]
-        assert item.revised_highlights == []
-        assert item.revised_summary is None
+        item = RevisedWorkItem(
+            id=valid_id,
+            revised_summary=valid_summary_data,
+            revised_highlights=valid_highlights_data,
+        )
+        assert UUID(item.id, version=4)
+
+    def test_id_invalid_uuid(
+        self, valid_summary_data: str, valid_highlights_data: List[str]
+    ):
+        with pytest.raises(ValueError, match="should be valid UUID4"):
+            RevisedWorkItem(
+                id="invalid-uuid",
+                revised_summary=valid_summary_data,
+                revised_highlights=valid_highlights_data,
+            )
 
 
 class TestRevisedProjectItem:
     def test_valid_instantiation_all_fields(
-        self, valid_id: UUID4, valid_summary_data: str, valid_highlights_data: List[str]
+        self, valid_id: str, valid_summary_data: str, valid_highlights_data: List[str]
     ):
         item = RevisedProjectItem(
             id=valid_id,
@@ -80,7 +98,7 @@ class TestRevisedProjectItem:
         assert item.revised_summary == valid_summary_data
         assert item.revised_highlights == valid_highlights_data
 
-    def test_valid_instantiation_optional_fields_missing(self, valid_id: UUID4):
+    def test_valid_instantiation_optional_fields_missing(self, valid_id: str):
         item = RevisedProjectItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
@@ -92,12 +110,12 @@ class TestRevisedProjectItem:
 
 
 class TestRevisedAwardItem:
-    def test_valid_instantiation(self, valid_id: UUID4, valid_summary_data: str):
+    def test_valid_instantiation(self, valid_id: str, valid_summary_data: str):
         item = RevisedAwardItem(id=valid_id, revised_summary=valid_summary_data)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary == valid_summary_data
 
-    def test_valid_instantiation_summary_missing(self, valid_id: UUID4):
+    def test_valid_instantiation_summary_missing(self, valid_id: str):
         item = RevisedAwardItem(id=valid_id)  # type: ignore[call-arg]
         assert item.id == valid_id
         assert item.revised_summary is None
@@ -108,7 +126,7 @@ class TestRevisedAwardItem:
 
 
 class TestRevisedPublicationItem:
-    def test_valid_instantiation(self, valid_id: UUID4, valid_summary_data: str):
+    def test_valid_instantiation(self, valid_id: str, valid_summary_data: str):
         item = RevisedPublicationItem(id=valid_id, revised_summary=valid_summary_data)
         assert item.id == valid_id
         assert item.revised_summary == valid_summary_data

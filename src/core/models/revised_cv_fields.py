@@ -1,9 +1,20 @@
 from typing import Dict, List, Optional
 
 from google.genai.types import GenerateContentResponse
-from pydantic import UUID4, BaseModel, Field
+from pydantic import UUID4, BaseModel, Field, field_validator
 
 from src.core.models.input_cv_fields import ProfessionalSummary, SkillItem
+
+
+def validate_uuid_id(id: str) -> str:
+    """Validates that the provided ID is a valid UUID."""
+    if type(id) != str:
+        raise TypeError(f"ID {id} should be a string")
+    try:
+        UUID4(id)
+    except ValueError:
+        raise ValueError(f"ID {id} should be valid UUID4")
+    return id
 
 
 class RevisedWorkItem(BaseModel):
@@ -15,16 +26,14 @@ class RevisedWorkItem(BaseModel):
     id: str = Field(
         ..., description="The unique identifier for the work experience item."
     )
-    # company_name: str = Field(
-    #     ..., description="The name of the company/organization for identification."
-    # )
-    # job_title: str = Field(..., description="The job title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for this work experience."
     )
     revised_highlights: Optional[List[str]] = Field(
         None, description="AI-suggested revised highlights for this work experience."
     )
+
+    validate_id = field_validator("id", mode="before")(validate_uuid_id)
 
 
 class RevisedProjectItem(BaseModel):
@@ -34,7 +43,6 @@ class RevisedProjectItem(BaseModel):
     """
 
     id: str = Field(..., description="The unique identifier for the project item.")
-    # name: str = Field(..., description="The project title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised description for the project."
     )
@@ -42,21 +50,25 @@ class RevisedProjectItem(BaseModel):
         None, description="AI-suggested revised highlights for the project."
     )
 
+    validate_id = field_validator("id", mode="before")(validate_uuid_id)
+
 
 class RevisedAwardItem(BaseModel):
     id: str = Field(..., description="The unique identifier for the award item.")
-    # title: str = Field(..., description="The award title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for the award."
     )
 
+    validate_id = field_validator("id", mode="before")(validate_uuid_id)
+
 
 class RevisedPublicationItem(BaseModel):
     id: str = Field(..., description="The unique identifier for the publication item.")
-    # name: str = Field(..., description="The publication title for identification.")
     revised_summary: Optional[str] = Field(
         None, description="AI-suggested revised summary for the publication."
     )
+
+    validate_id = field_validator("id", mode="before")(validate_uuid_id)
 
 
 class RevisedSkillItem(SkillItem):
