@@ -1,3 +1,4 @@
+from functools import lru_cache
 from typing import Dict, Optional, Union
 
 from google import genai
@@ -42,10 +43,14 @@ def _init_ai_resources() -> None:
 
     _CLIENT = genai.Client(api_key=api_key)
     # Checking for API key correctness
-    _CLIENT.models.list()
-    _IS_INITIALIZED = True
-    logger.success("Successfully initialized Google API client and model.")
+    try:
+        _CLIENT.models.list()
+        _IS_INITIALIZED = True
+    except Exception as e:
+        logger.error(f"Failed to initialize AI resources: {str(e)}")
+        raise ClientInitializationError(e) from e
 
+    logger.success("Successfully initialized Google API client and model.")
     return None
 
 
@@ -73,6 +78,35 @@ def get_token_usage_metadata(response: GenerateContentResponse) -> Dict:
     return metadata
 
 
+@lru_cache(maxsize=32)
+def _get_cached_improvements(formated_prompt: str) -> LLMResponse:
+    config: GenerateContentConfig
+    response: GenerateContentResponse
+
+    global _CLIENT, _IS_INITIALIZED
+    config = get_suggest_improvements_config()
+
+    if not _IS_INITIALIZED or _CLIENT is None:
+        logger.error("AI resources were not initialized. Attempting to initialize now.")
+        _init_ai_resources()
+
+    logger.debug("Generating CV improvements...")
+    response = _CLIENT.models.generate_content(
+        model=settings.MODEL_NAME,
+        contents=formated_prompt,
+        config=config,
+    )
+    logger.success("Successfully generated CV improvements.")
+
+    if response.parsed is None or not response.parsed:
+        logger.error("LLM response could not be parsed or was empty.")
+        logger.info(f"LLM response: {response}")
+        raise ResponseParsingError("LLM response could not be parsed or was empty.")
+
+    metadata = get_token_usage_metadata(response)
+    return LLMResponse(response=response, metadata=metadata)
+
+
 retriable_errors = (errors.ServerError, ResponseParsingError)
 
 
@@ -85,36 +119,10 @@ retriable_errors = (errors.ServerError, ResponseParsingError)
     ),
 )
 def get_cv_improvements(job_description: str, cv: str) -> LLMResponse:
-    config: GenerateContentConfig
-    response: GenerateContentResponse
-
-    global _CLIENT, _IS_INITIALIZED
-    config = get_suggest_improvements_config()
-
-    if not _IS_INITIALIZED or _CLIENT is None:
-        logger.error("AI resources were not initialized. Attempting to initialize now.")
-        try:
-            _init_ai_resources()
-        except Exception as e:
-            logger.error(f"Failed to initialize AI resources: {str(e)}")
-            raise ClientInitializationError(e) from e
-
-    logger.debug("Generating CV improvements...")
-
-    response = _CLIENT.models.generate_content(
-        model=settings.MODEL_NAME,
-        contents=JOB_DESC_W_CV_PROMPT.format(job_description=job_description, cv=cv),
-        config=config,
-    )
-    logger.success("Successfully generated CV improvements.")
-
-    if response.parsed is None or not response.parsed:
-        logger.error("LLM response could not be parsed or was empty.")
-        logger.info(f"LLM response: {response}")
-        raise ResponseParsingError("LLM response could not be parsed or was empty.")
-
-    metadata = get_token_usage_metadata(response)
-    return LLMResponse(response=response, metadata=metadata)
+    prompt = JOB_DESC_W_CV_PROMPT.format(job_description=job_description, cv=cv)
+    improvements = _get_cached_improvements(prompt)
+    logger.debug(f"Cache Info: {_get_cached_improvements.cache_info()}")
+    return improvements
 
 
 @retry(
