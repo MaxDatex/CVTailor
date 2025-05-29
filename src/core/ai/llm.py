@@ -1,6 +1,7 @@
 from functools import lru_cache
 from typing import Dict, Optional, Union
 
+from async_lru import alru_cache
 from google import genai
 from google.genai import errors
 from google.genai.types import GenerateContentConfig, GenerateContentResponse
@@ -54,7 +55,7 @@ def _init_ai_resources() -> None:
     return None
 
 
-def get_suggest_improvements_config() -> GenerateContentConfig:
+def _get_suggest_improvements_config() -> GenerateContentConfig:
     config = GenerateContentConfig(
         max_output_tokens=settings.MAX_OUTPUT_TOKENS,
         system_instruction=SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT,
@@ -64,7 +65,9 @@ def get_suggest_improvements_config() -> GenerateContentConfig:
     return config
 
 
-def get_token_usage_metadata(response: GenerateContentResponse) -> Dict:
+def _get_token_usage_metadata(
+    response: GenerateContentResponse,
+) -> Dict[str, Optional[int]]:
     metadata: Dict[str, Union[int, None]] = {
         "input_tokens_count": None,
         "output_tokens_count": None,
@@ -84,7 +87,7 @@ def _get_cached_improvements(formated_prompt: str) -> LLMResponse:
     response: GenerateContentResponse
 
     global _CLIENT, _IS_INITIALIZED
-    config = get_suggest_improvements_config()
+    config = _get_suggest_improvements_config()
 
     if not _IS_INITIALIZED or _CLIENT is None:
         logger.error("AI resources were not initialized. Attempting to initialize now.")
@@ -103,7 +106,36 @@ def _get_cached_improvements(formated_prompt: str) -> LLMResponse:
         logger.info(f"LLM response: {response}")
         raise ResponseParsingError("LLM response could not be parsed or was empty.")
 
-    metadata = get_token_usage_metadata(response)
+    metadata = _get_token_usage_metadata(response)
+    return LLMResponse(response=response, metadata=metadata)
+
+
+@alru_cache(maxsize=32)
+async def _get_cached_improvements_async(formated_prompt: str) -> LLMResponse:
+    config: GenerateContentConfig
+    response: GenerateContentResponse
+
+    global _CLIENT, _IS_INITIALIZED
+    config = _get_suggest_improvements_config()
+
+    if not _IS_INITIALIZED or _CLIENT is None:
+        logger.error("AI resources were not initialized. Attempting to initialize now.")
+        _init_ai_resources()
+
+    logger.debug("Generating CV improvements...")
+    response = await _CLIENT.aio.models.generate_content(
+        model=settings.MODEL_NAME,
+        contents=formated_prompt,
+        config=config,
+    )
+    logger.success("Successfully generated CV improvements.")
+
+    if response.parsed is None or not response.parsed:
+        logger.error("LLM response could not be parsed or was empty.")
+        logger.info(f"LLM response: {response}")
+        raise ResponseParsingError("LLM response could not be parsed or was empty.")
+
+    metadata = _get_token_usage_metadata(response)
     return LLMResponse(response=response, metadata=metadata)
 
 
@@ -134,33 +166,7 @@ def get_cv_improvements(job_description: str, cv: str) -> LLMResponse:
     ),
 )
 async def get_cv_improvements_async(job_description: str, cv: str) -> LLMResponse:
-    config: GenerateContentConfig
-    response: GenerateContentResponse
-
-    global _CLIENT, _IS_INITIALIZED
-    config = get_suggest_improvements_config()
-
-    if not _IS_INITIALIZED or _CLIENT is None:
-        logger.error("AI resources were not initialized. Attempting to initialize now.")
-        try:
-            _init_ai_resources()
-        except Exception as e:
-            logger.error(f"Failed to initialize AI resources: {str(e)}")
-            raise ClientInitializationError(e) from e
-
-    logger.debug("Generating CV improvements...")
-
-    response = await _CLIENT.aio.models.generate_content(
-        model=settings.MODEL_NAME,
-        contents=JOB_DESC_W_CV_PROMPT.format(job_description=job_description, cv=cv),
-        config=config,
-    )
-    logger.success("Successfully generated CV improvements.")
-
-    if response.parsed is None or not response.parsed:
-        logger.error("LLM response could not be parsed or was empty.")
-        logger.info(f"LLM response: {response}")
-        raise ResponseParsingError("LLM response could not be parsed or was empty.")
-
-    metadata = get_token_usage_metadata(response)
-    return LLMResponse(response=response, metadata=metadata)
+    prompt = JOB_DESC_W_CV_PROMPT.format(job_description=job_description, cv=cv)
+    improvements = await _get_cached_improvements_async(prompt)
+    logger.debug(f"Cache Info: {_get_cached_improvements_async.cache_info()}")
+    return improvements
