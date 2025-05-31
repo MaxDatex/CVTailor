@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger as loguru_logger
 
-from src.app.api.v1.endpoints import improve_section, tailor_cv
+from src.app.api.v1.endpoints import cover_letter, improve_section, tailor_cv
 from src.core.config import settings  # Access settings for configuration
 
 loguru_logger.level("INFO")
@@ -25,9 +25,7 @@ def create_app() -> FastAPI:
     # CORS middleware setup (adjust origins as needed for your frontend)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "*"
-        ],  # Be specific in production, e.g., ["http://localhost:3000", "https://your-frontend.com"]
+        allow_origins=["http://localhost:8000"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -38,6 +36,7 @@ def create_app() -> FastAPI:
     app.include_router(
         improve_section.router, prefix="/api/v1", tags=["improve_section"]
     )
+    app.include_router(cover_letter.router, prefix="/api/v1", tags=["cover_letter"])
     return app
 
 
