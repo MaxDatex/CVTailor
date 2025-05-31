@@ -1,4 +1,4 @@
-from typing import Any, Tuple, Type
+from typing import Tuple, Type
 
 from google import genai
 from google.genai import errors
