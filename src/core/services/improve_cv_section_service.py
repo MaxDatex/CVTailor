@@ -94,7 +94,10 @@ class ImproveCVSectionService:
             logger.error("LLM response could not be parsed or was empty.")
             logger.info(f"LLM response: {response}")
             raise ValueError("LLM response could not be parsed or was empty.")
-        return response.candidates[0].content.parts[0].text
+        return (
+            response.candidates[0].content.parts[0].text
+            or "Something unexpected happened. Please try again later."
+        )
 
 
 improve_cv_section_service = ImproveCVSectionService()
