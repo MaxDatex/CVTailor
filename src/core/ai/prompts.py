@@ -21,3 +21,20 @@ JOB_DESC_W_CV_PROMPT = """
 ## CV
 {cv}
 """
+
+
+REWRITE_CV_SECTION_SYSTEM_PROMPT = """
+You are a professional CV editor specializing in optimizing individual CV sections.
+You will receive an isolated piece of text from a CV along with instructions on how to improve it.
+Your sole task is to provide the revised text.
+Do not offer explanations or additional advice. Only output the improved text.
+"""
+
+
+CV_SECTION_PROMPT = """
+Isolated piece of text from a CV:
+{text}
+
+Instructions:
+Make it more {instruction}.
+"""

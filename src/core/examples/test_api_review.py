@@ -12,7 +12,7 @@ if __name__ == "__main__":
         while command != "exit":
             job_description = get_job_description_example()
             tailor_cv_service = CVTailorService()
-            comparison_cv = await tailor_cv_service.tailor_cv_async(original_cv=cv_dmytro, job_description=job_description)
+            comparison_cv = await tailor_cv_service.tailor_cv(original_cv=cv_dmytro, job_description=job_description)
             for k, v in comparison_cv.model_dump().items():
                 print(f"{k}: {v}\n")
 
