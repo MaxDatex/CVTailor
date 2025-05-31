@@ -8,7 +8,7 @@ from src.core.models.input_cv_fields import ProfessionalSummary, SkillItem
 
 def validate_uuid_id(id: str) -> str:
     """Validates that the provided ID is a valid UUID."""
-    if type(id) != str:
+    if not isinstance(id, str):
         raise TypeError(f"ID {id} should be a string")
     try:
         UUID4(id)
