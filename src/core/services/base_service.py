@@ -1,5 +1,5 @@
-from abc import ABC, abstractmethod
-from typing import Any, Tuple, Type
+from abc import ABC
+from typing import Tuple, Type
 
 from google import genai
 from google.genai import errors
