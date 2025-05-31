@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 from src.app.dependencies.common import get_improve_cv_section_service
 from src.core.services.improve_cv_section_service import (
@@ -11,8 +11,15 @@ router = APIRouter()
 
 
 class CVSectionChatRequest(BaseModel):
-    text: str
+    cv_section: str
     instruction: Instruction
+
+    @field_validator("cv_section")
+    @classmethod
+    def validate_cv_section_length(cls, cv_section: str) -> str:
+        if len(cv_section) > 100:
+            raise ValueError(f"CV section too long: (max: 100 chars)")
+        return cv_section
 
 
 class CVSectionChatResponse(BaseModel):
@@ -28,7 +35,7 @@ async def chat_with_gemini(
 ):
     try:
         generated_text = await improve_cv_section_service.get_cv_section_improvements(
-            request.text, request.instruction
+            request.cv_section, request.instruction
         )
         return CVSectionChatResponse(response=generated_text)
     except Exception as e:

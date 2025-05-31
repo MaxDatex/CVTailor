@@ -1,20 +1,11 @@
 from typing import Tuple, Type
 
-from google import genai
 from google.genai import errors
-from google.genai.types import GenerateContentConfig, GenerateContentResponse
+from google.genai.types import GenerateContentConfig
 from loguru import logger
-from pydantic import BaseModel
-from tenacity import (
-    retry,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
 
 from src.core.ai.helpers import format_prompt, get_token_usage_metadata
 from src.core.ai.prompts import JOB_DESC_W_CV_PROMPT, SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT
-from src.core.config import settings
 from src.core.cv_builders.comparison_cv_builder import ComparisonCVBuilder
 from src.core.models.input_cv_fields import CVBody
 from src.core.models.job_description_fields import JobDescriptionFields
@@ -22,28 +13,22 @@ from src.core.models.revised_cv_fields import (
     LLMResponse,
     RevisedCVResponseSchema,
 )
-from src.core.templates.renderers.llm import TemplateLLMRenderer
+from src.core.services.base_service import BaseAIService, BaseServiceConfig
 from src.core.utils.exceptions import ResponseParsingError
 
 
-class CVTailorServiceConfig(BaseModel):
-    model_name: str = settings.MODEL_NAME
+class CVTailorServiceConfig(BaseServiceConfig):
     max_output_tokens: int = 2048
-    retry_attempts: int = 3
-    retry_min_wait: int = 4
-    retry_max_wait: int = 10
 
 
-class CVTailorService:
+class CVTailorService(BaseAIService):
     retriable_errors: Tuple[Type[BaseException], ...] = (
         errors.ServerError,
         ResponseParsingError,
     )
-    config: CVTailorServiceConfig = CVTailorServiceConfig()
 
     def __init__(self):
-        self.client: genai.Client = genai.Client(api_key=settings.GOOGLE_API_KEY)
-        self.template_renderer: TemplateLLMRenderer = TemplateLLMRenderer()
+        super().__init__(CVTailorServiceConfig())
         self.comparison_cv_builder: ComparisonCVBuilder = ComparisonCVBuilder()
         self.ai_suggestions_with_error = RevisedCVResponseSchema(
             explanations="ERROR: An error occurred. Please try again later.",
@@ -58,50 +43,37 @@ class CVTailorService:
         )
 
     def _get_suggest_improvements_config(self) -> GenerateContentConfig:
-        suggestion_config = GenerateContentConfig(
+        return GenerateContentConfig(
             max_output_tokens=self.config.max_output_tokens,
             system_instruction=SUGGEST_IMPROVEMENTS_SYSTEM_PROMPT,
             response_mime_type="application/json",
             response_schema=RevisedCVResponseSchema,
         )
-        return suggestion_config
 
-    @retry(
-        reraise=True,
-        retry=retry_if_exception_type(retriable_errors),
-        stop=stop_after_attempt(config.retry_attempts),
-        wait=wait_exponential(
-            multiplier=1, min=config.retry_min_wait, max=config.retry_max_wait
-        ),
-    )
     async def get_cv_improvements(self, job_description: str, cv: str) -> LLMResponse:
-        response: GenerateContentResponse
-        prompt: str = format_prompt(
-            JOB_DESC_W_CV_PROMPT, job_description=job_description, cv=cv
-        )
-        suggestion_config: GenerateContentConfig = (
-            self._get_suggest_improvements_config()
-        )
+        retry_decorator = self._create_retry_decorator()
 
-        try:
-            logger.debug("Generating CV improvements...")
-            response = await self.client.aio.models.generate_content(
-                model=self.config.model_name,
-                contents=prompt,
-                config=suggestion_config,
+        @retry_decorator
+        async def _get_improvements():
+            prompt: str = format_prompt(
+                JOB_DESC_W_CV_PROMPT, job_description=job_description, cv=cv
             )
-            logger.success("Successfully generated CV improvements.")
-        except errors.APIError as e:
-            logger.error(f"Google API error during CV improvements: {e}")
-            raise
+            suggestion_config = self._get_suggest_improvements_config()
+            response = await self._make_api_call(
+                prompt, suggestion_config, "CV improvements"
+            )
 
-        if not response.parsed or response.parsed is None:
-            logger.error("LLM response could not be parsed or was empty.")
-            logger.info(f"LLM response: {response}")
-            raise ResponseParsingError("LLM response could not be parsed or was empty.")
+            if not response.parsed or response.parsed is None:
+                logger.error("LLM response could not be parsed or was empty.")
+                logger.info(f"LLM response: {response}")
+                raise ResponseParsingError(
+                    "LLM response could not be parsed or was empty."
+                )
 
-        metadata = get_token_usage_metadata(response)
-        return LLMResponse(response=response, metadata=metadata)
+            metadata = get_token_usage_metadata(response)
+            return LLMResponse(response=response, metadata=metadata)
+
+        return await _get_improvements()
 
     async def tailor_cv(
         self, original_cv: CVBody, job_description: JobDescriptionFields
