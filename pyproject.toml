@@ -43,5 +43,4 @@ docstring-code-format = false
 [tool.mypy]
 explicit_package_bases = true
 ignore_missing_imports = true
-args = ["src", "tests"]
 exclude = ["src/core/examples/"]
